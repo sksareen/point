@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key>
+    <string>Point</string>
+    <key>CFBundleDisplayName</key>
+    <string>Point</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.sksareen.point</string>
+    <key>CFBundleVersion</key>
+    <string>0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.1.0</string>
+    <key>PointChannel</key>
+    <string>dev</string>
+    <key>CFBundleExecutable</key>
+    <string>Point</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>LSUIElement</key>
+    <true/>
+    <key>LSMinimumSystemVersion</key>
+    <string>26.0</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Hold Right Option to dictate, or circle something on screen while you talk. Your voice is transcribed on-device.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>Transcribes what you say, on-device.</string>
+</dict>
+</plist>
