@@ -195,6 +195,13 @@
     width: 26px; height: 26px; flex: none; fill: none; stroke: var(--loop);
     stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
   }
+  .watch h2 { margin-bottom: 24px; }
+  .watch-figure { margin: 0 0 14px; }
+  .watch-figure img {
+    display: block; width: 100%; max-width: 800px; height: auto;
+    border-radius: 14px; border: 1px solid var(--line); box-shadow: var(--shadow);
+  }
+  .watch .fine a { color: var(--ink); }
   .privacy { max-width: 46em; }
   .privacy h2 { margin-bottom: 14px; }
   .privacy p { color: var(--muted); margin: 0 0 12px; }
