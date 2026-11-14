@@ -1,5 +1,7 @@
 # Point
 
+![Point: hold Option, say "this pay button is misaligned, fix it", and circle the button. Your agent gets your words and a screenshot with the loop on it.](docs/hero.png)
+
 **Show your AI agent what you mean.** Hold a key, talk, and circle the thing on your screen. Point hands Claude Code, Cursor, or any chat your words plus a screenshot of exactly what you pointed at. Without drawing, it's just fast on-device dictation.
 
 | Gesture | What happens |
@@ -67,6 +69,16 @@ Sources/
 ```
 
 The speech engine sits behind the `Transcriber` protocol, so swapping in whisper.cpp or Parakeet is one new file.
+
+## Roadmap
+
+Next: the screenshot itself on the clipboard for web chats, a notarized download and Homebrew, a faster start, voice commands ("search Porter Robinson on YouTube"), and recording a bug repro with zoom on clicks. Later: older Macs via Whisper or Parakeet, and agents that ask you to point.
+
+Far out, a wand: aim at any screen, click to select, hold to draw, and talk while you point.
+
+![Concept sketch of the Point wand: stacked steel rings, one button, a mic in the handle, and a weighted gyroscope in the tip, aiming at a screen and drawing a red line.](docs/wand.png)
+
+Ideas welcome in [issues](https://github.com/sksareen/point/issues).
 
 ## Status
 
