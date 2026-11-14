@@ -232,6 +232,14 @@
   :not(pre) > code { overflow-wrap: anywhere; background: var(--window); border: 1px solid var(--line); padding: 1px 6px; border-radius: 5px; }
   pre { background: var(--term); color: var(--term-ink); padding: 14px 16px; border-radius: 10px; overflow-x: auto; margin: 10px 0 0; }
 
+  .cmd { position: relative; margin-top: 10px; }
+  .cmd pre { margin: 0; padding-right: 84px; }
+  .copy {
+    position: absolute; top: 8px; right: 8px; font: inherit; font-size: 0.82rem; font-weight: 700;
+    padding: 6px 12px; border-radius: 7px; cursor: pointer;
+    border: 1px solid var(--term-dim); background: transparent; color: var(--term-ink);
+  }
+  .copy:hover { border-color: var(--term-ink); }
   footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: 0.92rem; }
   footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
@@ -273,10 +281,10 @@
       <h1><span class="line">Don't describe it.</span><span class="line">Point at it.</span></h1>
       <p class="lede">Hold <span class="keycap">⌥</span>, say what you mean, and circle it on screen. Point pastes <strong>your words and a screenshot of exactly what you circled</strong> into Claude Code, Cursor, or any chat.</p>
       <div class="ctas">
-        <a class="btn btn-primary" href="https://github.com/sksareen/point/releases/latest">Download for Mac</a>
+        <a class="btn btn-primary" href="#install">Install for Mac</a>
         <a class="btn btn-ghost" href="https://github.com/sksareen/point">View the source</a>
       </div>
-      <p class="fine">Free and open source. Transcription runs on your Mac. Needs macOS 26 on Apple Silicon.</p>
+      <p class="fine">Free and open source. One Terminal command to install. Transcription runs on your Mac. Needs macOS 26 on Apple Silicon.</p>
     </div>
 
     <div class="demo" aria-label="Animated demo: a loop is drawn around a misaligned Pay button while the words 'this pay button is misaligned, fix it' are spoken, then the words and a screenshot path are pasted into an agent terminal.">
@@ -350,9 +358,11 @@
   <section class="wrap section" id="install">
     <h2>Install in a minute.</h2>
     <ol class="steps">
-      <li><strong>Download Point</strong><span>Get <code>Point.zip</code> from the <a href="https://github.com/sksareen/point/releases/latest">latest release</a>, unzip it, and drag Point into Applications.</span></li>
-      <li><strong>Open it once with right-click</strong><span>This early build isn't notarized by Apple yet, so right-click Point and choose Open. Or run:</span>
-        <pre><code>xattr -dr com.apple.quarantine /Applications/Point.app</code></pre></li>
+      <li><strong>Paste this into Terminal</strong><span>It downloads the latest release into Applications and opens it. <a href="https://github.com/sksareen/point/blob/master/get.sh">Read the script</a> first if you like.</span>
+        <div class="cmd">
+          <pre><code id="installCmd">curl -fsSL https://raw.githubusercontent.com/sksareen/point/master/get.sh | bash</code></pre>
+          <button class="copy" id="copyBtn" type="button">Copy</button>
+        </div></li>
       <li><strong>Grant three permissions</strong><span>Accessibility to notice the key, Microphone to hear you, and Screen Recording the first time you circle something.</span></li>
       <li><strong>Hold <span class="keycap">⌥</span> and talk</strong><span>That's it. Open the menu bar icon for your timeline and settings.</span></li>
     </ol>
@@ -571,6 +581,17 @@
     down = false; current = null;
     // Tap-to-draw has no key to release, so finishing a real loop is the "let go".
     if (toggled && finished && pathLength(finished) >= 40) setTimeout(function () { setToggled(false); }, 450);
+  });
+
+  // Copy the install command.
+  var copyBtn = document.getElementById("copyBtn");
+  copyBtn.addEventListener("click", function () {
+    var text = document.getElementById("installCmd").textContent;
+    var done = function () {
+      copyBtn.textContent = "Copied";
+      setTimeout(function () { copyBtn.textContent = "Copy"; }, 1600);
+    };
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () {});
   });
 
   window.addEventListener("resize", sizeCanvas);

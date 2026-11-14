@@ -12,18 +12,17 @@ Prefer another key? Pick **Right ⌥**, **Left ⌃**, **Right ⌘**, or **Fn** f
 
 Transcription runs **on-device** with Apple's `SpeechAnalyzer` (macOS 26). No audio leaves your Mac.
 
-## Download
+## Install
 
-Requires **macOS 26**.
+Requires **macOS 26 on Apple Silicon**. Paste this into Terminal:
 
-1. Download `Point.zip` from the [latest release](https://github.com/sksareen/point/releases/latest), unzip it, and drag **Point** to Applications.
-2. **First open only:** this early build isn't notarized by Apple yet, so macOS will block a normal double-click. Right-click **Point**, choose **Open**, then click **Open** in the dialog. Or run once in Terminal:
-   ```sh
-   xattr -dr com.apple.quarantine /Applications/Point.app
-   ```
-3. Grant **Accessibility** and **Microphone** when asked, and **Screen Recording** the first time you draw a loop.
+```sh
+curl -fsSL https://raw.githubusercontent.com/sksareen/point/master/get.sh | bash
+```
 
-A notarized build and a Homebrew cask are coming.
+It downloads the latest release into Applications and opens it ([read the script](get.sh)). Then grant **Accessibility** and **Microphone** when asked, and **Screen Recording** the first time you draw a loop.
+
+A notarized download and a Homebrew cask are coming.
 
 ## Build from source
 
