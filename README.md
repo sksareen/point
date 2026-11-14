@@ -1,6 +1,6 @@
 # Point
 
-Hold a key, talk, and point at things on your screen. Point turns that into text your AI (or anything else) can use.
+**Show your AI agent what you mean.** Hold a key, talk, and circle the thing on your screen. Point hands Claude Code, Cursor, or any chat your words plus a screenshot of exactly what you pointed at. Without drawing, it's just fast on-device dictation.
 
 | Gesture | What happens |
 |---|---|
@@ -10,7 +10,20 @@ Hold a key, talk, and point at things on your screen. Point turns that into text
 
 Transcription runs **on-device** with Apple's `SpeechAnalyzer` (macOS 26). No audio leaves your Mac.
 
-## Install
+## Download
+
+Requires **macOS 26**.
+
+1. Download `Point.zip` from the [latest release](https://github.com/sksareen/point/releases/latest), unzip it, and drag **Point** to Applications.
+2. **First open only:** this early build isn't notarized by Apple yet, so macOS will block a normal double-click. Right-click **Point**, choose **Open**, then click **Open** in the dialog. Or run once in Terminal:
+   ```sh
+   xattr -dr com.apple.quarantine /Applications/Point.app
+   ```
+3. Grant **Accessibility** and **Microphone** when asked, and **Screen Recording** the first time you draw a loop.
+
+A notarized build and a Homebrew cask are coming.
+
+## Build from source
 
 Requires macOS 26 and Xcode command-line tools.
 
