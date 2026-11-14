@@ -33,7 +33,8 @@ final class StickyNoteController: NSObject, NSTextViewDelegate {
         if front?.bundleIdentifier != Bundle.main.bundleIdentifier { returnTo = front }
 
         textView.string = load()
-        hint.stringValue = "esc to hide · double-tap \(TriggerKey.current.symbol)"
+        restyleDone()
+        hint.stringValue = "⌘L done · esc to hide · double-tap \(TriggerKey.current.symbol)"
         updateCounter()
 
         NSApp.activate(ignoringOtherApps: true)
@@ -99,6 +100,7 @@ final class StickyNoteController: NSObject, NSTextViewDelegate {
         // Note: .canJoinAllSpaces + .moveToActiveSpace together throws — keep only one.
         p.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary]
         p.onEscape = { [weak self] in self?.hide() }
+        p.onToggleDone = { [weak self] in self?.toggleDone() }
 
         let bg = NSVisualEffectView(frame: NSRect(origin: .zero, size: size))
         bg.material = .hudWindow
@@ -202,13 +204,82 @@ final class StickyNoteController: NSObject, NSTextViewDelegate {
     }
 
     func textDidChange(_ notification: Notification) {
+        restyleDone()
         updateCounter()
         save()
+    }
+
+    // ─── Done lines (⌘L) ─────────────────────────────────────────────────────
+    // A line is "done" when it starts with DONE_MARK. Stored as plain text in
+    // sticky.txt, so it survives relaunches; strikethrough is applied on display.
+
+    private static let doneMark = "✓ "
+
+    /// Toggle done on every line touched by the selection (or the caret's line).
+    func toggleDone() {
+        guard let tv = textView else { return }
+        let text = tv.string as NSString
+        var lines: [NSRange] = []
+        var loc = text.lineRange(for: tv.selectedRange()).location
+        let end = NSMaxRange(text.lineRange(for: tv.selectedRange()))
+        repeat {
+            let line = text.lineRange(for: NSRange(location: loc, length: 0))
+            lines.append(line)
+            loc = NSMaxRange(line)
+        } while loc < end
+        // A trailing empty line after the last newline still counts when the caret sits there.
+        let nonEmpty = lines.filter { text.substring(with: $0).trimmingCharacters(in: .whitespacesAndNewlines) != "" }
+        guard !nonEmpty.isEmpty else { return }
+        // If every touched line is done, un-mark them all; otherwise mark the rest.
+        let allDone = nonEmpty.allSatisfy { text.substring(with: $0).hasPrefix(Self.doneMark) }
+        let mark = Self.doneMark as NSString
+        tv.undoManager?.beginUndoGrouping()
+        for line in nonEmpty.reversed() {
+            let isDone = text.substring(with: line).hasPrefix(Self.doneMark)
+            if allDone && isDone {
+                let r = NSRange(location: line.location, length: mark.length)
+                if tv.shouldChangeText(in: r, replacementString: "") {
+                    tv.textStorage?.replaceCharacters(in: r, with: "")
+                    tv.didChangeText()
+                }
+            } else if !allDone && !isDone {
+                let r = NSRange(location: line.location, length: 0)
+                if tv.shouldChangeText(in: r, replacementString: Self.doneMark) {
+                    tv.textStorage?.replaceCharacters(in: r, with: Self.doneMark)
+                    tv.didChangeText()
+                }
+            }
+        }
+        tv.undoManager?.endUndoGrouping()
+        tv.undoManager?.setActionName("Toggle Done")
+        restyleDone()
+    }
+
+    /// Strike through and dim done lines; everything else gets the normal style.
+    private func restyleDone() {
+        guard let tv = textView, let storage = tv.textStorage else { return }
+        let text = storage.string as NSString
+        let all = NSRange(location: 0, length: text.length)
+        let font = tv.font ?? NSFont.systemFont(ofSize: 14)
+        storage.beginEditing()
+        storage.removeAttribute(.strikethroughStyle, range: all)
+        storage.addAttribute(.foregroundColor, value: NSColor.labelColor, range: all)
+        storage.addAttribute(.font, value: font, range: all)
+        text.enumerateSubstrings(in: all, options: .byLines) { sub, range, _, _ in
+            guard let sub, sub.hasPrefix(Self.doneMark) else { return }
+            storage.addAttribute(.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: range)
+            storage.addAttribute(.foregroundColor, value: NSColor.tertiaryLabelColor, range: range)
+        }
+        storage.endEditing()
+        // New typing never inherits the struck style.
+        tv.typingAttributes[.strikethroughStyle] = nil
+        tv.typingAttributes[.foregroundColor] = NSColor.labelColor
     }
 }
 
 final class StickyPanel: NSPanel {
     var onEscape: (() -> Void)?
+    var onToggleDone: (() -> Void)?
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { true }
     override func cancelOperation(_ sender: Any?) { onEscape?() }
@@ -220,6 +291,7 @@ final class StickyPanel: NSPanel {
         guard flags.contains(.command), let key = event.charactersIgnoringModifiers?.lowercased()
         else { return super.performKeyEquivalent(with: event) }
         let shift = flags.contains(.shift)
+        if key == "l" && !shift { onToggleDone?(); return true }
         let action: Selector?
         switch key {
         case "v": action = #selector(NSText.paste(_:))
