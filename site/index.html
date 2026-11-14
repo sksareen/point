@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Point: show your AI agent what you mean</title>
+<meta name="description" content="Hold Right Option, say what you mean, and circle it. Point pastes your words and a screenshot of exactly what you circled into Claude Code, Cursor, or any chat. Free, open source, on-device.">
+<meta property="og:title" content="Point: Don't describe it. Point at it.">
+<meta property="og:description" content="Hold a key, talk, and circle what you mean. Your AI agent gets your words and a screenshot of exactly what you pointed at. Free, open source, on-device.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☝️</text></svg>">
+<script>
+  // Theme before first paint (no flash): saved choice → system preference.
+  (function () {
+    try {
+      var t = localStorage.getItem("point-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --page: #E8ECF1;
+    --ink: #17212C;
+    --muted: #586676;
+    --line: #CBD3DC;
+    --window: #FFFFFF;
+    --chrome: #F3F5F8;
+    --loop: #FF2E40;
+    --sticky: #FFF29E;
+    --pill: rgba(18, 24, 31, 0.86);
+    --term: #1B2430;
+    --term-ink: #D8E1EA;
+    --term-dim: #8796A6;
+    --shadow: 0 1px 2px rgba(23, 33, 44, 0.06), 0 12px 40px rgba(23, 33, 44, 0.12);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --page: #151B22;
+      --ink: #E6ECF2;
+      --muted: #97A5B4;
+      --line: #2C3642;
+      --window: #1E2630;
+      --chrome: #252E39;
+      --loop: #FF4757;
+      --sticky: #F2E27A;
+      --pill: rgba(6, 9, 12, 0.88);
+      --term: #10161D;
+      --term-ink: #D8E1EA;
+      --term-dim: #7D8B9A;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 16px 48px rgba(0, 0, 0, 0.4);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page: #151B22;
+    --ink: #E6ECF2;
+    --muted: #97A5B4;
+    --line: #2C3642;
+    --window: #1E2630;
+    --chrome: #252E39;
+    --loop: #FF4757;
+    --sticky: #F2E27A;
+    --pill: rgba(6, 9, 12, 0.88);
+    --term: #10161D;
+    --term-ink: #D8E1EA;
+    --term-dim: #7D8B9A;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 16px 48px rgba(0, 0, 0, 0.4);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font: 400 1.0625rem/1.6 "Schibsted Grotesk", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--loop);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 22px; padding-bottom: 22px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; text-decoration: none; letter-spacing: -0.01em; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links { display: flex; align-items: center; gap: 18px; font-weight: 500; }
+  .nav-links a { text-decoration: none; color: var(--muted); }
+  .nav-links a:hover { color: var(--ink); }
+  .theme-btn {
+    border: 1px solid var(--line); background: transparent; color: var(--muted);
+    width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 15px;
+  }
+
+  /* Hero */
+  .hero {
+    display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 56px; align-items: center;
+    padding-top: 48px; padding-bottom: 88px;
+  }
+  h1 {
+    font-weight: 800; font-size: clamp(2.1rem, 8.4vw, 3.75rem); line-height: 1.04;
+    letter-spacing: -0.035em; margin: 0 0 24px;
+  }
+  h1 .line { display: block; }
+  @media (min-width: 881px) { h1 .line { white-space: nowrap; } }
+  .lede { font-size: 1.2rem; color: var(--muted); max-width: 32em; margin: 0 0 32px; }
+  .lede strong { color: var(--ink); font-weight: 500; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 13px 22px; border-radius: 999px; font-weight: 700; text-decoration: none;
+    border: 1.5px solid var(--ink); font-size: 1rem;
+  }
+  .btn-primary { background: var(--ink); color: var(--page); }
+  .btn-primary:hover { background: transparent; color: var(--ink); }
+  .btn-ghost:hover { background: var(--ink); color: var(--page); }
+  .fine { color: var(--muted); font-size: 0.92rem; margin: 0; }
+
+  /* Demo window */
+  .demo { position: relative; }
+  .window {
+    background: var(--window); border-radius: 14px; box-shadow: var(--shadow);
+    overflow: hidden; border: 1px solid var(--line);
+  }
+  .titlebar { display: flex; gap: 7px; padding: 12px 14px; background: var(--chrome); border-bottom: 1px solid var(--line); }
+  .titlebar i { width: 11px; height: 11px; border-radius: 50%; background: var(--line); display: block; }
+  .app { position: relative; padding: 28px 28px 76px; }
+  .app h3 { margin: 0 0 4px; font-size: 1.05rem; }
+  .app p { margin: 0 0 18px; color: var(--muted); font-size: 0.9rem; }
+  .row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 0.92rem; }
+  .row span:last-child { font-weight: 700; }
+  .actions { display: flex; gap: 10px; margin-top: 22px; align-items: flex-start; }
+  .fake-btn { padding: 9px 16px; border-radius: 8px; font-size: 0.88rem; font-weight: 700; border: 1px solid var(--line); background: var(--chrome); }
+  .fake-btn.pay { background: #2F6BFF; color: #fff; border-color: #2F6BFF; margin-top: 11px; margin-left: 9px; }
+  svg.ink { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+  .ink path { fill: none; stroke: var(--loop); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+  .note {
+    position: absolute; font: 600 1.45rem/1 "Caveat", cursive; color: var(--loop);
+    transform: rotate(-4deg); opacity: 0; transition: opacity 0.3s;
+  }
+  .pill {
+    position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
+    background: var(--pill); color: #fff; border-radius: 999px; padding: 9px 16px;
+    font-size: 0.86rem; white-space: nowrap; max-width: calc(100% - 32px); overflow: hidden; text-overflow: ellipsis;
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .pill::before { content: "● "; color: var(--loop); }
+  .term {
+    margin-top: 14px; background: var(--term); color: var(--term-ink); border-radius: 12px;
+    padding: 16px 18px; font: 500 0.82rem/1.55 ui-monospace, "SF Mono", Menlo, monospace;
+    min-height: 118px; box-shadow: var(--shadow);
+  }
+  .term .dim { color: var(--term-dim); }
+  .term .ok { color: #7FD8A0; }
+  .term .line { display: block; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .keycap {
+    display: inline-block; min-width: 1.9em; padding: 1px 7px; border-radius: 6px;
+    border: 1px solid var(--line); border-bottom-width: 2.5px; background: var(--window);
+    font-weight: 700; font-size: 0.86em; text-align: center; line-height: 1.5;
+  }
+
+  /* Try it */
+  .tryit {
+    position: relative; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    padding: 64px 0; text-align: left;
+  }
+  .tryit h2, .section h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 12px; }
+  .tryit p { color: var(--muted); max-width: 36em; margin: 0 0 20px; }
+  .draw-toggle {
+    font: inherit; font-weight: 700; padding: 10px 18px; border-radius: 999px; cursor: pointer;
+    border: 1.5px dashed var(--loop); background: transparent; color: var(--loop);
+  }
+  .draw-toggle[aria-pressed="true"] { background: var(--loop); color: #fff; border-style: solid; }
+  #canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 50; }
+  body.drawing { cursor: crosshair; user-select: none; -webkit-user-select: none; }
+  body.drawing #canvas { pointer-events: auto; }
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 12px);
+    background: var(--pill); color: #fff; padding: 12px 20px; border-radius: 999px; font-size: 0.95rem;
+    opacity: 0; transition: opacity 0.25s, transform 0.25s; z-index: 60; pointer-events: none;
+    max-width: calc(100vw - 32px); text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* Gestures */
+  .section { padding-top: 72px; padding-bottom: 72px; }
+  .gestures { margin-top: 36px; border-top: 1.5px solid var(--ink); }
+  .gesture {
+    display: grid; grid-template-columns: 280px 1fr; gap: 32px; padding: 26px 0;
+    border-bottom: 1px solid var(--line); align-items: baseline;
+  }
+  .gesture dt { font-weight: 700; font-size: 1.15rem; }
+  .gesture dd { margin: 0; color: var(--muted); max-width: 40em; }
+  .gesture dd strong { color: var(--ink); font-weight: 500; }
+
+  /* Private + sticky */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .sticky-card {
+    background: var(--sticky); color: #2A2615; border-radius: 12px; padding: 22px 24px 18px;
+    box-shadow: var(--shadow); transform: rotate(1.2deg); max-width: 420px; justify-self: center;
+    font-size: 1rem;
+  }
+  .sticky-card b { display: block; font-size: 0.8rem; color: #6B6440; margin-bottom: 8px; }
+  .sticky-card p { margin: 0 0 6px; }
+  .sticky-card small { display: block; margin-top: 14px; color: #6B6440; font-size: 0.78rem; }
+
+  /* Install */
+  .steps { counter-reset: step; list-style: none; padding: 0; margin: 32px 0 0; max-width: 46em; }
+  .steps li { counter-increment: step; position: relative; padding: 0 0 26px 52px; }
+  .steps li::before {
+    content: counter(step); position: absolute; left: 0; top: -2px; width: 34px; height: 34px;
+    border-radius: 50%; border: 1.5px solid var(--ink); display: grid; place-items: center; font-weight: 700;
+  }
+  .steps li strong { display: block; font-size: 1.08rem; margin-bottom: 4px; }
+  .steps li span { color: var(--muted); }
+  code, pre { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.86em; }
+  :not(pre) > code { overflow-wrap: anywhere; background: var(--window); border: 1px solid var(--line); padding: 1px 6px; border-radius: 5px; }
+  pre { background: var(--term); color: var(--term-ink); padding: 14px 16px; border-radius: 10px; overflow-x: auto; margin: 10px 0 0; }
+
+  footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: 0.92rem; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  @media (max-width: 880px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 24px; }
+    .split { grid-template-columns: 1fr; }
+    .gesture { grid-template-columns: 1fr; gap: 6px; }
+  }
+  @media (max-width: 480px) {
+    .wrap { padding: 0 16px; }
+    .app { padding: 22px 18px 84px; }
+    .nav-links .hide-sm { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .note, .pill, .toast { transition: none; }
+  }
+</style>
+</head>
+<body>
+<canvas id="canvas" aria-hidden="true"></canvas>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<header class="wrap nav">
+  <a class="brand" href="#">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="var(--loop)" stroke-width="2.4" stroke-dasharray="48 9" transform="rotate(-70 12 12)"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg>
+    Point
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a class="hide-sm" href="#how">How it works</a>
+    <a class="hide-sm" href="#install">Install</a>
+    <a href="https://github.com/sksareen/point">GitHub</a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode (⌘I)" title="Toggle dark mode (⌘I)">◐</button>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <div>
+      <h1><span class="line">Don't describe it.</span><span class="line">Point at it.</span></h1>
+      <p class="lede">Hold <span class="keycap">⌥</span>, say what you mean, and circle it on screen. Point pastes <strong>your words and a screenshot of exactly what you circled</strong> into Claude Code, Cursor, or any chat.</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="https://github.com/sksareen/point/releases/latest">Download for Mac</a>
+        <a class="btn btn-ghost" href="https://github.com/sksareen/point">View the source</a>
+      </div>
+      <p class="fine">Free and open source. Transcription runs on your Mac. Needs macOS 26 on Apple Silicon.</p>
+    </div>
+
+    <div class="demo" aria-label="Animated demo: a loop is drawn around a misaligned Pay button while the words 'this pay button is misaligned, fix it' are spoken, then the words and a screenshot path are pasted into an agent terminal.">
+      <div class="window">
+        <div class="titlebar"><i></i><i></i><i></i></div>
+        <div class="app" id="app">
+          <h3>Checkout</h3>
+          <p>Review your order</p>
+          <div class="row"><span>Pro plan, yearly</span><span>$96.00</span></div>
+          <div class="row"><span>Tax</span><span>$7.68</span></div>
+          <div class="actions">
+            <span class="fake-btn">Back</span>
+            <span class="fake-btn pay" id="payBtn">Pay now</span>
+          </div>
+          <svg class="ink" id="heroInk" aria-hidden="true"><path id="heroLoop" d=""/></svg>
+          <span class="note" id="heroNote">this one</span>
+          <div class="pill" id="pill"></div>
+        </div>
+      </div>
+      <div class="term" id="term" aria-hidden="true">
+        <span class="line dim">agent ›</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="tryit" id="try">
+    <div class="wrap">
+      <h2>Try the gesture right here.</h2>
+      <p>Hold <span class="keycap">⌥</span> Option and drag your mouse to circle anything on this page. Let go and the loop disappears. In the app, letting go sends what you said and what you circled to your agent.</p>
+      <button class="draw-toggle" id="drawToggle" type="button" aria-pressed="false">Or tap here to draw with a finger or trackpad</button>
+    </div>
+  </section>
+
+  <section class="wrap section" id="how">
+    <h2>Everything happens on one key.</h2>
+    <dl class="gestures">
+      <div class="gesture">
+        <dt>Hold and talk</dt>
+        <dd>Fast dictation into any app. Your words land at the text cursor and stay on the clipboard. <strong>No drawing, no screenshot.</strong></dd>
+      </div>
+      <div class="gesture">
+        <dt>Hold, talk, and circle</dt>
+        <dd>Point captures the screen with your loop drawn on it and pastes your words plus the screenshot path. Agents like Claude Code and Cursor open the image and see exactly what you meant.</dd>
+      </div>
+      <div class="gesture">
+        <dt>Double-tap</dt>
+        <dd>A sticky pad floats over everything. It saves as you type, keeps your notes until you delete them, and you can dictate into it.</dd>
+      </div>
+      <div class="gesture">
+        <dt>Look back</dt>
+        <dd>Every capture is kept in a timeline you can scroll and search: the screenshot, the transcript, and the recording to play back.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="wrap section split">
+    <div>
+      <h2>Your voice stays on your Mac.</h2>
+      <p style="color:var(--muted);max-width:32em">Point uses Apple's on-device speech engine. No account, no server, no audio uploaded anywhere. Captures live in a folder you can open, and the whole app is about 1,800 lines of Swift you can read before you run it.</p>
+      <p style="color:var(--muted);max-width:32em">Prefer another key? Pick Right Option, Left Control, Right Command, or Fn in Settings.</p>
+    </div>
+    <div class="sticky-card" aria-label="Example sticky pad">
+      <b>Sticky</b>
+      <p>ask about the retry logic in the sync job</p>
+      <p>landing page: shorter hero copy?</p>
+      <p>call the bank before 5</p>
+      <small>autosaved · double-tap ⌥ to hide</small>
+    </div>
+  </section>
+
+  <section class="wrap section" id="install">
+    <h2>Install in a minute.</h2>
+    <ol class="steps">
+      <li><strong>Download Point</strong><span>Get <code>Point.zip</code> from the <a href="https://github.com/sksareen/point/releases/latest">latest release</a>, unzip it, and drag Point into Applications.</span></li>
+      <li><strong>Open it once with right-click</strong><span>This early build isn't notarized by Apple yet, so right-click Point and choose Open. Or run:</span>
+        <pre><code>xattr -dr com.apple.quarantine /Applications/Point.app</code></pre></li>
+      <li><strong>Grant three permissions</strong><span>Accessibility to notice the key, Microphone to hear you, and Screen Recording the first time you circle something.</span></li>
+      <li><strong>Hold <span class="keycap">⌥</span> and talk</strong><span>That's it. Open the menu bar icon for your timeline and settings.</span></li>
+    </ol>
+    <p class="fine" style="margin-top:8px">Rather build it yourself? <code>git clone https://github.com/sksareen/point && ./install.sh</code></p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Point is free and open source under the MIT license.</span>
+    <a href="https://github.com/sksareen/point">github.com/sksareen/point</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var css = getComputedStyle(document.documentElement);
+
+  // ── Theme toggle (button + ⌘I / Ctrl+I) ──────────────────────────────────
+  function currentTheme() {
+    var t = document.documentElement.getAttribute("data-theme");
+    if (t) return t;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  function toggleTheme() {
+    var next = currentTheme() === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("point-theme", next); } catch (e) {}
+    css = getComputedStyle(document.documentElement);
+  }
+  document.getElementById("themeBtn").addEventListener("click", toggleTheme);
+  window.addEventListener("keydown", function (e) {
+    if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "i") {
+      e.preventDefault();
+      toggleTheme();
+    }
+  });
+
+  // ── Hero demo ───────────────────────────────────────────────────────────
+  var app = document.getElementById("app");
+  var pay = document.getElementById("payBtn");
+  var loop = document.getElementById("heroLoop");
+  var note = document.getElementById("heroNote");
+  var pill = document.getElementById("pill");
+  var term = document.getElementById("term");
+  var spoken = "this pay button is misaligned, fix it";
+  var shot = "[Screenshot: …/Point/captures/point_1794656051204.png]";
+
+  // A hand-drawn loop around the button: an ellipse with wobble and an overshoot.
+  function loopPath(r) {
+    var cx = r.x + r.w / 2, cy = r.y + r.h / 2, rx = r.w / 2 + 22, ry = r.h / 2 + 16;
+    var pts = [], n = 44, start = -2.2, sweep = Math.PI * 2 + 0.55;
+    for (var i = 0; i <= n; i++) {
+      var t = start + sweep * (i / n);
+      var wob = 1 + 0.05 * Math.sin(i * 1.7) + (i / n) * 0.06;
+      pts.push([cx + Math.cos(t) * rx * wob, cy + Math.sin(t) * ry * wob]);
+    }
+    var d = "M" + pts[0][0].toFixed(1) + " " + pts[0][1].toFixed(1);
+    for (var j = 1; j < pts.length; j++) d += " L" + pts[j][0].toFixed(1) + " " + pts[j][1].toFixed(1);
+    return { d: d, right: cx + rx, top: cy - ry };
+  }
+  function layoutLoop() {
+    var a = app.getBoundingClientRect(), b = pay.getBoundingClientRect();
+    var p = loopPath({ x: b.left - a.left, y: b.top - a.top, w: b.width, h: b.height });
+    loop.setAttribute("d", p.d);
+    note.style.left = Math.min(p.right + 8, a.width - 78) + "px";
+    note.style.top = (p.top + 6) + "px";
+    var len = loop.getTotalLength();
+    loop.style.strokeDasharray = len;
+    return len;
+  }
+  function termLines(lines) {
+    term.innerHTML = lines.map(function (l) {
+      return '<span class="line ' + (l.cls || "") + '">' + l.text.replace(/&/g, "&amp;").replace(/</g, "&lt;") + "</span>";
+    }).join("");
+  }
+  var timers = [];
+  function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+  function finalState() {
+    var len = layoutLoop();
+    loop.style.transition = "none";
+    loop.style.strokeDashoffset = 0;
+    note.style.opacity = 1;
+    pill.style.opacity = 0;
+    termLines([
+      { text: "agent › " + spoken },
+      { text: shot, cls: "dim" },
+      { text: "✓ Read the screenshot. Fixed the stray margin on the Pay button in Checkout.tsx.", cls: "ok" }
+    ]);
+  }
+
+  function run() {
+    clearTimers();
+    var len = layoutLoop();
+    loop.style.transition = "none";
+    loop.style.strokeDashoffset = len;
+    note.style.opacity = 0;
+    pill.style.opacity = 0;
+    termLines([{ text: "agent ›", cls: "dim" }]);
+
+    at(700, function () { pill.textContent = "Listening…"; pill.style.opacity = 1; });
+    // Words arrive as you speak.
+    var words = spoken.split(" ");
+    words.forEach(function (w, i) {
+      at(1200 + i * 230, function () { pill.textContent = words.slice(0, i + 1).join(" "); });
+    });
+    // The loop is drawn while talking.
+    at(1500, function () {
+      loop.getBoundingClientRect();
+      loop.style.transition = "stroke-dashoffset 1.15s cubic-bezier(.5,.05,.4,1)";
+      loop.style.strokeDashoffset = 0;
+    });
+    at(2750, function () { note.style.opacity = 1; });
+    // Release: paste lands in the agent.
+    var release = 1200 + words.length * 230 + 500;
+    at(release, function () {
+      pill.style.opacity = 0;
+      termLines([{ text: "agent › " + spoken }, { text: shot, cls: "dim" }]);
+    });
+    at(release + 1300, function () {
+      termLines([
+        { text: "agent › " + spoken },
+        { text: shot, cls: "dim" },
+        { text: "✓ Read the screenshot. Fixed the stray margin on the Pay button in Checkout.tsx.", cls: "ok" }
+      ]);
+    });
+    at(release + 5200, run);
+  }
+
+  if (reduce) finalState(); else run();
+  var resizeT;
+  window.addEventListener("resize", function () {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(function () { reduce ? finalState() : run(); }, 150);
+  });
+
+  // ── Try it: hold Option (or toggle) and draw on the page ────────────────
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+  var toast = document.getElementById("toast");
+  var toggle = document.getElementById("drawToggle");
+  var held = false, toggled = false, down = false, strokes = [], current = null, toastT;
+
+  function sizeCanvas() {
+    var dpr = window.devicePixelRatio || 1;
+    canvas.width = innerWidth * dpr; canvas.height = innerHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    redraw();
+  }
+  function redraw() {
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    ctx.strokeStyle = css.getPropertyValue("--loop").trim() || "#FF2E40";
+    ctx.lineWidth = 5; ctx.lineCap = "round"; ctx.lineJoin = "round";
+    strokes.forEach(function (s) {
+      if (s.length < 2) return;
+      ctx.beginPath(); ctx.moveTo(s[0].x, s[0].y);
+      for (var i = 1; i < s.length; i++) ctx.lineTo(s[i].x, s[i].y);
+      ctx.stroke();
+    });
+  }
+  function pathLength(s) {
+    var L = 0;
+    for (var i = 1; i < s.length; i++) L += Math.hypot(s[i].x - s[i - 1].x, s[i].y - s[i - 1].y);
+    return L;
+  }
+  function setDrawing(on) {
+    document.body.classList.toggle("drawing", on);
+    if (!on) finish();
+  }
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastT);
+    toastT = setTimeout(function () { toast.classList.remove("show"); }, 3200);
+  }
+  function finish() {
+    var drew = strokes.some(function (s) { return pathLength(s) >= 40; });
+    if (drew) showToast("That's the gesture. In Point, letting go sends your words and this screenshot to your agent.");
+    strokes = []; current = null; down = false;
+    redraw();
+  }
+
+  window.addEventListener("keydown", function (e) {
+    if (e.key === "Alt" && !held) { held = true; e.preventDefault(); setDrawing(true); }
+  });
+  window.addEventListener("keyup", function (e) {
+    if (e.key === "Alt" && held) { held = false; if (!toggled) setDrawing(false); }
+  });
+  window.addEventListener("blur", function () { if (held) { held = false; if (!toggled) setDrawing(false); } });
+
+  toggle.addEventListener("click", function () {
+    toggled = !toggled;
+    toggle.setAttribute("aria-pressed", String(toggled));
+    toggle.textContent = toggled ? "Done drawing" : "Or tap here to draw with a finger or trackpad";
+    setDrawing(toggled);
+  });
+
+  canvas.addEventListener("pointerdown", function (e) {
+    down = true; current = [{ x: e.clientX, y: e.clientY }]; strokes.push(current);
+    canvas.setPointerCapture(e.pointerId);
+  });
+  canvas.addEventListener("pointermove", function (e) {
+    if (!down || !current) return;
+    current.push({ x: e.clientX, y: e.clientY }); redraw();
+  });
+  canvas.addEventListener("pointerup", function () { down = false; current = null; });
+
+  window.addEventListener("resize", sizeCanvas);
+  sizeCanvas();
+})();
+</script>
+</body>
+</html>
