@@ -129,6 +129,25 @@
   .btn-primary:hover { background: transparent; color: var(--ink); }
   .btn-ghost:hover { background: var(--ink); color: var(--page); }
   .fine { color: var(--muted); font-size: 0.92rem; margin: 0; }
+  .install-btn {
+    display: flex; align-items: center; gap: 12px; width: 100%; max-width: 520px;
+    padding: 8px 8px 8px 18px; margin-bottom: 14px; border-radius: 14px; cursor: pointer;
+    background: var(--term); color: var(--term-ink); border: 1.5px solid var(--term);
+    font: 500 0.95rem/1.2 ui-monospace, "SF Mono", Menlo, monospace; text-align: left;
+    box-shadow: var(--shadow); transition: border-color 0.15s;
+  }
+  .install-btn:hover { border-color: var(--loop); }
+  .install-btn .prompt { color: var(--term-dim); }
+  .install-btn .cmd-text {
+    flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    background: none; border: 0; padding: 0; font-size: inherit;
+  }
+  .install-btn .copy-label {
+    flex: none; font: 700 0.9rem/1 "Schibsted Grotesk", system-ui, sans-serif;
+    background: var(--loop); color: #fff; padding: 11px 18px; border-radius: 9px;
+  }
+  .install-btn.copied .copy-label { background: #2E9E5B; }
+  .install-hint a { color: var(--ink); }
 
   /* Demo window */
   .demo { position: relative; }
@@ -280,11 +299,12 @@
     <div>
       <h1><span class="line">Don't describe it.</span><span class="line">Point at it.</span></h1>
       <p class="lede">Hold <span class="keycap">⌥</span>, say what you mean, and circle it on screen. Point pastes <strong>your words and a screenshot of exactly what you circled</strong> into Claude Code, Cursor, or any chat.</p>
-      <div class="ctas">
-        <a class="btn btn-primary" href="#install">Install for Mac</a>
-        <a class="btn btn-ghost" href="https://github.com/sksareen/point">View the source</a>
-      </div>
-      <p class="fine">Free and open source. One Terminal command to install. Transcription runs on your Mac. Needs macOS 26 on Apple Silicon.</p>
+      <button class="install-btn copy-cmd" type="button" data-cmd="curl -fsSL https://raw.githubusercontent.com/sksareen/point/master/get.sh | bash" aria-label="Copy the install command">
+        <span class="prompt" aria-hidden="true">$</span>
+        <code class="cmd-text">curl -fsSL …/point/get.sh | bash</code>
+        <span class="copy-label">Copy</span>
+      </button>
+      <p class="fine install-hint">Click to copy, then paste into Terminal to install. Free and open source. Needs macOS 26 on Apple Silicon. <a href="https://github.com/sksareen/point">View the source</a></p>
     </div>
 
     <div class="demo" aria-label="Animated demo: a loop is drawn around a misaligned Pay button while the words 'this pay button is misaligned, fix it' are spoken, then the words and a screenshot path are pasted into an agent terminal.">
@@ -361,7 +381,7 @@
       <li><strong>Paste this into Terminal</strong><span>It downloads the latest release into Applications and opens it. <a href="https://github.com/sksareen/point/blob/master/get.sh">Read the script</a> first if you like.</span>
         <div class="cmd">
           <pre><code id="installCmd">curl -fsSL https://raw.githubusercontent.com/sksareen/point/master/get.sh | bash</code></pre>
-          <button class="copy" id="copyBtn" type="button">Copy</button>
+          <button class="copy copy-cmd" type="button" data-cmd="curl -fsSL https://raw.githubusercontent.com/sksareen/point/master/get.sh | bash">Copy</button>
         </div></li>
       <li><strong>Grant three permissions</strong><span>Accessibility to notice the key, Microphone to hear you, and Screen Recording the first time you circle something.</span></li>
       <li><strong>Hold <span class="keycap">⌥</span> and talk</strong><span>That's it. Open the menu bar icon for your timeline and settings.</span></li>
@@ -583,15 +603,17 @@
     if (toggled && finished && pathLength(finished) >= 40) setTimeout(function () { setToggled(false); }, 450);
   });
 
-  // Copy the install command.
-  var copyBtn = document.getElementById("copyBtn");
-  copyBtn.addEventListener("click", function () {
-    var text = document.getElementById("installCmd").textContent;
-    var done = function () {
-      copyBtn.textContent = "Copied";
-      setTimeout(function () { copyBtn.textContent = "Copy"; }, 1600);
-    };
-    if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () {});
+  // Copy the install command (hero button + install section).
+  document.querySelectorAll(".copy-cmd").forEach(function (btn) {
+    var label = btn.querySelector(".copy-label") || btn;
+    btn.addEventListener("click", function () {
+      var done = function () {
+        btn.classList.add("copied");
+        label.textContent = btn === label ? "Copied" : "Copied. Paste into Terminal";
+        setTimeout(function () { btn.classList.remove("copied"); label.textContent = "Copy"; }, 2200);
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText(btn.dataset.cmd).then(done, function () {});
+    });
   });
 
   window.addEventListener("resize", sizeCanvas);
