@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Point: show your AI agent what you mean</title>
 <meta name="description" content="Hold Right Option, say what you mean, and circle it. Point pastes your words and a screenshot of exactly what you circled into Claude Code, Cursor, or any chat. Free, open source, on-device.">
-<meta property="og:title" content="Point: Don't describe it. Point at it.">
-<meta property="og:description" content="Hold a key, talk, and circle what you mean. Your AI agent gets your words and a screenshot of exactly what you pointed at. Free, open source, on-device.">
+<meta property="og:title" content="Point: Less telling. Show it.">
+<meta property="og:description" content="Hold ⌥, talk, and circle. Point sends your words and a screenshot to Claude Code, Cursor, or any chat. Free, open source, on-device.">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☝️</text></svg>">
@@ -45,12 +45,15 @@
 <main>
   <section class="wrap hero">
     <div>
-      <h1><span class="line">Don't describe it.</span><span class="line">Point at it.</span></h1>
-      <p class="lede">Hold <span class="keycap">⌥</span>, say what you mean, and circle it on screen. Point pastes <strong>your words and a screenshot of exactly what you circled</strong> into Claude Code, Cursor, or any chat.</p>
-      <a class="download-btn" href="https://github.com/sksareen/point/releases/latest/download/Point.zip">
-        <span aria-hidden="true">↓</span> Download for Mac
-      </a>
-      <p class="fine install-hint">Free and open source. Needs macOS 26 on Apple Silicon. Unzip, drag Point into Applications, then right-click it and choose Open the first time. <a href="https://github.com/sksareen/point">View the source</a></p>
+      <h1><span class="line">Less telling.</span><span class="line hit show-it">Show it.</span></h1>
+      <p class="lede">Hold <span class="keycap">⌥</span>, talk, and circle. Point sends <strong>your words and a screenshot</strong> to Claude Code, Cursor, or any chat.</p>
+      <div class="cta-row">
+        <a class="download-btn" href="https://github.com/sksareen/point/releases/latest/download/Point.zip">
+          <span aria-hidden="true">↓</span> Download free for Mac
+        </a>
+        <a class="star-btn" href="https://github.com/sksareen/point" target="_blank" rel="noopener">★ Star on GitHub <span id="starCount"></span></a>
+      </div>
+      <p class="fine install-hint">Open source · macOS 26, Apple Silicon. First launch: right-click Point → Open.</p>
     </div>
 
     <div class="demo" aria-label="Animated demo: a loop is drawn around a misaligned Pay button while the words 'this pay button is misaligned, fix it' are spoken, then the words and a screenshot path are pasted into an agent terminal.">
@@ -77,10 +80,16 @@
   </section>
 
   <section class="tryit" id="try">
-    <div class="wrap">
-      <h2>Try the gesture right here.</h2>
-      <p>Hold <span class="keycap">⌥</span> Option and drag your mouse to circle anything on this page. Let go and the loop disappears. In the app, letting go sends what you said and what you circled to your agent.</p>
-      <button class="draw-toggle" id="drawToggle" type="button" aria-pressed="false">No keyboard? Draw with a finger or trackpad</button>
+    <div class="wrap try-grid">
+      <div>
+        <h2>Try the gesture right here.</h2>
+        <p>Click the button, then press and drag to circle anything on this page. Let go to finish. In the app, letting go sends your words and your circle to your agent.</p>
+      </div>
+      <div class="try-card">
+        <button class="draw-toggle" id="drawToggle" type="button" aria-pressed="false">Start circling</button>
+        <p class="fine">Or hold <span class="keycap">⌥</span> and drag, with a mouse or trackpad.</p>
+        <p class="fine">Ready? <a href="https://github.com/sksareen/point/releases/latest/download/Point.zip">Download Point</a>, then hold <span class="keycap">⌥</span> anywhere.</p>
+      </div>
     </div>
   </section>
 
@@ -88,37 +97,28 @@
     <h2>Everything happens on one key.</h2>
     <dl class="gestures">
       <div class="gesture">
-        <dt>Hold and talk</dt>
-        <dd>Fast dictation into any app. Your words land at the text cursor and stay on the clipboard. <strong>No drawing, no screenshot.</strong></dd>
+        <dt><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>Talk</dt>
+        <dd>Dictate into any app. Your words land at the cursor.</dd>
       </div>
       <div class="gesture">
-        <dt>Hold, talk, and circle</dt>
-        <dd>Point captures the screen with your loop drawn on it and pastes your words plus the screenshot path. Agents like Claude Code and Cursor open the image and see exactly what you meant.</dd>
+        <dt><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="6" transform="rotate(-20 12 12)"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/></svg>Circle</dt>
+        <dd>Your agent gets your words and a screenshot of what you circled.</dd>
       </div>
       <div class="gesture">
-        <dt>Double-tap</dt>
-        <dd>A sticky pad floats over everything. It saves as you type, keeps your notes until you delete them, and you can dictate into it.</dd>
+        <dt><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 9h7M8.5 13h7M8.5 17h4"/></svg>Notes</dt>
+        <dd>Double-tap ⌥ for a sticky pad that saves as you type.</dd>
       </div>
       <div class="gesture">
-        <dt>Look back</dt>
-        <dd>Every capture is kept in a timeline you can scroll and search: the screenshot, the transcript, and the recording to play back.</dd>
+        <dt><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>History</dt>
+        <dd>Search every capture, with screenshot, transcript, and recording.</dd>
       </div>
     </dl>
   </section>
 
-  <section class="wrap section split">
-    <div>
-      <h2>Your voice stays on your Mac.</h2>
-      <p style="color:var(--muted);max-width:32em">Point uses Apple's on-device speech engine. No account, no server, no audio uploaded anywhere. Captures live in a folder you can open, and the whole app is about 1,800 lines of Swift you can read before you run it.</p>
-      <p style="color:var(--muted);max-width:32em">Prefer another key? Pick Right Option, Left Control, Right Command, or Fn in Settings.</p>
-    </div>
-    <div class="sticky-card" aria-label="Example sticky pad">
-      <b>Sticky</b>
-      <p>ask about the retry logic in the sync job</p>
-      <p>landing page: shorter hero copy?</p>
-      <p>call the bank before 5</p>
-      <small>autosaved · double-tap ⌥ to hide</small>
-    </div>
+  <section class="wrap section privacy">
+    <h2>Your voice stays on your Mac.</h2>
+    <p>Point uses Apple's on-device speech engine. No account, no server, no audio uploaded anywhere. Captures live in a folder you can open, and the whole app is about 1,800 lines of Swift you can read before you run it.</p>
+    <p>Prefer another key? Pick Right Option, Left Control, Right Command, or Fn in Settings.</p>
   </section>
 
   <section class="wrap section" id="install">
@@ -139,7 +139,6 @@
 <footer>
   <div class="wrap">
     <span>Point is free and open source under the MIT license.</span>
-    <a href="https://github.com/sksareen/point">github.com/sksareen/point</a>
   </div>
 </footer>
 
@@ -351,16 +350,25 @@
 
   // Copy the install command (hero button + install section).
   document.querySelectorAll(".copy-cmd").forEach(function (btn) {
-    var label = btn.querySelector(".copy-label") || btn;
     btn.addEventListener("click", function () {
       var done = function () {
         btn.classList.add("copied");
-        label.textContent = btn === label ? "Copied" : "Copied. Paste into Terminal";
-        setTimeout(function () { btn.classList.remove("copied"); label.textContent = "Copy"; }, 2200);
+        btn.textContent = "Copied";
+        setTimeout(function () { btn.classList.remove("copied"); btn.textContent = "Copy"; }, 2200);
       };
       if (navigator.clipboard) navigator.clipboard.writeText(btn.dataset.cmd).then(done, function () {});
     });
   });
+
+  // Live star count next to the button. Fails silently; the button works without it.
+  fetch("https://api.github.com/repos/sksareen/point")
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (typeof d.stargazers_count === "number") {
+        document.getElementById("starCount").textContent = "· " + d.stargazers_count.toLocaleString();
+      }
+    })
+    .catch(function () {});
 
   window.addEventListener("resize", sizeCanvas);
   sizeCanvas();
