@@ -6,8 +6,6 @@
 import Cocoa
 import AVFoundation
 
-let RIGHT_OPTION_KEYCODE: UInt16 = 61
-let RIGHT_OPTION_DEVICE_MASK: UInt = 0x40     // NX_DEVICERALTKEYMASK
 let OVERLAY_DELAY: TimeInterval = 0.15         // avoid flashing on quick taps
 let MIN_HOLD: TimeInterval = 0.4               // shorter holds with no drawing = ignored
 let LOOP_COLOR = NSColor(calibratedRed: 1.0, green: 0.18, blue: 0.25, alpha: 1.0)
@@ -72,14 +70,15 @@ final class CircleTalkController {
         default: break
         }
         AppleTranscriber.prewarm()
-        NSLog("Point: ✅ active — hold Right ⌥ to dictate, draw to add a screenshot, double-tap for sticky")
+        NSLog("Point: ✅ active — hold %@ to dictate, draw to add a screenshot, double-tap for sticky", TriggerKey.current.symbol)
     }
 
     private func handle(_ event: NSEvent) {
         switch event.type {
         case .flagsChanged:
-            guard event.keyCode == RIGHT_OPTION_KEYCODE else { return }
-            let down = event.modifierFlags.rawValue & RIGHT_OPTION_DEVICE_MASK != 0
+            let key = TriggerKey.current
+            guard event.keyCode == key.keyCode else { return }
+            let down = key.isDown(event.modifierFlags)
             if down && !held {
                 held = true
                 downAt = Date()
@@ -94,7 +93,7 @@ final class CircleTalkController {
                 if wasTap { registerTap() }
             }
         case .keyDown:
-            // Any key while holding means Right ⌥ was a chord (or Esc) — bail out.
+            // Any key while holding means the trigger was part of a shortcut (or Esc) — bail out.
             if held {
                 otherKeyDuringHold = true
                 if session != nil { cancel() }
@@ -104,7 +103,7 @@ final class CircleTalkController {
         }
     }
 
-    /// Double-tap Right ⌥ toggles the sticky pad. Single taps are ignored.
+    /// Double-tap the trigger key toggles the sticky pad. Single taps are ignored.
     private func registerTap() {
         let now = Date()
         if now.timeIntervalSince(lastTapAt) < DOUBLE_TAP_WINDOW {

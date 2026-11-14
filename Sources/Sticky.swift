@@ -1,7 +1,7 @@
 // Sticky pad: one persistent note that floats over everything.
-// Toggle: double-tap Right ⌥ (or ⌃⇧N, or the ◎ menu). Esc hides.
+// Toggle: double-tap the trigger key (or ⌃⇧N, or the menu). Esc hides.
 // Text autosaves on every keystroke to ~/Library/Application Support/Point/sticky.txt and stays until you
-// delete it. Max 1440 chars. With the pad open, hold Right ⌥ to dictate into it.
+// delete it. Max 1440 chars. With the pad open, hold the trigger key to dictate into it.
 
 import Cocoa
 
@@ -20,6 +20,7 @@ final class StickyNoteController: NSObject, NSTextViewDelegate {
     private var panel: StickyPanel?
     private var textView: NSTextView!
     private var counter: NSTextField!
+    private var hint: NSTextField!
     private var returnTo: NSRunningApplication?
 
     var isVisible: Bool { panel?.isVisible == true }
@@ -32,6 +33,7 @@ final class StickyNoteController: NSObject, NSTextViewDelegate {
         if front?.bundleIdentifier != Bundle.main.bundleIdentifier { returnTo = front }
 
         textView.string = load()
+        hint.stringValue = "autosaved · esc hide · double-tap \(TriggerKey.current.symbol) to toggle"
         updateCounter()
 
         NSApp.activate(ignoringOtherApps: true)
@@ -131,7 +133,8 @@ final class StickyNoteController: NSObject, NSTextViewDelegate {
         scroll.documentView = tv
         bg.addSubview(scroll)
 
-        let hint = NSTextField(labelWithString: "autosaved · esc hide · double-tap right ⌥ to toggle")
+        let hint = NSTextField(labelWithString: "")
+        self.hint = hint
         hint.font = NSFont.systemFont(ofSize: 11)
         hint.textColor = NOTE_MUTED
         hint.frame = NSRect(x: 16, y: 12, width: 300, height: 14)

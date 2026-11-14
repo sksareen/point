@@ -8,6 +8,8 @@
 | **…and draw a loop while holding** | Your words, plus the path to a full-screen screenshot with your loop drawn on it. Paste into Claude Code, Cursor, or any agent that reads files. |
 | **Double-tap Right ⌥** (or ⌃⇧N) | Toggle a sticky pad that floats over everything. Autosaved, persistent, 1,440 characters. Hold Right ⌥ while it's open to dictate into it. |
 
+Prefer another key? Pick **Right ⌥**, **Left ⌃**, **Right ⌘**, or **Fn** from the menu bar icon → *Trigger key*.
+
 Transcription runs **on-device** with Apple's `SpeechAnalyzer` (macOS 26). No audio leaves your Mac.
 
 ## Download
@@ -52,7 +54,8 @@ Everything lives in `~/Library/Application Support/Point/`:
 ```
 Sources/
   main.swift          app entry, menu bar, Accessibility, ⌃⇧N
-  Gesture.swift       Right ⌥ hold/double-tap, overlay, screenshot, paste
+  TriggerKey.swift    which modifier key drives Point (menu setting)
+  Gesture.swift       trigger hold/double-tap, overlay, screenshot, paste
   Transcriber.swift   Transcriber protocol + Apple on-device implementation
   Sticky.swift        the sticky pad
   LoginItem.swift     launch at login, version, menu items
