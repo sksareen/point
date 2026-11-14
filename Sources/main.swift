@@ -37,6 +37,10 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
         NotificationCenter.default.addObserver(forName: TriggerKey.changed, object: nil, queue: .main) { [weak self] _ in
             self?.refreshTriggerLabels()
         }
+        NotificationCenter.default.addObserver(forName: RECORDING_CHANGED, object: nil, queue: .main) { [weak self] note in
+            let recording = (note.object as? Bool) ?? false
+            self?.statusItem.button?.contentTintColor = recording ? LOOP_COLOR : nil
+        }
         requireAccessibility()
         NSLog("Point %@ launched from %@", APP_VERSION, Bundle.main.bundlePath)
     }

@@ -8,9 +8,9 @@ import Cocoa
 let STICKY_FILE = POINT_DIR.appendingPathComponent("sticky.txt")
 let NOTE_MAX_CHARS = 1440
 
-private let NOTE_BG = NSColor(calibratedRed: 1.0, green: 0.95, blue: 0.62, alpha: 1.0)
-private let NOTE_INK = NSColor(calibratedWhite: 0.12, alpha: 1.0)
-private let NOTE_MUTED = NSColor(calibratedWhite: 0.35, alpha: 1.0)
+// Frosted glass that follows light/dark; one amber dot keeps the "sticky" cue.
+private let NOTE_ACCENT = NSColor(calibratedRed: 1.0, green: 0.72, blue: 0.18, alpha: 1.0)
+private let NOTE_RADIUS: CGFloat = 14
 
 final class StickyNoteController: NSObject, NSTextViewDelegate {
     static let shared = StickyNoteController()
@@ -33,7 +33,7 @@ final class StickyNoteController: NSObject, NSTextViewDelegate {
         if front?.bundleIdentifier != Bundle.main.bundleIdentifier { returnTo = front }
 
         textView.string = load()
-        hint.stringValue = "autosaved · esc hide · double-tap \(TriggerKey.current.symbol) to toggle"
+        hint.stringValue = "esc to hide · double-tap \(TriggerKey.current.symbol)"
         updateCounter()
 
         NSApp.activate(ignoringOtherApps: true)
@@ -100,23 +100,34 @@ final class StickyNoteController: NSObject, NSTextViewDelegate {
         p.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary]
         p.onEscape = { [weak self] in self?.hide() }
 
-        let bg = NSView(frame: NSRect(origin: .zero, size: size))
+        let bg = NSVisualEffectView(frame: NSRect(origin: .zero, size: size))
+        bg.material = .hudWindow
+        bg.blendingMode = .behindWindow
+        bg.state = .active
+        bg.maskImage = Self.roundedMask(radius: NOTE_RADIUS)
         bg.wantsLayer = true
-        bg.layer?.backgroundColor = NOTE_BG.cgColor
-        bg.layer?.cornerRadius = 12
-        bg.layer?.borderWidth = 1
-        bg.layer?.borderColor = NSColor.black.withAlphaComponent(0.08).cgColor
+        bg.layer?.cornerRadius = NOTE_RADIUS
+        bg.layer?.borderWidth = 0.5
+        bg.layer?.borderColor = NSColor.white.withAlphaComponent(0.12).cgColor
 
-        let title = NSTextField(labelWithString: "Sticky")
-        title.font = NSFont.systemFont(ofSize: 12, weight: .semibold)
-        title.textColor = NOTE_MUTED
-        title.frame = NSRect(x: 16, y: size.height - 30, width: 200, height: 16)
+        let dot = NSView(frame: NSRect(x: 18, y: size.height - 24, width: 6, height: 6))
+        dot.wantsLayer = true
+        dot.layer?.backgroundColor = NOTE_ACCENT.cgColor
+        dot.layer?.cornerRadius = 3
+        bg.addSubview(dot)
+
+        let title = NSTextField(labelWithString: "STICKY")
+        title.font = NSFont.systemFont(ofSize: 10, weight: .semibold)
+        title.textColor = .tertiaryLabelColor
+        title.attributedStringValue = NSAttributedString(string: "STICKY", attributes: [.kern: 1.2, .font: title.font!, .foregroundColor: NSColor.tertiaryLabelColor])
+        title.frame = NSRect(x: 30, y: size.height - 28, width: 200, height: 14)
         bg.addSubview(title)
 
-        let scroll = NSScrollView(frame: NSRect(x: 12, y: 36, width: size.width - 24, height: size.height - 72))
+        let scroll = NSScrollView(frame: NSRect(x: 12, y: 32, width: size.width - 24, height: size.height - 68))
         scroll.drawsBackground = false
         scroll.hasVerticalScroller = true
         scroll.autohidesScrollers = true
+        scroll.scrollerStyle = .overlay
         scroll.borderType = .noBorder
 
         let tv = NSTextView(frame: scroll.contentView.bounds)
@@ -124,10 +135,14 @@ final class StickyNoteController: NSObject, NSTextViewDelegate {
         tv.isRichText = false
         tv.allowsUndo = true
         tv.drawsBackground = false
-        tv.font = NSFont.systemFont(ofSize: 15)
-        tv.textColor = NOTE_INK
-        tv.insertionPointColor = NOTE_INK
-        tv.textContainerInset = NSSize(width: 4, height: 4)
+        tv.font = NSFont.systemFont(ofSize: 14, weight: .regular)
+        tv.textColor = .labelColor
+        tv.insertionPointColor = NOTE_ACCENT
+        tv.selectedTextAttributes = [.backgroundColor: NOTE_ACCENT.withAlphaComponent(0.3)]
+        tv.textContainerInset = NSSize(width: 6, height: 4)
+        let para = NSMutableParagraphStyle(); para.lineSpacing = 3
+        tv.defaultParagraphStyle = para
+        tv.typingAttributes[.paragraphStyle] = para
         tv.isAutomaticQuoteSubstitutionEnabled = false
         tv.delegate = self
         scroll.documentView = tv
@@ -135,15 +150,15 @@ final class StickyNoteController: NSObject, NSTextViewDelegate {
 
         let hint = NSTextField(labelWithString: "")
         self.hint = hint
-        hint.font = NSFont.systemFont(ofSize: 11)
-        hint.textColor = NOTE_MUTED
-        hint.frame = NSRect(x: 16, y: 12, width: 300, height: 14)
+        hint.font = NSFont.systemFont(ofSize: 10)
+        hint.textColor = .quaternaryLabelColor
+        hint.frame = NSRect(x: 18, y: 12, width: 300, height: 13)
         bg.addSubview(hint)
 
         let count = NSTextField(labelWithString: "")
-        count.font = NSFont.monospacedDigitSystemFont(ofSize: 11, weight: .regular)
+        count.font = NSFont.monospacedDigitSystemFont(ofSize: 10, weight: .regular)
         count.alignment = .right
-        count.frame = NSRect(x: size.width - 106, y: 12, width: 90, height: 14)
+        count.frame = NSRect(x: size.width - 108, y: 12, width: 90, height: 13)
         bg.addSubview(count)
 
         p.contentView = bg
@@ -152,10 +167,25 @@ final class StickyNoteController: NSObject, NSTextViewDelegate {
         counter = count
     }
 
+    /// Stretchable rounded-rect mask so the frosted glass gets real rounded corners.
+    private static func roundedMask(radius: CGFloat) -> NSImage {
+        let d = radius * 2 + 1
+        let img = NSImage(size: NSSize(width: d, height: d), flipped: false) { rect in
+            NSColor.black.setFill()
+            NSBezierPath(roundedRect: rect, xRadius: radius, yRadius: radius).fill()
+            return true
+        }
+        img.capInsets = NSEdgeInsets(top: radius, left: radius, bottom: radius, right: radius)
+        img.resizingMode = .stretch
+        return img
+    }
+
     private func updateCounter() {
         let n = textView.string.count
-        counter.stringValue = "\(n) / \(NOTE_MAX_CHARS)"
-        counter.textColor = n >= NOTE_MAX_CHARS ? .systemRed : NOTE_MUTED
+        // the count only matters near the cap; stay out of the way until then
+        counter.isHidden = n < NOTE_MAX_CHARS * 8 / 10
+        counter.stringValue = "\(NOTE_MAX_CHARS - n) left"
+        counter.textColor = n >= NOTE_MAX_CHARS ? .systemRed : .tertiaryLabelColor
     }
 
     // Hard cap at NOTE_MAX_CHARS (handles typing, paste, and dictation).

@@ -10,7 +10,9 @@ let OVERLAY_DELAY: TimeInterval = 0.15         // avoid flashing on quick taps
 let MIN_HOLD: TimeInterval = 0.4               // shorter holds with no drawing = ignored
 let LOOP_COLOR = NSColor(calibratedRed: 1.0, green: 0.18, blue: 0.25, alpha: 1.0)
 let LOOP_WIDTH: CGFloat = 5.0
-let MIN_LOOP_LENGTH: CGFloat = 40               // shorter marks = a click/twitch, not a loop
+let MIN_LOOP_LENGTH: CGFloat = 40
+/// Posted with object Bool (true = recording started, false = ended). Drives the menu bar icon.
+let RECORDING_CHANGED = Notification.Name("PointRecordingChanged")               // shorter marks = a click/twitch, not a loop
 
 /// A stroke counts as a deliberate loop only if its path is long enough.
 func isLoop(_ stroke: [NSPoint]) -> Bool {
@@ -181,6 +183,11 @@ final class CircleSession {
         overlays = NSScreen.screens.map { OverlayPanel(screen: $0, session: self) }
         overlays.forEach { $0.orderFrontRegardless() }
         mark("overlay_shown")
+        NotificationCenter.default.post(name: RECORDING_CHANGED, object: true)
+        // Redraw ~15×/s so the recording dot pulses.
+        pulseTimer = Timer.scheduledTimer(withTimeInterval: 1.0 / 15, repeats: true) { [weak self] _ in
+            self?.redraw()
+        }
     }
 
     func beginStroke(_ p: NSPoint) { strokes.append([p]); redraw() }
@@ -192,8 +199,12 @@ final class CircleSession {
     }
 
     private func redraw() { overlays.forEach { $0.contentView?.needsDisplay = true } }
+    private var pulseTimer: Timer?
 
     private func hideOverlay() {
+        pulseTimer?.invalidate()
+        pulseTimer = nil
+        if !overlays.isEmpty { NotificationCenter.default.post(name: RECORDING_CHANGED, object: false) }
         overlays.forEach { $0.orderOut(nil) }
         overlays = []
     }
@@ -494,10 +505,12 @@ final class OverlayView: NSView {
 
         // Only the screen under the cursor shows the transcript pill.
         guard NSMouseInRect(NSEvent.mouseLocation, screenFrame, false) else { return }
-        let hint = !session.strokes.contains(where: isLoop)
-            ? "● Listening — talk to dictate · circle to add a screenshot"
-            : "● Listening — will paste text + screenshot"
-        drawPill(session.liveText.isEmpty ? hint : "● " + tail(session.liveText))
+        let hasLoop = session.strokes.contains(where: isLoop)
+        let mode = hasLoop ? "Dictating + screenshot" : "Dictating"
+        let detail = !session.liveText.isEmpty
+            ? tail(session.liveText, max: 90)
+            : (hasLoop ? "keep talking, let go to paste" : "draw a loop to add a screenshot")
+        drawPill(mode: mode, detail: detail)
     }
 
     private func local(_ p: NSPoint) -> NSPoint {
@@ -508,18 +521,32 @@ final class OverlayView: NSView {
         s.count <= max ? s : "…" + s.suffix(max)
     }
 
-    private func drawPill(_ text: String) {
-        let attrs: [NSAttributedString.Key: Any] = [
-            .font: NSFont.systemFont(ofSize: 15, weight: .medium),
+    /// Recording pill: pulsing red dot, what's being captured (bold), then your live words.
+    private func drawPill(mode: String, detail: String) {
+        let str = NSMutableAttributedString(string: mode, attributes: [
+            .font: NSFont.systemFont(ofSize: 15, weight: .bold),
             .foregroundColor: NSColor.white,
-        ]
-        let str = NSAttributedString(string: text, attributes: attrs)
+        ])
+        str.append(NSAttributedString(string: "   " + detail, attributes: [
+            .font: NSFont.systemFont(ofSize: 15, weight: .regular),
+            .foregroundColor: NSColor.white.withAlphaComponent(0.82),
+        ]))
         let size = str.size()
         let pad: CGFloat = 14
-        let pill = NSRect(x: (bounds.width - size.width) / 2 - pad, y: 60,
-                          width: size.width + pad * 2, height: size.height + pad)
-        NSColor.black.withAlphaComponent(0.78).setFill()
+        let dot: CGFloat = 10
+        let dotGap: CGFloat = 9
+        let width = pad + dot + dotGap + size.width + pad
+        let pill = NSRect(x: (bounds.width - width) / 2, y: 60, width: width, height: size.height + pad)
+        NSColor.black.withAlphaComponent(0.82).setFill()
         NSBezierPath(roundedRect: pill, xRadius: pill.height / 2, yRadius: pill.height / 2).fill()
-        str.draw(at: NSPoint(x: pill.minX + pad, y: pill.minY + pad / 2))
+
+        // Pulse between 45% and 100% opacity, about once a second.
+        let t = Date().timeIntervalSinceReferenceDate
+        let alpha = 0.45 + 0.55 * (0.5 + 0.5 * sin(t * 2 * .pi * 0.9))
+        LOOP_COLOR.withAlphaComponent(alpha).setFill()
+        let dotRect = NSRect(x: pill.minX + pad, y: pill.midY - dot / 2, width: dot, height: dot)
+        NSBezierPath(ovalIn: dotRect).fill()
+
+        str.draw(at: NSPoint(x: dotRect.maxX + dotGap, y: pill.minY + pad / 2))
     }
 }
