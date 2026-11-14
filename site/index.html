@@ -181,6 +181,7 @@
   .tryit h2, .section h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 12px; }
   .tryit p { color: var(--muted); max-width: 36em; margin: 0 0 20px; }
   .draw-toggle {
+    position: relative; z-index: 55;
     font: inherit; font-weight: 700; padding: 10px 18px; border-radius: 999px; cursor: pointer;
     border: 1.5px dashed var(--loop); background: transparent; color: var(--loop);
   }
@@ -305,7 +306,7 @@
     <div class="wrap">
       <h2>Try the gesture right here.</h2>
       <p>Hold <span class="keycap">⌥</span> Option and drag your mouse to circle anything on this page. Let go and the loop disappears. In the app, letting go sends what you said and what you circled to your agent.</p>
-      <button class="draw-toggle" id="drawToggle" type="button" aria-pressed="false">Or tap here to draw with a finger or trackpad</button>
+      <button class="draw-toggle" id="drawToggle" type="button" aria-pressed="false">No keyboard? Draw with a finger or trackpad</button>
     </div>
   </section>
 
@@ -545,11 +546,16 @@
   });
   window.addEventListener("blur", function () { if (held) { held = false; if (!toggled) setDrawing(false); } });
 
-  toggle.addEventListener("click", function () {
-    toggled = !toggled;
-    toggle.setAttribute("aria-pressed", String(toggled));
-    toggle.textContent = toggled ? "Done drawing" : "Or tap here to draw with a finger or trackpad";
-    setDrawing(toggled);
+  var idleLabel = toggle.textContent;
+  function setToggled(on) {
+    toggled = on;
+    toggle.setAttribute("aria-pressed", String(on));
+    toggle.textContent = on ? "Now press and drag to circle something" : idleLabel;
+    setDrawing(on);
+  }
+  toggle.addEventListener("click", function () { setToggled(!toggled); });
+  window.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && toggled) setToggled(false);
   });
 
   canvas.addEventListener("pointerdown", function (e) {
@@ -560,7 +566,12 @@
     if (!down || !current) return;
     current.push({ x: e.clientX, y: e.clientY }); redraw();
   });
-  canvas.addEventListener("pointerup", function () { down = false; current = null; });
+  canvas.addEventListener("pointerup", function () {
+    var finished = current;
+    down = false; current = null;
+    // Tap-to-draw has no key to release, so finishing a real loop is the "let go".
+    if (toggled && finished && pathLength(finished) >= 40) setTimeout(function () { setToggled(false); }, 450);
+  });
 
   window.addEventListener("resize", sizeCanvas);
   sizeCanvas();
