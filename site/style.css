@@ -104,24 +104,14 @@
   .btn-primary:hover { background: transparent; color: var(--ink); }
   .btn-ghost:hover { background: var(--ink); color: var(--page); }
   .fine { color: var(--muted); font-size: 0.92rem; margin: 0; }
-  .install-btn {
-    display: flex; align-items: center; gap: 12px; width: 100%; max-width: 520px;
-    padding: 8px 8px 8px 18px; margin-bottom: 14px; border-radius: 14px; cursor: pointer;
-    background: var(--term); color: var(--term-ink); border: 1.5px solid var(--term);
-    font: 500 0.95rem/1.2 ui-monospace, "SF Mono", Menlo, monospace; text-align: left;
-    box-shadow: var(--shadow); transition: border-color 0.15s;
+  .download-btn {
+    display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    padding: 15px 28px; border-radius: 999px; text-decoration: none;
+    background: var(--loop); color: #fff; border: 1.5px solid var(--loop);
+    font: 700 1.05rem/1 "Schibsted Grotesk", system-ui, sans-serif;
+    box-shadow: var(--shadow); transition: transform 0.15s, filter 0.15s;
   }
-  .install-btn:hover { border-color: var(--loop); }
-  .install-btn .prompt { color: var(--term-dim); }
-  .install-btn .cmd-text {
-    flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    background: none; border: 0; padding: 0; font-size: inherit;
-  }
-  .install-btn .copy-label {
-    flex: none; font: 700 0.9rem/1 "Schibsted Grotesk", system-ui, sans-serif;
-    background: var(--loop); color: #fff; padding: 11px 18px; border-radius: 9px;
-  }
-  .install-btn.copied .copy-label { background: #2E9E5B; }
+  .download-btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
   .install-hint a { color: var(--ink); }
 
   /* Demo window */
