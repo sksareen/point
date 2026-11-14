@@ -289,6 +289,7 @@ final class CircleSession {
         do {
             let data = try JSONSerialization.data(withJSONObject: meta, options: [.prettyPrinted, .sortedKeys])
             try data.write(to: metaURL)
+            DispatchQueue.main.async { NotificationCenter.default.post(name: CaptureStore.didChange, object: nil) }
         } catch {
             NSLog("Point: metadata write failed: \(error)")
         }

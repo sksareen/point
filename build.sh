@@ -24,6 +24,7 @@ git -C "$SCRIPT_DIR" diff --quiet HEAD 2>/dev/null || SHA="$SHA+dirty"
 swiftc -O \
     -o "$APP_DIR/Contents/MacOS/Point" \
     -framework Cocoa \
+    -framework SwiftUI \
     -framework AVFoundation \
     -framework Speech \
     -framework ServiceManagement \

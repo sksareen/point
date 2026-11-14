@@ -37,9 +37,6 @@ extension PointAppDelegate: NSMenuDelegate {
     /// Adds the dev-mode section to the status menu (call after the base items are added).
     func addDevModeItems(to menu: NSMenu) {
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Open captures folder", action: #selector(openCaptures), keyEquivalent: "")
-        menu.addItem(withTitle: "Edit vocabulary…", action: #selector(openVocab), keyEquivalent: "")
-        menu.addItem(.separator())
 
         let login = NSMenuItem(title: "Launch at login", action: #selector(toggleLogin(_:)), keyEquivalent: "")
         login.tag = 9001
@@ -58,21 +55,5 @@ extension PointAppDelegate: NSMenuDelegate {
 
     @objc func toggleLogin(_ sender: NSMenuItem) {
         sender.state = LoginItem.toggle() ? .on : .off
-    }
-
-    @objc func openCaptures() {
-        try? FileManager.default.createDirectory(at: CAPTURES_DIR, withIntermediateDirectories: true)
-        NSWorkspace.shared.open(CAPTURES_DIR)
-    }
-
-    @objc func openVocab() {
-        let url = POINT_DIR.appendingPathComponent("vocab.txt")
-        if !FileManager.default.fileExists(atPath: url.path) {
-            try? FileManager.default.createDirectory(at: POINT_DIR, withIntermediateDirectories: true)
-            try? "# One word or phrase per line. Point biases transcription toward these.\n"
-                .write(to: url, atomically: true, encoding: .utf8)
-        }
-        let textEdit = URL(fileURLWithPath: "/System/Applications/TextEdit.app")
-        NSWorkspace.shared.open([url], withApplicationAt: textEdit, configuration: NSWorkspace.OpenConfiguration())
     }
 }

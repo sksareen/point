@@ -39,6 +39,10 @@ On first run, grant **Accessibility** (to see the key), **Microphone**, and, the
 
 **Why the signing cert?** macOS ties privacy permissions to an app's code signature. Ad-hoc signatures change on every build, so macOS silently forgets Point's permissions after each rebuild. A self-signed certificate keeps the identity stable. If `codesign` keeps asking for your keychain password, run the `security set-key-partition-list` command that `make-signing-cert.sh` prints.
 
+## The Point window
+
+Menu bar icon → **Open Point…** shows every capture as a time machine: newest first, grouped by day, searchable, with ↑/↓ to move through time. Each capture shows the screenshot (click for full size), the transcript, and the recording you can play back. **Settings…** has the trigger key, launch at login, permission status with one-click fixes, and the vocabulary list.
+
 ## Your data
 
 Everything lives in `~/Library/Application Support/Point/`:
@@ -47,7 +51,7 @@ Everything lives in `~/Library/Application Support/Point/`:
 - `captures/point_<id>.wav`: exactly what the speech model heard (16 kHz mono)
 - `captures/point_<id>.json`: transcript, timings per stage, and an empty `reference` field. Fill in what you actually said to score accuracy.
 - `sticky.txt`: the sticky pad
-- `vocab.txt`: words to bias transcription toward (names, jargon), one per line. Menu → *Edit vocabulary…*
+- `vocab.txt`: words to bias transcription toward (names, jargon), one per line. Edit it in *Settings → Vocabulary*.
 
 ## Layout
 
@@ -58,6 +62,7 @@ Sources/
   Gesture.swift       trigger hold/double-tap, overlay, screenshot, paste
   Transcriber.swift   Transcriber protocol + Apple on-device implementation
   Sticky.swift        the sticky pad
+  Window.swift        the Point window: captures time machine + Settings (SwiftUI)
   LoginItem.swift     launch at login, version, menu items
   SauronHook.swift    optional: logs screenshots to Sauron if it's installed
 ```

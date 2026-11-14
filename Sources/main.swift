@@ -34,6 +34,9 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         setupMenuBar()
+        NotificationCenter.default.addObserver(forName: TriggerKey.changed, object: nil, queue: .main) { [weak self] _ in
+            self?.refreshTriggerLabels()
+        }
         requireAccessibility()
         NSLog("Point %@ launched from %@", APP_VERSION, Bundle.main.bundlePath)
     }
@@ -48,6 +51,13 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
         }
 
         let menu = NSMenu()
+        let open = NSMenuItem(title: "Open Point…", action: #selector(openWindow), keyEquivalent: "o")
+        open.target = self
+        menu.addItem(open)
+        let settings = NSMenuItem(title: "Settings…", action: #selector(openSettings), keyEquivalent: ",")
+        settings.target = self
+        menu.addItem(settings)
+        menu.addItem(.separator())
         howItem.isEnabled = false
         menu.addItem(howItem)
         stickyItem.action = #selector(toggleSticky)
@@ -73,6 +83,8 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc func toggleSticky() { StickyNoteController.shared.toggle() }
+    @objc func openWindow() { PointWindowController.shared.show(.captures) }
+    @objc func openSettings() { PointWindowController.shared.show(.settings) }
 
     // ─── Trigger key setting ─────────────────────────────────────────────────
 
