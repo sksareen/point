@@ -1,6 +1,6 @@
 # Point
 
-![Point: hold Option, say "this pay button is misaligned, fix it", and circle the button. Your agent gets your words and a screenshot with the loop on it.](docs/hero.png)
+![Point in action: circle part of the screen, and the agent gets your words and a screenshot of what you circled.](site/point-demo.gif)
 
 **Show your AI agent what you mean.** Hold a key, talk, and circle the thing on your screen. Point hands Claude Code, Cursor, or any chat your words plus a screenshot of exactly what you pointed at. Without drawing, it's just fast on-device dictation.
 
@@ -13,8 +13,6 @@
 Prefer another key? Pick **Right ⌥**, **Left ⌃**, **Right ⌘**, or **Fn** from the menu bar icon → *Trigger key*.
 
 Transcription runs **on-device** with Apple's `SpeechAnalyzer` (macOS 26). No audio leaves your Mac.
-
-![Point in action: circle part of the screen, and the agent gets your words and a screenshot of what you circled.](site/point-demo.gif)
 
 [Watch the full video](site/point-demo.mp4).
 
