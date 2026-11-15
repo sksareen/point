@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="340" viewBox="0 0 560 340">
+  <rect width="560" height="340" fill="#F3F5F8"/>
+  <path d="M222 150 C 255 128, 305 128, 338 150" fill="none" stroke="#FF2E40" stroke-width="5" stroke-linecap="round"/>
+  <path d="M322 136 L340 151 L318 160" fill="none" stroke="#FF2E40" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="280" y="290" text-anchor="middle" font-family="-apple-system, Helvetica Neue, sans-serif" font-size="15" font-weight="600" fill="#586676">Drag Point into Applications</text>
+</svg>
