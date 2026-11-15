@@ -14,6 +14,10 @@ Prefer another key? Pick **Right ⌥**, **Left ⌃**, **Right ⌘**, or **Fn** f
 
 Transcription runs **on-device** with Apple's `SpeechAnalyzer` (macOS 26). No audio leaves your Mac.
 
+![Point in action: circle part of the screen, and the agent gets your words and a screenshot of what you circled.](site/point-demo.gif)
+
+[Watch the full video](site/point-demo.mp4).
+
 ## Install
 
 Requires **macOS 26 on Apple Silicon**. Paste this into Terminal:
