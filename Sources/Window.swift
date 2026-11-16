@@ -4,6 +4,7 @@
 import SwiftUI
 import AVFoundation
 import ServiceManagement
+import UniformTypeIdentifiers
 
 // ─── Model ───────────────────────────────────────────────────────────────────
 
@@ -324,8 +325,9 @@ struct CaptureDetail: View {
                         .aspectRatio(contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(.quaternary))
+                        .onDrag { capture.screenshot.map(screenshotDragProvider) ?? NSItemProvider() }
                         .onTapGesture { if let s = capture.screenshot { NSWorkspace.shared.open(s) } }
-                        .help("Click to open full size")
+                        .help("Click to open full size. Drag to copy into another app.")
                 } else if capture.kind == "circle_failed" {
                     Label("Screenshot failed (Screen Recording permission?)", systemImage: "exclamationmark.triangle")
                         .foregroundStyle(.orange)
@@ -393,6 +395,22 @@ private func copy(_ text: String) {
     NSPasteboard.general.setString(text, forType: .string)
 }
 
+/// Drag provider for a screenshot. Offers the PNG as image data (web chats and
+/// rich-text fields take the image itself) and as a file (Finder and file drops).
+private func screenshotDragProvider(_ url: URL) -> NSItemProvider {
+    let provider = NSItemProvider()
+    provider.suggestedName = url.deletingPathExtension().lastPathComponent
+    provider.registerDataRepresentation(forTypeIdentifier: UTType.png.identifier, visibility: .all) { completion in
+        completion(try? Data(contentsOf: url), nil)
+        return nil
+    }
+    provider.registerFileRepresentation(forTypeIdentifier: UTType.png.identifier, fileOptions: [], visibility: .all) { completion in
+        completion(url, false, nil)
+        return nil
+    }
+    return provider
+}
+
 // ─── Settings ────────────────────────────────────────────────────────────────
 
 struct SettingsView: View {
@@ -402,8 +420,23 @@ struct SettingsView: View {
     @State private var vocab = ""
     @State private var vocabSaved = true
     @State private var perms = PermissionStatus.current()
+    @State private var capturesPath = CAPTURES_DIR.path
 
     private var vocabURL: URL { POINT_DIR.appendingPathComponent("vocab.txt") }
+
+    private func chooseCapturesFolder() {
+        let panel = NSOpenPanel()
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        panel.canCreateDirectories = true
+        panel.prompt = "Choose"
+        panel.directoryURL = CAPTURES_DIR
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+        CapturesFolder.set(url)
+        capturesPath = url.path
+        store.reload()
+    }
 
     var body: some View {
         Form {
@@ -449,11 +482,28 @@ struct SettingsView: View {
 
             Section("Storage") {
                 LabeledContent("Captures", value: "\(store.captures.count)")
-                LabeledContent("Location", value: "~/Library/Application Support/Point")
-                Button("Open Captures Folder") {
-                    try? FileManager.default.createDirectory(at: CAPTURES_DIR, withIntermediateDirectories: true)
-                    NSWorkspace.shared.open(CAPTURES_DIR)
+                LabeledContent("Captures folder") {
+                    Text((capturesPath as NSString).abbreviatingWithTildeInPath)
+                        .font(.caption).foregroundStyle(.secondary)
+                        .lineLimit(1).truncationMode(.middle)
                 }
+                HStack {
+                    Button("Change…") { chooseCapturesFolder() }
+                    if CapturesFolder.isCustom {
+                        Button("Use Default") {
+                            CapturesFolder.set(nil)
+                            capturesPath = CAPTURES_DIR.path
+                            store.reload()
+                        }
+                    }
+                    Spacer()
+                    Button("Open Folder") {
+                        try? FileManager.default.createDirectory(at: CAPTURES_DIR, withIntermediateDirectories: true)
+                        NSWorkspace.shared.open(CAPTURES_DIR)
+                    }
+                }
+                Text("New captures are saved here. Captures already in the old folder stay there.")
+                    .font(.caption).foregroundStyle(.secondary)
             }
 
             Section("About") {

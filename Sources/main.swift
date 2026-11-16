@@ -15,7 +15,27 @@ import Cocoa
 let POINT_DIR = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
     .appendingPathComponent("Point")
 /// Each gesture saves point_<id>.png (if you drew), .wav (what the model heard), .json (transcript + timings).
-let CAPTURES_DIR = POINT_DIR.appendingPathComponent("captures")
+/// Defaults to Point/captures; the user can pick another folder in Settings.
+var CAPTURES_DIR: URL { CapturesFolder.current }
+
+enum CapturesFolder {
+    static let defaultsKey = "capturesFolderPath"
+
+    static var current: URL {
+        if let path = UserDefaults.standard.string(forKey: defaultsKey), !path.isEmpty {
+            return URL(fileURLWithPath: path, isDirectory: true)
+        }
+        return POINT_DIR.appendingPathComponent("captures")
+    }
+
+    static var isCustom: Bool {
+        !(UserDefaults.standard.string(forKey: defaultsKey) ?? "").isEmpty
+    }
+
+    static func set(_ url: URL?) {
+        UserDefaults.standard.set(url?.path ?? "", forKey: defaultsKey)
+    }
+}
 
 // ─── Entry point ─────────────────────────────────────────────────────────────
 
