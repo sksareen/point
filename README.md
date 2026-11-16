@@ -2,7 +2,6 @@
 
 ![Point in action: circle part of the screen, and the agent gets your words and a screenshot of what you circled.](site/point-demo.gif)
 
-[![Listed on JustBuildApps](https://justbuildapps.com/badge/7173.svg?theme=dark)](https://justbuildapps.com/u/savar/point)
 
 **Show your AI agent what you mean.** Hold a key, talk, and circle the thing on your screen. Point hands Claude Code, Cursor, or any chat your words plus a screenshot of exactly what you pointed at. Without drawing, it's just fast on-device dictation.
 
@@ -17,6 +16,8 @@ Prefer another key? Pick **Right ⌥**, **Left ⌃**, **Right ⌘**, or **Fn** f
 Transcription runs **on-device** with Apple's `SpeechAnalyzer` (macOS 26). No audio leaves your Mac.
 
 [Watch the full video](site/point-demo.mp4).
+
+[![Listed on JustBuildApps](https://justbuildapps.com/badge/7173.svg?theme=dark)](https://justbuildapps.com/u/savar/point)
 
 ## Install
 
