@@ -14,6 +14,7 @@ echo "Building Point..."
 rm -rf "$APP_DIR"
 mkdir -p "$APP_DIR/Contents/MacOS" "$APP_DIR/Contents/Resources"
 cp "$SCRIPT_DIR/Info.plist" "$APP_DIR/Contents/"
+cp "$SCRIPT_DIR/Resources/Point.icns" "$APP_DIR/Contents/Resources/"
 
 # Build number = commit count + short sha (+dirty), shown in the menu.
 BUILD="$(git -C "$SCRIPT_DIR" rev-list --count HEAD 2>/dev/null || echo 0)"
