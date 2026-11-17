@@ -1,4 +1,4 @@
-# Point
+# <img src="Resources/icon-512.png" alt="" width="44" align="top"> Point
 
 ![Point in action: circle part of the screen, and the agent gets your words and a screenshot of what you circled.](site/point-demo.gif)
 
@@ -112,4 +112,4 @@ Ideas welcome in [issues](https://github.com/sksareen/point/issues).
 
 ## Status
 
-Early preview (0.1.1). Known: about 200–270 ms from key-down until the mic is live, so your first syllable can be clipped if you start talking instantly.
+Early preview (0.1.2). Known: about 200–270 ms from key-down until the mic is live, so your first syllable can be clipped if you start talking instantly.
