@@ -212,7 +212,7 @@ struct CapturesView: View {
                             store.captures.isEmpty ? "No captures yet" : "No matches",
                             systemImage: "hand.point.up.left",
                             description: Text(store.captures.isEmpty
-                                ? "Hold \(TriggerKey.current.symbol) and talk. Draw a loop to add a screenshot."
+                                ? "Hold \(TriggerKey.current.symbol) and talk. \(MarkMode.current == .select ? "Drag a box" : "Draw a loop") to add a screenshot."
                                 : "Try a different search or filter."))
                     }
                 }
@@ -416,6 +416,7 @@ private func screenshotDragProvider(_ url: URL) -> NSItemProvider {
 struct SettingsView: View {
     @EnvironmentObject var store: CaptureStore
     @State private var trigger = TriggerKey.current
+    @State private var markMode = MarkMode.current
     @State private var launchAtLogin = LoginItem.isEnabled
     @State private var vocab = ""
     @State private var vocabSaved = true
@@ -445,7 +446,17 @@ struct SettingsView: View {
                     ForEach(TriggerKey.allCases, id: \.self) { Text($0.menuTitle).tag($0) }
                 }
                 .onChange(of: trigger) { _, new in TriggerKey.current = new }
-                Text("Hold to talk · draw while holding to add a screenshot · double-tap for the sticky pad.")
+                Text("Hold to talk · \(markMode.verb) while holding to add a screenshot · double-tap for the sticky pad.")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
+
+            Section("Marking") {
+                Picker("Mark the screen by", selection: $markMode) {
+                    ForEach(MarkMode.allCases, id: \.self) { Text($0.title).tag($0) }
+                }
+                .pickerStyle(.radioGroup)
+                .onChange(of: markMode) { _, new in MarkMode.current = new }
+                Text("Draw: circle what you mean, freehand. Select: drag a red box over it, like taking a screenshot.")
                     .font(.caption).foregroundStyle(.secondary)
             }
 
@@ -514,6 +525,7 @@ struct SettingsView: View {
         .formStyle(.grouped)
         .onAppear {
             trigger = TriggerKey.current
+            markMode = MarkMode.current
             launchAtLogin = LoginItem.isEnabled
             perms = PermissionStatus.current()
             vocab = (try? String(contentsOf: vocabURL, encoding: .utf8)) ?? ""

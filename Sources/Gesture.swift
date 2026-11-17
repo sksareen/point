@@ -1,6 +1,7 @@
 // The Right Option gesture.
 //   hold + talk            → dictation pasted at the text cursor (and left on the clipboard)
 //   hold + talk + draw loop → transcript + path to a full-screen PNG with your loop drawn on it
+//                             (or drag a red box instead, in Select mode: MarkMode.swift)
 //   double-tap             → toggle the sticky pad (Sticky.swift)
 
 import Cocoa
@@ -150,6 +151,8 @@ final class CircleSession {
     private let keyDown = Date()
     private let id = Int(Date().timeIntervalSince1970 * 1000)
     private let targetApp = NSWorkspace.shared.frontmostApplication
+    /// Fixed for the whole gesture, so changing Settings mid-hold can't mix loops and boxes.
+    let mode = MarkMode.current
     private var overlays: [OverlayPanel] = []
     private var ended = false
     private var marks: [String: Int] = [:]       // stage → ms since key down
@@ -194,7 +197,12 @@ final class CircleSession {
 
     func extendStroke(_ p: NSPoint) {
         guard !strokes.isEmpty else { return }
-        strokes[strokes.count - 1].append(p)
+        if mode == .select {
+            // A box only needs where the drag started and where it is now.
+            strokes[strokes.count - 1] = [strokes[strokes.count - 1][0], p]
+        } else {
+            strokes[strokes.count - 1].append(p)
+        }
         redraw()
     }
 
@@ -233,6 +241,7 @@ final class CircleSession {
         let strokes = self.strokes
         let target = targetApp
         let id = self.id
+        let mode = self.mode
 
         Task {
             let transcript = await transcriber.stop()
@@ -256,7 +265,7 @@ final class CircleSession {
             }
             // Let the window server drop the overlay before capturing.
             try? await Task.sleep(nanoseconds: 80_000_000)
-            let path = await Task.detached { captureAndCompose(screen: screen, strokes: strokes, id: id) }.value
+            let path = await Task.detached { captureAndCompose(screen: screen, strokes: strokes, mode: mode, id: id) }.value
             await MainActor.run {
                 self.mark("screenshot_saved")
                 guard let path else {
@@ -295,6 +304,7 @@ final class CircleSession {
             "app": targetApp?.localizedName ?? NSNull(),
             "bundle_id": targetApp?.bundleIdentifier ?? NSNull(),
             "strokes": strokes.filter(isLoop).count,
+            "mark_mode": mode.rawValue,
             "timings_ms": marks,
         ]
         do {
@@ -317,8 +327,8 @@ final class CircleSession {
 
 // ─── Capture + compose + deliver ─────────────────────────────────────────────
 
-/// Screenshot `screenFrame` (Cocoa coords), draw strokes onto it, save PNG. Returns the path.
-func captureAndCompose(screen screenFrame: NSRect, strokes: [[NSPoint]], id: Int) -> String? {
+/// Screenshot `screenFrame` (Cocoa coords), draw strokes (loops or boxes) onto it, save PNG. Returns the path.
+func captureAndCompose(screen screenFrame: NSRect, strokes: [[NSPoint]], mode: MarkMode, id: Int) -> String? {
     // screencapture -R wants top-left-origin global coordinates.
     let mainHeight = NSScreen.screens.first?.frame.height ?? screenFrame.height
     let topY = mainHeight - screenFrame.maxY
@@ -357,6 +367,12 @@ func captureAndCompose(screen screenFrame: NSRect, strokes: [[NSPoint]], id: Int
     ctx.setLineJoin(.round)
     for stroke in strokes where isLoop(stroke) {
         // Both CG and Cocoa are bottom-left origin; just translate + scale.
+        if mode == .select {
+            let r = boxRect(stroke)
+            ctx.stroke(CGRect(x: (r.minX - screenFrame.minX) * scale, y: (r.minY - screenFrame.minY) * scale,
+                              width: r.width * scale, height: r.height * scale))
+            continue
+        }
         let pts = stroke.map {
             CGPoint(x: ($0.x - screenFrame.minX) * scale, y: ($0.y - screenFrame.minY) * scale)
         }
@@ -536,6 +552,13 @@ final class OverlayView: NSView {
 
         LOOP_COLOR.setStroke()
         for stroke in session.strokes where stroke.count > 1 {
+            if session.mode == .select {
+                let path = NSBezierPath(rect: boxRect(stroke).offsetBy(dx: -screenFrame.minX, dy: -screenFrame.minY))
+                path.lineWidth = LOOP_WIDTH
+                path.lineJoinStyle = .round
+                path.stroke()
+                continue
+            }
             let path = NSBezierPath()
             path.lineWidth = LOOP_WIDTH
             path.lineCapStyle = .round
@@ -551,7 +574,7 @@ final class OverlayView: NSView {
         let mode = hasLoop ? "Dictating + screenshot" : "Dictating"
         let detail = !session.liveText.isEmpty
             ? tail(session.liveText, max: 90)
-            : (hasLoop ? "keep talking, let go to paste" : "draw a loop to add a screenshot")
+            : (hasLoop ? "keep talking, let go to paste" : session.mode.hint)
         drawPill(mode: mode, detail: detail)
     }
 

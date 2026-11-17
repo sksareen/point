@@ -57,6 +57,9 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
         NotificationCenter.default.addObserver(forName: TriggerKey.changed, object: nil, queue: .main) { [weak self] _ in
             self?.refreshTriggerLabels()
         }
+        NotificationCenter.default.addObserver(forName: MarkMode.changed, object: nil, queue: .main) { [weak self] _ in
+            self?.refreshTriggerLabels()
+        }
         NotificationCenter.default.addObserver(forName: RECORDING_CHANGED, object: nil, queue: .main) { [weak self] note in
             let recording = (note.object as? Bool) ?? false
             self?.statusItem.button?.contentTintColor = recording ? LOOP_COLOR : nil
@@ -125,7 +128,7 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
 
     private func refreshTriggerLabels() {
         let key = TriggerKey.current
-        howItem.title = "Hold \(key.symbol): talk → dictate · draw → + screenshot"
+        howItem.title = "Hold \(key.symbol): talk → dictate · \(MarkMode.current.verb) → + screenshot"
         stickyItem.title = "Sticky pad  (double-tap \(key.symbol) · ⌃⇧N)"
         for item in triggerItems {
             item.state = (item.representedObject as? String) == key.rawValue ? .on : .off
