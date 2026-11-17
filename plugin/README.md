@@ -12,3 +12,5 @@ This plugin makes Claude Code better at using those captures.
 - **`/point:last`:** pulls in your most recent capture without pasting. `/point:last fix this`, or `/point:last 3` for the last three, or `/point:last all` to include plain dictations.
 
 Requires the Point app (macOS 26, Apple Silicon). The plugin only reads files Point already saved on your Mac; it sends nothing anywhere.
+
+Privacy: [PRIVACY.md](https://github.com/sksareen/point/blob/master/PRIVACY.md)
