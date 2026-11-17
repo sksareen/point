@@ -377,13 +377,55 @@ func captureAndCompose(screen screenFrame: NSRect, strokes: [[NSPoint]], id: Int
     return dest.path
 }
 
+/// Apps where the agent reads files from disk, so a path is the right thing to paste
+/// (and pasting an image into a terminal does nothing).
+let PATH_APPS: Set<String> = [
+    "com.apple.Terminal", "com.googlecode.iterm2", "com.mitchellh.ghostty", "dev.warp.Warp-Stable",
+    "net.kovidgoyal.kitty", "org.alacritty", "com.github.wez.wezterm", "co.zeit.hyper",
+    "com.microsoft.VSCode", "com.microsoft.VSCodeInsiders", "com.todesktop.230313mzl4w4u92", // Cursor
+    "com.exafunction.windsurf", "dev.zed.Zed", "dev.zed.Zed-Preview",
+]
+
+/// How long to give the target app to read the pasteboard before replacing it.
+let PASTE_SETTLE: TimeInterval = 0.4
+
 func deliver(path: String, transcript: String, target: NSRunningApplication?,
              onPasted: @escaping () -> Void) {
-    var text = transcript.isEmpty ? "" : transcript + "\n\n"
-    text += "[Screenshot: \(path)]"
     NSLog("Point: circle → %@ (%d chars spoken)", path, transcript.count)
     DispatchQueue.global(qos: .utility).async { SauronHook.register(screenshot: path, app: target) }
-    pasteText(text, target: target, onPasted: onPasted)
+
+    if let id = target?.bundleIdentifier, PATH_APPS.contains(id) {
+        var text = transcript.isEmpty ? "" : transcript + "\n\n"
+        text += "[Screenshot: \(path)]"
+        pasteText(text, target: target, onPasted: onPasted)
+        return
+    }
+
+    // Chat apps and browsers can't open a local path: paste the words, then the picture itself.
+    // The picture is left on the clipboard so it can be pasted again elsewhere.
+    let pasteImage = {
+        guard let png = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
+            onPasted()
+            return
+        }
+        let item = NSPasteboardItem()
+        item.setData(png, forType: .png)
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.writeObjects([item])
+        NSLog("Point: pasting screenshot image into %@", target?.localizedName ?? "front app")
+        if let target, NSWorkspace.shared.frontmostApplication != target { target.activate() }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+            postCommandV()
+            onPasted()
+        }
+    }
+    if transcript.isEmpty {
+        pasteImage()
+    } else {
+        pasteText(transcript + " ", target: target) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + PASTE_SETTLE, execute: pasteImage)
+        }
+    }
 }
 
 /// Put `text` on the clipboard (it stays there) and paste it at the text caret of `target`.
