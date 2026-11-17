@@ -60,3 +60,30 @@ enum TriggerKey: String, CaseIterable {
         }
     }
 }
+
+/// How you mark the screen while holding the trigger: a freehand loop, or a dragged rectangle.
+enum MarkStyle: String, CaseIterable {
+    case loop, rectangle
+
+    private static let defaultsKey = "markStyle"
+
+    static var current: MarkStyle {
+        get { UserDefaults.standard.string(forKey: defaultsKey).flatMap(MarkStyle.init(rawValue:)) ?? .loop }
+        set { UserDefaults.standard.set(newValue.rawValue, forKey: defaultsKey) }
+    }
+
+    var title: String {
+        switch self {
+        case .loop: return "Circle (draw freehand)"
+        case .rectangle: return "Rectangle (drag a box)"
+        }
+    }
+
+    /// Hint shown in the overlay before anything is marked.
+    var hint: String {
+        switch self {
+        case .loop: return "draw a loop to add a screenshot"
+        case .rectangle: return "drag a box to add a screenshot"
+        }
+    }
+}

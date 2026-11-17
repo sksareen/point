@@ -416,6 +416,7 @@ private func screenshotDragProvider(_ url: URL) -> NSItemProvider {
 struct SettingsView: View {
     @EnvironmentObject var store: CaptureStore
     @State private var trigger = TriggerKey.current
+    @State private var markStyle = MarkStyle.current
     @State private var launchAtLogin = LoginItem.isEnabled
     @State private var vocab = ""
     @State private var vocabSaved = true
@@ -445,7 +446,11 @@ struct SettingsView: View {
                     ForEach(TriggerKey.allCases, id: \.self) { Text($0.menuTitle).tag($0) }
                 }
                 .onChange(of: trigger) { _, new in TriggerKey.current = new }
-                Text("Hold to talk · draw while holding to add a screenshot · double-tap for the sticky pad.")
+                Picker("Mark", selection: $markStyle) {
+                    ForEach(MarkStyle.allCases, id: \.self) { Text($0.title).tag($0) }
+                }
+                .onChange(of: markStyle) { _, new in MarkStyle.current = new }
+                Text("Hold to talk · mark the screen while holding to add a screenshot · double-tap for the sticky pad.")
                     .font(.caption).foregroundStyle(.secondary)
             }
 
@@ -514,6 +519,7 @@ struct SettingsView: View {
         .formStyle(.grouped)
         .onAppear {
             trigger = TriggerKey.current
+            markStyle = MarkStyle.current
             launchAtLogin = LoginItem.isEnabled
             perms = PermissionStatus.current()
             vocab = (try? String(contentsOf: vocabURL, encoding: .utf8)) ?? ""

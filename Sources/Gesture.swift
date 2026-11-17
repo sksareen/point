@@ -156,6 +156,7 @@ final class CircleSession {
 
     private(set) var strokes: [[NSPoint]] = []   // global (Cocoa) screen coordinates
     private(set) var liveText = ""
+    let markStyle = MarkStyle.current            // fixed for the whole hold
 
     private var audioURL: URL { CAPTURES_DIR.appendingPathComponent("point_\(id).wav") }
     private var metaURL: URL { CAPTURES_DIR.appendingPathComponent("point_\(id).json") }
@@ -193,8 +194,15 @@ final class CircleSession {
     func beginStroke(_ p: NSPoint) { strokes.append([p]); redraw() }
 
     func extendStroke(_ p: NSPoint) {
-        guard !strokes.isEmpty else { return }
-        strokes[strokes.count - 1].append(p)
+        guard let start = strokes.last?.first else { return }
+        switch markStyle {
+        case .loop:
+            strokes[strokes.count - 1].append(p)
+        case .rectangle:
+            // A rectangle is a closed 5-point stroke, so capture/compose/isLoop treat it like a loop.
+            strokes[strokes.count - 1] = [start, NSPoint(x: p.x, y: start.y), p,
+                                          NSPoint(x: start.x, y: p.y), start]
+        }
         redraw()
     }
 
@@ -551,7 +559,7 @@ final class OverlayView: NSView {
         let mode = hasLoop ? "Dictating + screenshot" : "Dictating"
         let detail = !session.liveText.isEmpty
             ? tail(session.liveText, max: 90)
-            : (hasLoop ? "keep talking, let go to paste" : "draw a loop to add a screenshot")
+            : (hasLoop ? "keep talking, let go to paste" : session.markStyle.hint)
         drawPill(mode: mode, detail: detail)
     }
 

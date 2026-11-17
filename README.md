@@ -17,6 +17,8 @@ Hold a key, talk, and circle the thing on your screen. Point hands Claude Code, 
 
 Prefer another key? Pick **Right ⌥**, **Left ⌃**, **Right ⌘**, or **Fn** from the menu bar icon → *Trigger key*.
 
+Prefer boxes to loops? *Settings → Mark → Rectangle* lets you drag a red box instead of drawing a circle.
+
 Transcription runs **on-device** with Apple's `SpeechAnalyzer` (macOS 26). No audio leaves your Mac.
 
 [Watch the full video](site/point-demo.mp4).
