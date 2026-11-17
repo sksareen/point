@@ -265,12 +265,12 @@
   footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
   @media (max-width: 880px) {
-    .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 24px; }
+    .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 40px; }
     .split { grid-template-columns: 1fr; }
     .gesture { grid-template-columns: 1fr; gap: 6px; }
   }
   @media (max-width: 480px) {
-    .wrap { padding: 0 16px; }
+    .wrap { padding-left: 16px; padding-right: 16px; }
     .app { padding: 22px 18px 84px; }
     .nav-links .hide-sm { display: none; }
   }
