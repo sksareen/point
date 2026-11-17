@@ -3,12 +3,16 @@
 ![Point in action: circle part of the screen, and the agent gets your words and a screenshot of what you circled.](site/point-demo.gif)
 
 
-**Show your AI agent what you mean.** Hold a key, talk, and circle the thing on your screen. Point hands Claude Code, Cursor, or any chat your words plus a screenshot of exactly what you pointed at. Without drawing, it's just fast on-device dictation.
+## Talk less. Point more.
+
+Hold a key, talk, and circle the thing on your screen. Point hands Claude Code, Cursor, ChatGPT, or any chat your words plus a screenshot of exactly what you pointed at. Without drawing, it's fast on-device dictation.
+
+**[⬇ Download Point.dmg](https://github.com/sksareen/point/releases/latest/download/Point.dmg)** · macOS 26, Apple Silicon · free and open source · voice never leaves your Mac
 
 | Gesture | What happens |
 |---|---|
 | **Hold Right ⌥ and talk** | Dictation. Your words are pasted at the text cursor and left on the clipboard. |
-| **…and draw a loop while holding** | Your words, plus the path to a full-screen screenshot with your loop drawn on it. Paste into Claude Code, Cursor, or any agent that reads files. |
+| **…and draw a loop while holding** | Your words, plus a screenshot with your loop drawn on it. Chats (claude.ai, ChatGPT, the Claude app, Slack) get the image itself; terminals and code editors (Claude Code, Cursor) get its file path. |
 | **Double-tap Right ⌥** (or ⌃⇧N) | Toggle a sticky pad that floats over everything. Autosaved, persistent, 1,440 characters. Hold Right ⌥ while it's open to dictate into it. |
 
 Prefer another key? Pick **Right ⌥**, **Left ⌃**, **Right ⌘**, or **Fn** from the menu bar icon → *Trigger key*.
@@ -21,7 +25,11 @@ Transcription runs **on-device** with Apple's `SpeechAnalyzer` (macOS 26). No au
 
 ## Install
 
-Requires **macOS 26 on Apple Silicon**. Paste this into Terminal:
+Requires **macOS 26 on Apple Silicon**.
+
+**Download:** [Point.dmg](https://github.com/sksareen/point/releases/latest/download/Point.dmg), open it, and drag Point to Applications. Point isn't notarized by Apple yet, so the first launch is blocked: open **System Settings → Privacy & Security** and click **Open Anyway**.
+
+**Or paste this into Terminal**, which skips that block:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/sksareen/point/master/get.sh | bash
@@ -77,7 +85,7 @@ The speech engine sits behind the `Transcriber` protocol, so swapping in whisper
 
 ## Roadmap
 
-Next: the screenshot itself on the clipboard for web chats, a notarized download and Homebrew, a faster start, voice commands ("search Porter Robinson on YouTube"), and recording a bug repro with zoom on clicks. Later: older Macs via Whisper or Parakeet, and agents that ask you to point.
+Next: a notarized download and Homebrew, a faster start, voice commands ("search Porter Robinson on YouTube"), and recording a bug repro with zoom on clicks. Later: older Macs via Whisper or Parakeet, and agents that ask you to point.
 
 Far out, a wand: aim at any screen, click to select, hold to draw, and talk while you point.
 
@@ -87,4 +95,4 @@ Ideas welcome in [issues](https://github.com/sksareen/point/issues).
 
 ## Status
 
-Early dev build (0.1.0). Known: about 200–270 ms from key-down until the mic is live, so your first syllable can be clipped if you start talking instantly.
+Early preview (0.1.1). Known: about 200–270 ms from key-down until the mic is live, so your first syllable can be clipped if you start talking instantly.
