@@ -1,0 +1,15 @@
+{
+  "name": "point-mac",
+  "description": "Point: hold a key, talk, and circle something on your Mac screen. Your agent gets your words plus the screenshot.",
+  "owner": {
+    "name": "Savar Sareen",
+    "url": "https://github.com/sksareen"
+  },
+  "plugins": [
+    {
+      "name": "point",
+      "source": "./plugin",
+      "description": "Read what you pointed at. Teaches Claude to interpret Point captures (your spoken words plus a screenshot with your red mark on it) and adds /point:last to pull in your most recent capture."
+    }
+  ]
+}

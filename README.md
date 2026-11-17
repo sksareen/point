@@ -41,6 +41,19 @@ It downloads the latest release into Applications and opens it ([read the script
 
 A notarized download and a Homebrew cask are coming.
 
+## Claude Code plugin
+
+Point works in Claude Code with nothing extra: it pastes your words and the screenshot's path. The plugin adds two things on top.
+
+```
+/plugin install point --marketplace sksareen/point
+```
+
+- **Claude reads captures properly.** It opens the screenshot first, treats your red loop or rectangle as "this", and allows for dictation mishearings.
+- **`/point:last`** pulls in your most recent capture without pasting. Circle something in any app, switch to Claude Code, and type `/point:last fix this`. `/point:last 3` reads the last three.
+
+On Claude Code older than 2.1.275, run `/plugin marketplace add sksareen/point` and then `/plugin install point@point-mac`.
+
 ## Build from source
 
 Requires macOS 26 and Xcode command-line tools.
@@ -82,6 +95,8 @@ Sources/
   LoginItem.swift     launch at login, version, menu items
   SauronHook.swift    optional: logs screenshots to Sauron if it's installed
 ```
+
+`plugin/` is the Claude Code plugin (two skills and one script); `.claude-plugin/marketplace.json` lists it.
 
 The speech engine sits behind the `Transcriber` protocol, so swapping in whisper.cpp or Parakeet is one new file.
 
