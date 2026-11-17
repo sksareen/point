@@ -96,7 +96,7 @@ Sources/
   SauronHook.swift    optional: logs screenshots to Sauron if it's installed
 ```
 
-`plugin/` is the Claude Code plugin (two skills and one script); `.claude-plugin/marketplace.json` lists it.
+`plugin/` is the Claude Code plugin (two skills); `.claude-plugin/marketplace.json` lists it.
 
 The speech engine sits behind the `Transcriber` protocol, so swapping in whisper.cpp or Parakeet is one new file.
 

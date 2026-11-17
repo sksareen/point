@@ -1,6 +1,6 @@
 ---
 name: captures
-description: How to read a Point capture. Use when a message contains "[Screenshot: …/point_<id>.png]", a screenshot with a hand-drawn red loop or red rectangle on it, or when the user refers to what they circled, pointed at, or marked on screen with Point.
+description: "How to read a Point capture. Use when a message contains a line like [Screenshot: /path/point_123.png], a screenshot with a hand-drawn red loop or red rectangle on it, or when the user refers to what they circled, pointed at, or marked on screen with Point."
 ---
 
 # Reading a Point capture

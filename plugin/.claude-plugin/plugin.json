@@ -1,7 +1,7 @@
 {
   "name": "point",
   "displayName": "Point",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Read what you pointed at. Teaches Claude to interpret Point captures (your spoken words plus a screenshot with your red mark on it) and adds /point:last to pull in your most recent capture.",
   "author": {
     "name": "Savar Sareen",
