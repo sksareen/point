@@ -1,53 +1,59 @@
 ---
-title: How to show Claude Code exactly what you mean
-description: Describing a UI bug in words is slow and lossy. Here are the ways to give Claude Code a screenshot of the problem, and how to mark exactly which part you mean.
+title: How to show Claude Code (or Cursor) a UI bug
+description: Every way to get a screenshot of a bug into Claude Code or Cursor, which ones are fastest, and how to mark exactly which part you mean.
 date: 2026-11-18
 draft: true
 ---
 
-<!-- DRAFT. Savar: rewrite the opening in your own words, and check the
-     "Ways to give Claude Code a screenshot" section against your own setup. -->
+<!-- DRAFT. Savar: check the Cursor section against your own version. -->
 
-You're vibe coding a site. One heading is in the wrong font. You type "the heading in the second section looks off," and Claude Code fixes a different heading.
+Describing a UI bug in words is slow and easy to misread. A screenshot is faster, but only if the agent can tell which part of it you mean. This is a practical guide to getting the picture in, and marking it so there's no ambiguity.
 
-The words weren't the problem. The pointing was. A person sitting next to you would just tap the screen and say "this one." Agents can't see what you're looking at, so you end up writing a paragraph to describe a thing you could point at in a second.
+## Getting a screenshot into Claude Code
 
-## Why words lose
+Claude Code's [documentation](https://code.claude.com/docs/en/common-workflows) lists three ways to add an image to a conversation:
 
-A UI bug has a *what* and a *where*. Words handle the *what* well ("too much padding", "wrong font"). They handle the *where* badly. "The button on the left" depends on which left. "The second card" depends on what counts as a card. Every ambiguity is a chance for the agent to fix the wrong thing confidently.
+1. **Drag and drop** the image file into the Claude Code window.
+2. **Paste it** with `Ctrl+V`. Note: on a Mac it's Control-V, not Command-V. On Windows and WSL it's `Alt+V`.
+3. **Give it a path** in your message, like `look at /Users/me/Desktop/bug.png and fix the overlap`.
 
-A screenshot fixes the *where*, but only if the agent knows which part of it you mean. A full-screen screenshot with no mark on it is a new question: which of these forty things?
+All three work. The catch is the steps around them. A typical loop is: take a screenshot, open it, draw on it in Preview or the screenshot tool, save or copy it, switch back, paste or drag it in, then type your request. That's six or seven steps for one bug, and most people skip the marking step because it's the slowest. That's the step that matters most.
 
-The reliable version is three parts:
+## Getting a screenshot into Cursor
 
-1. **A screenshot** of what you're looking at.
-2. **A mark** on it: a circle or a box around the exact thing.
-3. **A sentence** saying what's wrong with it.
+Cursor's chat accepts images by paste, drag and drop, or by referencing a saved file with `@` and its path. In practice, which one works can depend on your Cursor version: the [Cursor forum](https://forum.cursor.com/t/getting-screenshots-into-cursor-is-driving-me-a-bit-crazy-whats-your-workflow/162024) has a long-running thread from people trying to settle on a reliable screenshot workflow. If paste doesn't attach the image, dragging a saved file in, or `@`-referencing its path, is the usual fallback.
 
-## Ways to give Claude Code a screenshot
+## Mark it, or it's a new question
 
-- **Paste or drag an image into the session.** Claude Code accepts images: drag a screenshot file in, or paste one. Take the screenshot, mark it up in Preview or the screenshot tool, save it, then bring it in. It works, but it's five or six steps for one bug.
-- **Give it a file path.** Claude Code can read an image from disk. Save the screenshot and type its path along with your request.
-- **Point.** Hold a key, talk, and circle the thing on screen. When you let go, [Point](https://www.pointandtell.app) pastes what you said plus the path to a screenshot with your circle drawn on it. One gesture covers all three parts: screenshot, mark, sentence.
+A full-screen screenshot with no mark tells the agent *what you're looking at*, not *what you mean*. On a busy page that's dozens of candidates. Draw on it:
 
-Whichever you use, the mark is what makes it work. Claude reads "fix this" plus a red circle around one button far more reliably than a paragraph of directions.
+- **A circle or box** around the one element. Red stands out against almost any UI.
+- **One mark per problem.** If there are two issues, send two marks with a sentence for each.
+- **Crop only if the context doesn't matter.** A full screenshot with a mark beats a tight crop, because the agent can see which page and which state you're in.
 
-## What to say with the mark
+## What to say with it
 
-Keep the words about the *what*, and let the mark carry the *where*:
+Let the mark carry the *where*, and keep the words to the *what*:
 
-- "This is misaligned with the card above it." (circle the element)
-- "Make this match the other buttons." (circle the odd one out)
-- "This text is cut off on mobile." (box the clipped text)
+| Instead of | Say (with a mark) |
+|---|---|
+| "The second button in the card row on the pricing page has extra padding on the left" | "Extra padding on the left of this one." |
+| "The heading under the hero, not the main one, the smaller one, is in the wrong font" | "Wrong font here. Should match the other headings." |
+| "On mobile the text in the footer gets cut off on the right side" | "This is cut off on mobile." |
 
-You don't need to name the component or find the file. Claude Code can match visible text and layout in the screenshot to your code.
+You don't need to name the component or find the file. Claude Code and Cursor can match the visible text and layout in the screenshot to your code.
 
-## If you use Point with Claude Code
+## The one-gesture version
 
-Point's Claude Code plugin adds two things: it teaches Claude to open the screenshot first and treat your mark as "this", and it adds `/point:last`, which pulls in your most recent capture without pasting anything.
+[Point](https://www.pointandtell.app) collapses all of this into one gesture: hold a key, talk, and circle the thing on screen. When you let go:
+
+- **In Claude Code or Cursor**, it pastes what you said plus the path to a screenshot with your circle drawn on it. Both read files from disk, so the path is enough.
+- **In claude.ai, ChatGPT, or Slack**, it pastes your words and then the image itself.
+
+Point also has a Claude Code plugin. It teaches Claude to open the screenshot first and treat your circle as "this", and adds `/point:last` to pull in your most recent capture without pasting:
 
 ```
 /plugin install point --marketplace sksareen/point
 ```
 
-Circle something in any app, switch to Claude Code, and type `/point:last fix this`.
+Point is free and open source, for macOS 26 on Apple Silicon.
