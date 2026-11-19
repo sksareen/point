@@ -4,7 +4,7 @@
     <title>Point blog</title>
     <link>https://www.pointandtell.app/blog/</link>
     <description>Notes on building Point, and on showing AI agents exactly what you mean.</description>
-    <lastBuildDate>Thu, 19 Nov 2026 05:43:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Nov 2026 05:59:08 +0000</lastBuildDate>
     <item>
       <title>How to show Claude Code (or Cursor) a UI bug</title>
       <link>https://www.pointandtell.app/blog/show-claude-code-what-you-mean.html</link>
@@ -18,6 +18,13 @@
       <guid>https://www.pointandtell.app/blog/talk-to-your-coding-agent.html</guid>
       <pubDate>Wed, 18 Nov 2026 16:00:00 +0000</pubDate>
       <description>Speaking is about three times faster than typing, and spoken prompts carry more context. What changes when you talk to Claude Code or Cursor, and where voice breaks.</description>
+    </item>
+    <item>
+      <title>The most universal way to talk to any AI agent is paste</title>
+      <link>https://www.pointandtell.app/blog/the-universal-interface-is-paste.html</link>
+      <guid>https://www.pointandtell.app/blog/the-universal-interface-is-paste.html</guid>
+      <pubDate>Wed, 18 Nov 2026 16:00:00 +0000</pubDate>
+      <description>You can wire a tool into each agent with MCP servers and plugins. Or you can use the one interface every app already has. Why Point pastes, and what that costs.</description>
     </item>
     <item>
       <title>Why it&#x27;s so hard to explain things to your AI agent</title>

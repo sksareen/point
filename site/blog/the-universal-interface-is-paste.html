@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The most universal way to talk to any AI agent is paste · Point</title>
+<meta name="description" content="You can wire a tool into each agent with MCP servers and plugins. Or you can use the one interface every app already has. Why Point pastes, and what that costs.">
+<link rel="canonical" href="https://www.pointandtell.app/blog/the-universal-interface-is-paste.html">
+<meta property="og:title" content="The most universal way to talk to any AI agent is paste · Point">
+<meta property="og:description" content="You can wire a tool into each agent with MCP servers and plugins. Or you can use the one interface every app already has. Why Point pastes, and what that costs.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.pointandtell.app/blog/the-universal-interface-is-paste.html">
+<meta property="og:image" content="https://www.pointandtell.app/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="Point blog" href="https://www.pointandtell.app/blog/feed.xml">
+<link rel="icon" type="image/png" href="/icon.png">
+<link rel="apple-touch-icon" href="/icon.png">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("point-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+  .post { max-width: 720px; padding-top: 32px; padding-bottom: 72px; }
+  .post h1 { font-size: clamp(2rem, 5vw, 2.8rem); letter-spacing: -0.03em; line-height: 1.08; margin: 0 0 12px; }
+  .post .meta { color: var(--muted); font-size: 0.95rem; margin: 0 0 36px; }
+  .post img.cover { display: block; width: 100%; margin: -12px 0 32px; }
+  .post h2 { font-size: 1.5rem; letter-spacing: -0.02em; margin: 44px 0 10px; }
+  .post h3 { font-size: 1.15rem; margin: 32px 0 8px; }
+  .post p, .post li { font-size: 1.08rem; }
+  .post img, .post video { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); }
+  .post pre { background: var(--term); color: var(--term-ink); padding: 14px 16px; border-radius: 10px; overflow-x: auto; font-size: 0.92rem; }
+  .post blockquote { margin: 20px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--loop); color: var(--muted); }
+  .post table { border-collapse: collapse; width: 100%; font-size: 0.98rem; }
+  .post th, .post td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .cta { margin-top: 48px; padding: 20px 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--window); }
+  .cta p { margin: 0 0 12px; }
+  .cta a.btn { display: inline-block; background: var(--loop); color: #fff; font-weight: 700; text-decoration: none; padding: 10px 16px; border-radius: 999px; }
+  .posts { list-style: none; padding: 0; margin: 24px 0 0; border-top: 1.5px solid var(--ink); }
+  .posts li { padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .posts a { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+  .posts a:hover { text-decoration: underline; }
+  .posts p { margin: 4px 0 0; color: var(--muted); }
+  .posts time { color: var(--muted); font-size: 0.9rem; }
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "The most universal way to talk to any AI agent is paste", "description": "You can wire a tool into each agent with MCP servers and plugins. Or you can use the one interface every app already has. Why Point pastes, and what that costs.", "datePublished": "2026-11-18", "url": "https://www.pointandtell.app/blog/the-universal-interface-is-paste.html", "author": {"@type": "Person", "name": "Savar Sareen"}, "publisher": {"@type": "Organization", "name": "Point", "url": "https://www.pointandtell.app"}}</script>
+</head>
+<body>
+<header class="wrap nav">
+  <a class="brand" href="/">
+    <img src="/icon.png" alt="" width="28" height="28">
+    Point
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="/blog/">Blog</a>
+    <a href="/roadmap.html">Roadmap</a>
+    <a href="https://github.com/sksareen/point">GitHub</a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode (⌘I)" title="Toggle dark mode (⌘I)">◐</button>
+  </nav>
+</header>
+<main class="wrap">
+<article class="post">
+<h1>The most universal way to talk to any AI agent is paste</h1>
+<p class="meta"><time datetime="2026-11-18">November 18, 2026</time></p>
+<p>If you build a tool for AI agents today, the obvious design is an integration. Run an MCP server, have the agent call a tool like <code>get_latest_screenshot</code>, and pass the capture in as structured data. It's clean. Agents understand it. It's how most new agent tools are built.</p>
+<p>Point goes the other way. It types into whatever app is in front of you, the same way you would: it puts your words and screenshot on the clipboard and presses paste. This post is about why.</p>
+<h2>Integrations are one agent at a time</h2>
+<p>An MCP server, a plugin, or an extension works with exactly the clients that support it, once each one is set up. That's fine if you live in one tool. Most people don't. In a single afternoon you might talk to:</p>
+<ul>
+<li>Claude Code in a terminal</li>
+<li>Cursor's chat</li>
+<li>claude.ai or ChatGPT in a browser</li>
+<li>a teammate in Slack, about the same bug</li>
+</ul>
+<p>Each integration has to be installed, configured, and kept working in each place. Some of those places will never support it: a Slack message box or a web form doesn't call tools. And whatever agent comes out next month starts at zero.</p>
+<p>The thing you want to send is the same everywhere: <em>here's what I'm looking at, here's what I mean, here's what I want.</em> It shouldn't need a different pipe for every destination.</p>
+<h2>Every app already has the interface</h2>
+<p>Every text box on your Mac accepts paste. Every agent, chat app, terminal, and editor. Today's, and the ones that don't exist yet. Paste needs no setup, no API, and no permission from the app vendor.</p>
+<p>It's also honest in a way integrations often aren't. What gets pasted is exactly what the agent sees, in the box, in front of you, before you send it. Nothing is happening in a background channel you can't inspect.</p>
+<p>So Point's core does three things: record what you say, capture what you circled, and paste both where your cursor is. That's the whole interface.</p>
+<h2>What paste costs, and how Point handles it</h2>
+<p>Paste isn't free. Three real problems, and what we did about each:</p>
+<ul>
+<li><strong>The clipboard holds one thing at a time.</strong> Your words and your screenshot are two things. In chat apps, Point pastes your words, waits a moment for the app to read them, then pastes the image. The image stays on the clipboard so you can paste it again somewhere else.</li>
+<li><strong>Terminals can't take an image.</strong> Pasting a picture into a terminal does nothing. So Point checks which app is in front. In terminals and code editors it pastes your words plus the screenshot's file path instead, because Claude Code and Cursor read files from disk. Same gesture, the right format for each app.</li>
+<li><strong>Paste carries no structure.</strong> A tool call can say "this is a screenshot, this is the transcript, this is the app it came from." Pasted text can't. In practice agents read <code>[Screenshot: /path/to/file.png]</code> without help. For people who want more, Point has an optional Claude Code plugin that teaches Claude how to read a capture and pulls in the latest one with <code>/point:last</code>. It's a layer on top, never a requirement.</li>
+</ul>
+<h2>Integrations should be extras, not the foundation</h2>
+<p>None of this is an argument against MCP. It's very good at what it's for: letting an agent reach out and fetch data, call services, and act. That's the agent's side of the conversation.</p>
+<p>Your side, what you say and what you point at, is different. It has to reach every app you use, starting today, with no setup. The one mechanism that does that is the oldest one on your computer.</p>
+<p>Build the universal version first. Add integrations where they genuinely help. Don't make the user's words depend on them.</p>
+<hr />
+<p><a href="https://www.pointandtell.app">Point</a> is free and open source for the Mac. Hold a key, talk, and circle what you mean. It pastes into any app.</p>
+<div class="cta">
+  <p><strong>Point</strong> is a free, open-source Mac app: hold a key, talk, and circle what you mean. Your agent gets your words plus a screenshot of exactly what you circled.</p>
+  <a class="btn" href="https://github.com/sksareen/point/releases/latest/download/Point.dmg">Download free for Mac</a>
+</div>
+</article>
+</main>
+<footer>
+  <div class="wrap">
+    <span>Point is free and open source under the MIT license.</span>
+    <a href="/blog/feed.xml">RSS</a>
+  </div>
+</footer>
+<script>
+(function () {
+  function currentTheme() {
+    var t = document.documentElement.getAttribute("data-theme");
+    if (t) return t;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  function toggleTheme() {
+    var next = currentTheme() === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("point-theme", next); } catch (e) {}
+  }
+  document.getElementById("themeBtn").addEventListener("click", toggleTheme);
+  window.addEventListener("keydown", function (e) {
+    if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "i") {
+      e.preventDefault();
+      toggleTheme();
+    }
+  });
+})();
+</script>
+</body>
+</html>
