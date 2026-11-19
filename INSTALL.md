@@ -46,7 +46,13 @@ Skip this step if you are not Claude Code.
 claude plugin marketplace add sksareen/point && claude plugin install point@point-mac
 ```
 
-If it's already installed, that's fine. The plugin teaches Claude to read Point captures and adds `/point:last`, which pulls in the user's latest capture without pasting. It takes effect in new sessions, or after `/reload-plugins`.
+If it was already installed, bring it up to date:
+
+```bash
+claude plugin marketplace update point-mac && claude plugin update point@point-mac
+```
+
+Either way, the plugin teaches Claude to read Point captures and adds `/point:last`, which pulls in the user's latest capture without pasting. It takes effect in new sessions, or after `/reload-plugins`.
 
 ## 5. Confirm it's running
 
