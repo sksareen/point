@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to show Claude Code (or Cursor) a UI bug · Point</title>
+<meta name="description" content="Every way to get a screenshot of a bug into Claude Code or Cursor, which ones are fastest, and how to mark exactly which part you mean.">
+<link rel="canonical" href="https://www.pointandtell.app/blog/show-claude-code-what-you-mean.html">
+<meta property="og:title" content="How to show Claude Code (or Cursor) a UI bug · Point">
+<meta property="og:description" content="Every way to get a screenshot of a bug into Claude Code or Cursor, which ones are fastest, and how to mark exactly which part you mean.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.pointandtell.app/blog/show-claude-code-what-you-mean.html">
+<meta property="og:image" content="https://www.pointandtell.app/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="Point blog" href="https://www.pointandtell.app/blog/feed.xml">
+<link rel="icon" type="image/png" href="/icon.png">
+<link rel="apple-touch-icon" href="/icon.png">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("point-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+  .post { max-width: 720px; padding-top: 32px; padding-bottom: 72px; }
+  .post h1 { font-size: clamp(2rem, 5vw, 2.8rem); letter-spacing: -0.03em; line-height: 1.08; margin: 0 0 12px; }
+  .post .meta { color: var(--muted); font-size: 0.95rem; margin: 0 0 36px; }
+  .post h2 { font-size: 1.5rem; letter-spacing: -0.02em; margin: 44px 0 10px; }
+  .post h3 { font-size: 1.15rem; margin: 32px 0 8px; }
+  .post p, .post li { font-size: 1.08rem; }
+  .post img, .post video { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); }
+  .post pre { background: var(--term); color: var(--term-ink); padding: 14px 16px; border-radius: 10px; overflow-x: auto; font-size: 0.92rem; }
+  .post blockquote { margin: 20px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--loop); color: var(--muted); }
+  .post table { border-collapse: collapse; width: 100%; font-size: 0.98rem; }
+  .post th, .post td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .cta { margin-top: 48px; padding: 20px 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--window); }
+  .cta p { margin: 0 0 12px; }
+  .cta a.btn { display: inline-block; background: var(--loop); color: #fff; font-weight: 700; text-decoration: none; padding: 10px 16px; border-radius: 999px; }
+  .posts { list-style: none; padding: 0; margin: 24px 0 0; border-top: 1.5px solid var(--ink); }
+  .posts li { padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .posts a { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+  .posts a:hover { text-decoration: underline; }
+  .posts p { margin: 4px 0 0; color: var(--muted); }
+  .posts time { color: var(--muted); font-size: 0.9rem; }
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "How to show Claude Code (or Cursor) a UI bug", "description": "Every way to get a screenshot of a bug into Claude Code or Cursor, which ones are fastest, and how to mark exactly which part you mean.", "datePublished": "2026-11-18", "url": "https://www.pointandtell.app/blog/show-claude-code-what-you-mean.html", "author": {"@type": "Person", "name": "Savar Sareen"}, "publisher": {"@type": "Organization", "name": "Point", "url": "https://www.pointandtell.app"}}</script>
+</head>
+<body>
+<header class="wrap nav">
+  <a class="brand" href="/">
+    <img src="/icon.png" alt="" width="28" height="28">
+    Point
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="/blog/">Blog</a>
+    <a href="/roadmap.html">Roadmap</a>
+    <a href="https://github.com/sksareen/point">GitHub</a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode (⌘I)" title="Toggle dark mode (⌘I)">◐</button>
+  </nav>
+</header>
+<main class="wrap">
+<article class="post">
+<h1>How to show Claude Code (or Cursor) a UI bug</h1>
+<p class="meta"><time datetime="2026-11-18">November 18, 2026</time></p>
+<p>Describing a UI bug in words is slow and easy to misread. A screenshot is faster, but only if the agent can tell which part of it you mean. This is a practical guide to getting the picture in, and marking it so there's no ambiguity.</p>
+<h2>Getting a screenshot into Claude Code</h2>
+<p>Claude Code's <a href="https://code.claude.com/docs/en/common-workflows">documentation</a> lists three ways to add an image to a conversation:</p>
+<ol>
+<li><strong>Drag and drop</strong> the image file into the Claude Code window.</li>
+<li><strong>Paste it</strong> with <code>Ctrl+V</code>. Note: on a Mac it's Control-V, not Command-V. On Windows and WSL it's <code>Alt+V</code>.</li>
+<li><strong>Give it a path</strong> in your message, like <code>look at /Users/me/Desktop/bug.png and fix the overlap</code>.</li>
+</ol>
+<p>All three work. The catch is the steps around them. A typical loop is: take a screenshot, open it, draw on it in Preview or the screenshot tool, save or copy it, switch back, paste or drag it in, then type your request. That's six or seven steps for one bug, and most people skip the marking step because it's the slowest. That's the step that matters most.</p>
+<h2>Getting a screenshot into Cursor</h2>
+<p>Cursor's chat accepts images by paste, drag and drop, or by referencing a saved file with <code>@</code> and its path. In practice, which one works can depend on your Cursor version: the <a href="https://forum.cursor.com/t/getting-screenshots-into-cursor-is-driving-me-a-bit-crazy-whats-your-workflow/162024">Cursor forum</a> has a long-running thread from people trying to settle on a reliable screenshot workflow. If paste doesn't attach the image, dragging a saved file in, or <code>@</code>-referencing its path, is the usual fallback.</p>
+<h2>Mark it, or it's a new question</h2>
+<p>A full-screen screenshot with no mark tells the agent <em>what you're looking at</em>, not <em>what you mean</em>. On a busy page that's dozens of candidates. Draw on it:</p>
+<ul>
+<li><strong>A circle or box</strong> around the one element. Red stands out against almost any UI.</li>
+<li><strong>One mark per problem.</strong> If there are two issues, send two marks with a sentence for each.</li>
+<li><strong>Crop only if the context doesn't matter.</strong> A full screenshot with a mark beats a tight crop, because the agent can see which page and which state you're in.</li>
+</ul>
+<h2>What to say with it</h2>
+<p>Let the mark carry the <em>where</em>, and keep the words to the <em>what</em>:</p>
+<table>
+<thead>
+<tr>
+<th>Instead of</th>
+<th>Say (with a mark)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"The second button in the card row on the pricing page has extra padding on the left"</td>
+<td>"Extra padding on the left of this one."</td>
+</tr>
+<tr>
+<td>"The heading under the hero, not the main one, the smaller one, is in the wrong font"</td>
+<td>"Wrong font here. Should match the other headings."</td>
+</tr>
+<tr>
+<td>"On mobile the text in the footer gets cut off on the right side"</td>
+<td>"This is cut off on mobile."</td>
+</tr>
+</tbody>
+</table>
+<p>You usually don't need to name the component or find the file. Claude Code and Cursor can match the visible text and layout in the screenshot to your code.</p>
+<h2>The one-gesture version</h2>
+<p><a href="https://www.pointandtell.app">Point</a> collapses all of this into one gesture: hold a key, talk, and circle the thing on screen. When you let go:</p>
+<ul>
+<li><strong>In a terminal running Claude Code, or in a code editor like Cursor</strong>, it pastes what you said plus the path to a screenshot with your circle drawn on it. The agent reads the file from disk, so the path is enough.</li>
+<li><strong>In claude.ai, ChatGPT, the Claude app, or Slack</strong>, it pastes your words and then the image itself.</li>
+</ul>
+<p>Point also has a Claude Code plugin. It teaches Claude to open the screenshot first and treat your circle as "this", and adds <code>/point:last</code> to pull in your most recent capture without pasting:</p>
+<pre><code>/plugin install point --marketplace sksareen/point
+</code></pre>
+<p>Point is free and open source, for macOS 26 on Apple Silicon.</p>
+<div class="cta">
+  <p><strong>Point</strong> is a free, open-source Mac app: hold a key, talk, and circle what you mean. Your agent gets your words plus a screenshot of exactly what you circled.</p>
+  <a class="btn" href="https://github.com/sksareen/point/releases/latest/download/Point.dmg">Download free for Mac</a>
+</div>
+</article>
+</main>
+<footer>
+  <div class="wrap">
+    <span>Point is free and open source under the MIT license.</span>
+    <a href="/blog/feed.xml">RSS</a>
+  </div>
+</footer>
+<script>
+(function () {
+  function currentTheme() {
+    var t = document.documentElement.getAttribute("data-theme");
+    if (t) return t;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  function toggleTheme() {
+    var next = currentTheme() === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("point-theme", next); } catch (e) {}
+  }
+  document.getElementById("themeBtn").addEventListener("click", toggleTheme);
+  window.addEventListener("keydown", function (e) {
+    if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "i") {
+      e.preventDefault();
+      toggleTheme();
+    }
+  });
+})();
+</script>
+</body>
+</html>

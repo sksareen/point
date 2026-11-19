@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Point blog</title>
+    <link>https://www.pointandtell.app/blog/</link>
+    <description>Notes on building Point, and on showing AI agents exactly what you mean.</description>
+    <lastBuildDate>Thu, 19 Nov 2026 05:37:40 +0000</lastBuildDate>
+    <item>
+      <title>How to show Claude Code (or Cursor) a UI bug</title>
+      <link>https://www.pointandtell.app/blog/show-claude-code-what-you-mean.html</link>
+      <guid>https://www.pointandtell.app/blog/show-claude-code-what-you-mean.html</guid>
+      <pubDate>Wed, 18 Nov 2026 16:00:00 +0000</pubDate>
+      <description>Every way to get a screenshot of a bug into Claude Code or Cursor, which ones are fastest, and how to mark exactly which part you mean.</description>
+    </item>
+    <item>
+      <title>Talk to your coding agent instead of typing to it</title>
+      <link>https://www.pointandtell.app/blog/talk-to-your-coding-agent.html</link>
+      <guid>https://www.pointandtell.app/blog/talk-to-your-coding-agent.html</guid>
+      <pubDate>Wed, 18 Nov 2026 16:00:00 +0000</pubDate>
+      <description>Speaking is about three times faster than typing, and spoken prompts carry more context. What changes when you talk to Claude Code or Cursor, and where voice breaks.</description>
+    </item>
+    <item>
+      <title>Why it&#x27;s so hard to explain things to your AI agent</title>
+      <link>https://www.pointandtell.app/blog/why-its-hard-to-explain-things-to-your-ai-agent.html</link>
+      <guid>https://www.pointandtell.app/blog/why-its-hard-to-explain-things-to-your-ai-agent.html</guid>
+      <pubDate>Wed, 18 Nov 2026 16:00:00 +0000</pubDate>
+      <description>Coding agents are good at the what and bad at the where. Why &quot;fix the button on the left&quot; goes wrong, and the habits that fix it.</description>
+    </item>
+  </channel>
+</rss>

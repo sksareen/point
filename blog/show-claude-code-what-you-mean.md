@@ -2,10 +2,9 @@
 title: How to show Claude Code (or Cursor) a UI bug
 description: Every way to get a screenshot of a bug into Claude Code or Cursor, which ones are fastest, and how to mark exactly which part you mean.
 date: 2026-11-18
-draft: true
+draft: false
 ---
 
-<!-- DRAFT. Savar: check the Cursor section against your own version. -->
 
 Describing a UI bug in words is slow and easy to misread. A screenshot is faster, but only if the agent can tell which part of it you mean. This is a practical guide to getting the picture in, and marking it so there's no ambiguity.
 
@@ -41,14 +40,14 @@ Let the mark carry the *where*, and keep the words to the *what*:
 | "The heading under the hero, not the main one, the smaller one, is in the wrong font" | "Wrong font here. Should match the other headings." |
 | "On mobile the text in the footer gets cut off on the right side" | "This is cut off on mobile." |
 
-You don't need to name the component or find the file. Claude Code and Cursor can match the visible text and layout in the screenshot to your code.
+You usually don't need to name the component or find the file. Claude Code and Cursor can match the visible text and layout in the screenshot to your code.
 
 ## The one-gesture version
 
 [Point](https://www.pointandtell.app) collapses all of this into one gesture: hold a key, talk, and circle the thing on screen. When you let go:
 
-- **In Claude Code or Cursor**, it pastes what you said plus the path to a screenshot with your circle drawn on it. Both read files from disk, so the path is enough.
-- **In claude.ai, ChatGPT, or Slack**, it pastes your words and then the image itself.
+- **In a terminal running Claude Code, or in a code editor like Cursor**, it pastes what you said plus the path to a screenshot with your circle drawn on it. The agent reads the file from disk, so the path is enough.
+- **In claude.ai, ChatGPT, the Claude app, or Slack**, it pastes your words and then the image itself.
 
 Point also has a Claude Code plugin. It teaches Claude to open the screenshot first and treat your circle as "this", and adds `/point:last` to pull in your most recent capture without pasting:
 

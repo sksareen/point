@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why it&#x27;s so hard to explain things to your AI agent · Point</title>
+<meta name="description" content="Coding agents are good at the what and bad at the where. Why &quot;fix the button on the left&quot; goes wrong, and the habits that fix it.">
+<link rel="canonical" href="https://www.pointandtell.app/blog/why-its-hard-to-explain-things-to-your-ai-agent.html">
+<meta property="og:title" content="Why it&#x27;s so hard to explain things to your AI agent · Point">
+<meta property="og:description" content="Coding agents are good at the what and bad at the where. Why &quot;fix the button on the left&quot; goes wrong, and the habits that fix it.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.pointandtell.app/blog/why-its-hard-to-explain-things-to-your-ai-agent.html">
+<meta property="og:image" content="https://www.pointandtell.app/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="Point blog" href="https://www.pointandtell.app/blog/feed.xml">
+<link rel="icon" type="image/png" href="/icon.png">
+<link rel="apple-touch-icon" href="/icon.png">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("point-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+  .post { max-width: 720px; padding-top: 32px; padding-bottom: 72px; }
+  .post h1 { font-size: clamp(2rem, 5vw, 2.8rem); letter-spacing: -0.03em; line-height: 1.08; margin: 0 0 12px; }
+  .post .meta { color: var(--muted); font-size: 0.95rem; margin: 0 0 36px; }
+  .post h2 { font-size: 1.5rem; letter-spacing: -0.02em; margin: 44px 0 10px; }
+  .post h3 { font-size: 1.15rem; margin: 32px 0 8px; }
+  .post p, .post li { font-size: 1.08rem; }
+  .post img, .post video { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); }
+  .post pre { background: var(--term); color: var(--term-ink); padding: 14px 16px; border-radius: 10px; overflow-x: auto; font-size: 0.92rem; }
+  .post blockquote { margin: 20px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--loop); color: var(--muted); }
+  .post table { border-collapse: collapse; width: 100%; font-size: 0.98rem; }
+  .post th, .post td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .cta { margin-top: 48px; padding: 20px 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--window); }
+  .cta p { margin: 0 0 12px; }
+  .cta a.btn { display: inline-block; background: var(--loop); color: #fff; font-weight: 700; text-decoration: none; padding: 10px 16px; border-radius: 999px; }
+  .posts { list-style: none; padding: 0; margin: 24px 0 0; border-top: 1.5px solid var(--ink); }
+  .posts li { padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .posts a { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+  .posts a:hover { text-decoration: underline; }
+  .posts p { margin: 4px 0 0; color: var(--muted); }
+  .posts time { color: var(--muted); font-size: 0.9rem; }
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Why it's so hard to explain things to your AI agent", "description": "Coding agents are good at the what and bad at the where. Why \"fix the button on the left\" goes wrong, and the habits that fix it.", "datePublished": "2026-11-18", "url": "https://www.pointandtell.app/blog/why-its-hard-to-explain-things-to-your-ai-agent.html", "author": {"@type": "Person", "name": "Savar Sareen"}, "publisher": {"@type": "Organization", "name": "Point", "url": "https://www.pointandtell.app"}}</script>
+</head>
+<body>
+<header class="wrap nav">
+  <a class="brand" href="/">
+    <img src="/icon.png" alt="" width="28" height="28">
+    Point
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="/blog/">Blog</a>
+    <a href="/roadmap.html">Roadmap</a>
+    <a href="https://github.com/sksareen/point">GitHub</a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode (⌘I)" title="Toggle dark mode (⌘I)">◐</button>
+  </nav>
+</header>
+<main class="wrap">
+<article class="post">
+<h1>Why it&#x27;s so hard to explain things to your AI agent</h1>
+<p class="meta"><time datetime="2026-11-18">November 18, 2026</time></p>
+<p>You ask your agent to fix "the heading that looks off in the second section." It confidently fixes a different heading. You explain again, more carefully. It fixes a third one.</p>
+<p>The agent isn't being dumb. You're asking it to find something it can't see, using only words, and words are bad at one specific job.</p>
+<h2>Every request has a what and a where</h2>
+<p>Almost every change you ask for has two parts:</p>
+<ul>
+<li><strong>The what:</strong> what's wrong, or what you want. "Too much padding." "Wrong font." "Should be blue."</li>
+<li><strong>The where:</strong> which thing on screen you mean. "This button." "That card." "The second heading."</li>
+</ul>
+<p>Language is very good at the <em>what</em>. You can say "the spacing feels cramped" and a model knows what to do with it.</p>
+<p>Language is bad at the <em>where</em>. "The button on the left" depends on whose left and which buttons. "The second card" depends on what counts as a card. "The heading" depends on which of the eleven headings on the page you're looking at. You resolve all of this instantly, because you're looking at the screen. The agent is reading your code and guessing which part of it produces the thing you're describing.</p>
+<p>That's why agents so often get the change right and the location wrong. They nail the <em>what</em> and miss the <em>where</em>.</p>
+<h2>You're describing a picture in words</h2>
+<p>Most frustrating prompts have the same shape: you're looking at something visual and translating it into a paragraph. The more precise you try to be, the longer the paragraph gets, and the more likely one phrase is read differently than you meant.</p>
+<p>People don't work this way with each other. If a colleague sits next to you, you point at the screen and say "this one." The pointing carries the <em>where</em>, and the words only have to carry the <em>what</em>. The conversation takes three seconds.</p>
+<h2>The fix: let something other than words carry the where</h2>
+<p>The pattern that works is the one you'd use with a person:</p>
+<ol>
+<li><strong>Show it.</strong> Give the agent a screenshot of what you're looking at.</li>
+<li><strong>Mark it.</strong> Circle or box the exact thing. A full screenshot with no mark is a new question: which of these forty things?</li>
+<li><strong>Say it.</strong> One sentence about the <em>what</em>: "this is misaligned with the card above it."</li>
+</ol>
+<p>Each part does one job. The screenshot gives context, the mark gives the <em>where</em>, and the sentence gives the <em>what</em>. None of them has to do the others' work, so none of them gets long.</p>
+<h2>Habits that help even without tools</h2>
+<ul>
+<li><strong>Name things by their visible text.</strong> "The button that says Pay now" beats "the blue button." The agent can search the code for the exact string.</li>
+<li><strong>Describe one change per request.</strong> Two <em>wheres</em> in one prompt doubles the chance of a mix-up.</li>
+<li><strong>Say what's wrong, not just what to do.</strong> "This overlaps the footer on mobile" gives the agent a way to check its own fix. "Move this up" doesn't.</li>
+<li><strong>When it guesses wrong, show instead of re-explaining.</strong> A second, longer paragraph rarely helps. A screenshot with a circle almost always does.</li>
+</ul>
+<h2>Where Point fits</h2>
+<p>We built <a href="https://www.pointandtell.app">Point</a> because the show-mark-say loop took too many steps: screenshot, open it, draw on it, save it, attach it, then type the sentence. With Point you hold a key, talk, and circle the thing on screen. When you let go, your agent gets your words and a screenshot with your circle on it. It's free and open source, for the Mac.</p>
+<p>Even if you never use it, the habit is worth stealing: stop describing where things are, and point.</p>
+<div class="cta">
+  <p><strong>Point</strong> is a free, open-source Mac app: hold a key, talk, and circle what you mean. Your agent gets your words plus a screenshot of exactly what you circled.</p>
+  <a class="btn" href="https://github.com/sksareen/point/releases/latest/download/Point.dmg">Download free for Mac</a>
+</div>
+</article>
+</main>
+<footer>
+  <div class="wrap">
+    <span>Point is free and open source under the MIT license.</span>
+    <a href="/blog/feed.xml">RSS</a>
+  </div>
+</footer>
+<script>
+(function () {
+  function currentTheme() {
+    var t = document.documentElement.getAttribute("data-theme");
+    if (t) return t;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  function toggleTheme() {
+    var next = currentTheme() === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("point-theme", next); } catch (e) {}
+  }
+  document.getElementById("themeBtn").addEventListener("click", toggleTheme);
+  window.addEventListener("keydown", function (e) {
+    if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "i") {
+      e.preventDefault();
+      toggleTheme();
+    }
+  });
+})();
+</script>
+</body>
+</html>

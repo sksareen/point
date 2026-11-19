@@ -3,10 +3,9 @@ title: Why it's so hard to explain things to your AI agent
 description: Coding agents are good at the what and bad at the where. Why "fix the button on the left" goes wrong, and the habits that fix it.
 date: 2026-11-18
 slug: why-its-hard-to-explain-things-to-your-ai-agent
-draft: true
+draft: false
 ---
 
-<!-- DRAFT. Savar: put the opening story in your own words. -->
 
 You ask your agent to fix "the heading that looks off in the second section." It confidently fixes a different heading. You explain again, more carefully. It fixes a third one.
 

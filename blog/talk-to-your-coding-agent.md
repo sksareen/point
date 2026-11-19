@@ -3,10 +3,9 @@ title: Talk to your coding agent instead of typing to it
 description: Speaking is about three times faster than typing, and spoken prompts carry more context. What changes when you talk to Claude Code or Cursor, and where voice breaks.
 date: 2026-11-18
 slug: talk-to-your-coding-agent
-draft: true
+draft: false
 ---
 
-<!-- DRAFT. Savar: add a line from your own experience; this post is stronger with it. -->
 
 Most people type their prompts to coding agents. That's a habit from search boxes, where short is better. Agents are the opposite: they do better with more context, and typing is the slowest way to give it.
 
@@ -33,7 +32,7 @@ You'd rarely type all of that. You'll say it without thinking.
 
 Voice isn't free. The common problems, and fixes:
 
-- **Code names get misheard.** "useEffect" becomes "use effect", "Supabase" becomes "super base." Agents usually recover from the context, and many dictation tools, Point included, let you add a vocabulary list of your project's names.
+- **Code names get misheard.** "useEffect" becomes "use effect", "Supabase" becomes "super base." Agents often recover from the context, and many dictation tools, Point included, let you add a vocabulary list of your project's names.
 - **Rambling.** Spoken prompts can wander. That's mostly fine, since the agent filters, but end with one clear sentence: "So: make the error message show under the field."
 - **You can't edit as you go.** Look over the transcript before you send if the request is risky, like a migration or a delete.
 - **It's still blind.** Voice carries the *what* beautifully and the *where* as badly as typing does. "The button on the left" is just as ambiguous out loud.

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Point blog</title>
+<meta name="description" content="Notes on building Point, and on showing AI agents exactly what you mean.">
+<link rel="canonical" href="https://www.pointandtell.app/blog/">
+<meta property="og:title" content="Point blog">
+<meta property="og:description" content="Notes on building Point, and on showing AI agents exactly what you mean.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.pointandtell.app/blog/">
+<meta property="og:image" content="https://www.pointandtell.app/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="Point blog" href="https://www.pointandtell.app/blog/feed.xml">
+<link rel="icon" type="image/png" href="/icon.png">
+<link rel="apple-touch-icon" href="/icon.png">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("point-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+  .post { max-width: 720px; padding-top: 32px; padding-bottom: 72px; }
+  .post h1 { font-size: clamp(2rem, 5vw, 2.8rem); letter-spacing: -0.03em; line-height: 1.08; margin: 0 0 12px; }
+  .post .meta { color: var(--muted); font-size: 0.95rem; margin: 0 0 36px; }
+  .post h2 { font-size: 1.5rem; letter-spacing: -0.02em; margin: 44px 0 10px; }
+  .post h3 { font-size: 1.15rem; margin: 32px 0 8px; }
+  .post p, .post li { font-size: 1.08rem; }
+  .post img, .post video { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); }
+  .post pre { background: var(--term); color: var(--term-ink); padding: 14px 16px; border-radius: 10px; overflow-x: auto; font-size: 0.92rem; }
+  .post blockquote { margin: 20px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--loop); color: var(--muted); }
+  .post table { border-collapse: collapse; width: 100%; font-size: 0.98rem; }
+  .post th, .post td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .cta { margin-top: 48px; padding: 20px 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--window); }
+  .cta p { margin: 0 0 12px; }
+  .cta a.btn { display: inline-block; background: var(--loop); color: #fff; font-weight: 700; text-decoration: none; padding: 10px 16px; border-radius: 999px; }
+  .posts { list-style: none; padding: 0; margin: 24px 0 0; border-top: 1.5px solid var(--ink); }
+  .posts li { padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .posts a { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+  .posts a:hover { text-decoration: underline; }
+  .posts p { margin: 4px 0 0; color: var(--muted); }
+  .posts time { color: var(--muted); font-size: 0.9rem; }
+</style>
+
+</head>
+<body>
+<header class="wrap nav">
+  <a class="brand" href="/">
+    <img src="/icon.png" alt="" width="28" height="28">
+    Point
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="/blog/">Blog</a>
+    <a href="/roadmap.html">Roadmap</a>
+    <a href="https://github.com/sksareen/point">GitHub</a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode (⌘I)" title="Toggle dark mode (⌘I)">◐</button>
+  </nav>
+</header>
+<main class="wrap">
+<section class="post"><h1>Blog</h1><p class="meta">Notes on building Point, and on showing AI agents exactly what you mean.</p>
+<ul class="posts">
+  <li><time datetime="2026-11-18">November 18, 2026</time><br><a href="/blog/show-claude-code-what-you-mean.html">How to show Claude Code (or Cursor) a UI bug</a><p>Every way to get a screenshot of a bug into Claude Code or Cursor, which ones are fastest, and how to mark exactly which part you mean.</p></li>
+  <li><time datetime="2026-11-18">November 18, 2026</time><br><a href="/blog/talk-to-your-coding-agent.html">Talk to your coding agent instead of typing to it</a><p>Speaking is about three times faster than typing, and spoken prompts carry more context. What changes when you talk to Claude Code or Cursor, and where voice breaks.</p></li>
+  <li><time datetime="2026-11-18">November 18, 2026</time><br><a href="/blog/why-its-hard-to-explain-things-to-your-ai-agent.html">Why it&#x27;s so hard to explain things to your AI agent</a><p>Coding agents are good at the what and bad at the where. Why &quot;fix the button on the left&quot; goes wrong, and the habits that fix it.</p></li>
+</ul></section>
+</main>
+<footer>
+  <div class="wrap">
+    <span>Point is free and open source under the MIT license.</span>
+    <a href="/blog/feed.xml">RSS</a>
+  </div>
+</footer>
+<script>
+(function () {
+  function currentTheme() {
+    var t = document.documentElement.getAttribute("data-theme");
+    if (t) return t;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  function toggleTheme() {
+    var next = currentTheme() === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("point-theme", next); } catch (e) {}
+  }
+  document.getElementById("themeBtn").addEventListener("click", toggleTheme);
+  window.addEventListener("keydown", function (e) {
+    if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "i") {
+      e.preventDefault();
+      toggleTheme();
+    }
+  });
+})();
+</script>
+</body>
+</html>

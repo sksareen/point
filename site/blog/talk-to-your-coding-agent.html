@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Talk to your coding agent instead of typing to it · Point</title>
+<meta name="description" content="Speaking is about three times faster than typing, and spoken prompts carry more context. What changes when you talk to Claude Code or Cursor, and where voice breaks.">
+<link rel="canonical" href="https://www.pointandtell.app/blog/talk-to-your-coding-agent.html">
+<meta property="og:title" content="Talk to your coding agent instead of typing to it · Point">
+<meta property="og:description" content="Speaking is about three times faster than typing, and spoken prompts carry more context. What changes when you talk to Claude Code or Cursor, and where voice breaks.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.pointandtell.app/blog/talk-to-your-coding-agent.html">
+<meta property="og:image" content="https://www.pointandtell.app/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="Point blog" href="https://www.pointandtell.app/blog/feed.xml">
+<link rel="icon" type="image/png" href="/icon.png">
+<link rel="apple-touch-icon" href="/icon.png">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("point-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+  .post { max-width: 720px; padding-top: 32px; padding-bottom: 72px; }
+  .post h1 { font-size: clamp(2rem, 5vw, 2.8rem); letter-spacing: -0.03em; line-height: 1.08; margin: 0 0 12px; }
+  .post .meta { color: var(--muted); font-size: 0.95rem; margin: 0 0 36px; }
+  .post h2 { font-size: 1.5rem; letter-spacing: -0.02em; margin: 44px 0 10px; }
+  .post h3 { font-size: 1.15rem; margin: 32px 0 8px; }
+  .post p, .post li { font-size: 1.08rem; }
+  .post img, .post video { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); }
+  .post pre { background: var(--term); color: var(--term-ink); padding: 14px 16px; border-radius: 10px; overflow-x: auto; font-size: 0.92rem; }
+  .post blockquote { margin: 20px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--loop); color: var(--muted); }
+  .post table { border-collapse: collapse; width: 100%; font-size: 0.98rem; }
+  .post th, .post td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .cta { margin-top: 48px; padding: 20px 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--window); }
+  .cta p { margin: 0 0 12px; }
+  .cta a.btn { display: inline-block; background: var(--loop); color: #fff; font-weight: 700; text-decoration: none; padding: 10px 16px; border-radius: 999px; }
+  .posts { list-style: none; padding: 0; margin: 24px 0 0; border-top: 1.5px solid var(--ink); }
+  .posts li { padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .posts a { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+  .posts a:hover { text-decoration: underline; }
+  .posts p { margin: 4px 0 0; color: var(--muted); }
+  .posts time { color: var(--muted); font-size: 0.9rem; }
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Talk to your coding agent instead of typing to it", "description": "Speaking is about three times faster than typing, and spoken prompts carry more context. What changes when you talk to Claude Code or Cursor, and where voice breaks.", "datePublished": "2026-11-18", "url": "https://www.pointandtell.app/blog/talk-to-your-coding-agent.html", "author": {"@type": "Person", "name": "Savar Sareen"}, "publisher": {"@type": "Organization", "name": "Point", "url": "https://www.pointandtell.app"}}</script>
+</head>
+<body>
+<header class="wrap nav">
+  <a class="brand" href="/">
+    <img src="/icon.png" alt="" width="28" height="28">
+    Point
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="/blog/">Blog</a>
+    <a href="/roadmap.html">Roadmap</a>
+    <a href="https://github.com/sksareen/point">GitHub</a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode (⌘I)" title="Toggle dark mode (⌘I)">◐</button>
+  </nav>
+</header>
+<main class="wrap">
+<article class="post">
+<h1>Talk to your coding agent instead of typing to it</h1>
+<p class="meta"><time datetime="2026-11-18">November 18, 2026</time></p>
+<p>Most people type their prompts to coding agents. That's a habit from search boxes, where short is better. Agents are the opposite: they do better with more context, and typing is the slowest way to give it.</p>
+<h2>Speaking is a lot faster than typing</h2>
+<p>The numbers are rough but consistent. People speak conversationally at around 150 words per minute. A study of about 168,000 people taking online typing tests put average keyboard typing at about 52 words per minute, and many estimates for typical users are closer to 40. In a Stanford, Baidu and University of Washington study, voice input was about three times faster than typing on a phone keyboard. (<a href="https://www.lesswrong.com/posts/ZpG6AdeXuZy4JbWrH/how-much-faster-is-speaking-compared-to-typing-on-laptop-vs">Summary of the research</a>.)</p>
+<p>Three times faster matters less for one-line commands and a lot for real requests, which is what agents need.</p>
+<h2>Spoken prompts carry more context</h2>
+<p>When you type, you compress. "Fix the login bug." When you talk, you explain the way you would to a person: what you saw, what you expected, what you already tried, what you suspect.</p>
+<p>That extra context is exactly what agents are missing. A spoken prompt naturally includes:</p>
+<ul>
+<li><strong>What you expected</strong> versus what happened.</li>
+<li><strong>How you got there</strong>: the steps, the page, the state.</li>
+<li><strong>Your hunch</strong>: "I think it's the new caching, it started after that."</li>
+<li><strong>Constraints</strong>: "don't touch the API, just the frontend."</li>
+</ul>
+<p>You'd rarely type all of that. You'll say it without thinking.</p>
+<h2>Where voice breaks</h2>
+<p>Voice isn't free. The common problems, and fixes:</p>
+<ul>
+<li><strong>Code names get misheard.</strong> "useEffect" becomes "use effect", "Supabase" becomes "super base." Agents often recover from the context, and many dictation tools, Point included, let you add a vocabulary list of your project's names.</li>
+<li><strong>Rambling.</strong> Spoken prompts can wander. That's mostly fine, since the agent filters, but end with one clear sentence: "So: make the error message show under the field."</li>
+<li><strong>You can't edit as you go.</strong> Look over the transcript before you send if the request is risky, like a migration or a delete.</li>
+<li><strong>It's still blind.</strong> Voice carries the <em>what</em> beautifully and the <em>where</em> as badly as typing does. "The button on the left" is just as ambiguous out loud.</li>
+</ul>
+<h2>Voice plus pointing</h2>
+<p>That last problem is why voice alone isn't enough for UI work. You need something to carry the <em>where</em>: a screenshot with the thing marked on it. (More on that in <a href="/blog/why-its-hard-to-explain-things-to-your-ai-agent.html">why it's so hard to explain things to your agent</a>.)</p>
+<p><a href="https://www.pointandtell.app">Point</a> does both in one gesture. Hold a key and talk to dictate into any app; keep holding and circle something on screen, and your agent also gets a screenshot with your circle on it. Transcription runs on your Mac with Apple's speech recognizer, so your voice doesn't leave your machine. It's free and open source.</p>
+<p>You don't need Point to start, though. Turn on your Mac's built-in dictation, talk your next prompt instead of typing it, and see how much more you end up saying.</p>
+<div class="cta">
+  <p><strong>Point</strong> is a free, open-source Mac app: hold a key, talk, and circle what you mean. Your agent gets your words plus a screenshot of exactly what you circled.</p>
+  <a class="btn" href="https://github.com/sksareen/point/releases/latest/download/Point.dmg">Download free for Mac</a>
+</div>
+</article>
+</main>
+<footer>
+  <div class="wrap">
+    <span>Point is free and open source under the MIT license.</span>
+    <a href="/blog/feed.xml">RSS</a>
+  </div>
+</footer>
+<script>
+(function () {
+  function currentTheme() {
+    var t = document.documentElement.getAttribute("data-theme");
+    if (t) return t;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  function toggleTheme() {
+    var next = currentTheme() === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("point-theme", next); } catch (e) {}
+  }
+  document.getElementById("themeBtn").addEventListener("click", toggleTheme);
+  window.addEventListener("keydown", function (e) {
+    if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "i") {
+      e.preventDefault();
+      toggleTheme();
+    }
+  });
+})();
+</script>
+</body>
+</html>
