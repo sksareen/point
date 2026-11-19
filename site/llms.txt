@@ -1,0 +1,30 @@
+# Point
+
+> Point is a free, open-source Mac app. Hold a key, talk, and circle something on your screen: Point pastes your words plus a screenshot with your mark on it into Claude Code, Cursor, ChatGPT, or any chat. Transcription runs on-device with Apple's speech recognizer. Without a mark, it is fast push-to-talk dictation.
+
+Point needs macOS 26 on Apple Silicon. It is MIT-licensed and makes no network requests.
+
+## How it works
+
+- Hold Right Option and talk: your words are pasted at the text cursor.
+- Keep holding and draw a loop (or a rectangle, in Settings → Mark): Point adds a full-screen screenshot with your mark drawn on it.
+- In terminals and code editors (Claude Code, Cursor, VS Code, Ghostty, iTerm, Warp, Zed) Point pastes your words plus the screenshot's file path, because those agents read files from disk. In chat apps and browsers (claude.ai, ChatGPT, the Claude app, Slack) it pastes your words, then the image itself.
+- Double-tap Right Option: a floating sticky pad.
+
+## Install
+
+- [Download Point.dmg](https://github.com/sksareen/point/releases/latest/download/Point.dmg): open it and drag Point to Applications. It is not notarized yet: on first launch, open System Settings → Privacy & Security and click Open Anyway.
+- Or in Terminal: `curl -fsSL https://raw.githubusercontent.com/sksareen/point/master/get.sh | bash`
+
+## Claude Code plugin
+
+- Install: `/plugin install point --marketplace sksareen/point`
+- `/point:last` pulls the user's most recent capture into the conversation without pasting. The plugin also teaches Claude how to read a capture: the red loop or rectangle marks what the user means by "this".
+
+## Links
+
+- [Source code and README](https://github.com/sksareen/point)
+- [Roadmap](https://www.pointandtell.app/roadmap.html)
+- [Blog](https://www.pointandtell.app/blog/)
+- [Privacy](https://github.com/sksareen/point/blob/master/PRIVACY.md)
+- [Releases](https://github.com/sksareen/point/releases)

@@ -7,7 +7,7 @@
 
 Hold a key, talk, and circle the thing on your screen. Point hands Claude Code, Cursor, ChatGPT, or any chat your words plus a screenshot of exactly what you pointed at. Without drawing, it's fast on-device dictation.
 
-**[⬇ Download Point.dmg](https://github.com/sksareen/point/releases/latest/download/Point.dmg)** · macOS 26, Apple Silicon · free and open source · voice never leaves your Mac
+**[pointandtell.app](https://www.pointandtell.app)** · **[⬇ Download Point.dmg](https://github.com/sksareen/point/releases/latest/download/Point.dmg)** · macOS 26, Apple Silicon · free and open source · voice never leaves your Mac
 
 | Gesture | What happens |
 |---|---|

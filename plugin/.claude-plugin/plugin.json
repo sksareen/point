@@ -1,13 +1,13 @@
 {
   "name": "point",
   "displayName": "Point",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Read what you pointed at. Teaches Claude to interpret Point captures (your spoken words plus a screenshot with your red mark on it) and adds /point:last to pull in your most recent capture.",
   "author": {
     "name": "Savar Sareen",
     "url": "https://github.com/sksareen"
   },
-  "homepage": "https://point-site-opal.vercel.app",
+  "homepage": "https://www.pointandtell.app",
   "repository": "https://github.com/sksareen/point",
   "license": "MIT",
   "keywords": [
