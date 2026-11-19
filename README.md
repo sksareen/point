@@ -9,11 +9,28 @@ Hold a key, talk, and circle the thing on your screen. Point hands Claude Code, 
 
 **[pointandtell.app](https://www.pointandtell.app)** · **[⬇ Download Point.dmg](https://github.com/sksareen/point/releases/latest/download/Point.dmg)** · macOS 26, Apple Silicon · free and open source · voice never leaves your Mac
 
-| Gesture | What happens |
+## What you do, what your agent gets
+
+| You do | Your agent gets |
 |---|---|
-| **Hold Right ⌥ and talk** | Dictation. Your words are pasted at the text cursor and left on the clipboard. |
-| **…and draw a loop while holding** | Your words, plus a screenshot with your loop drawn on it. Chats (claude.ai, ChatGPT, the Claude app, Slack) get the image itself; terminals and code editors (Claude Code, Cursor) get its file path. |
-| **Double-tap Right ⌥** (or ⌃⇧N) | Toggle a sticky pad that floats over everything. Autosaved, persistent, 1,440 characters. Hold Right ⌥ while it's open to dictate into it. |
+| **Hold Right ⌥ and talk** | Your words, pasted at the text cursor of whatever app you're in. Plain dictation. |
+| **…and circle something while holding**, in a terminal or code editor (Claude Code, Cursor, VS Code, Ghostty, iTerm, Warp, Zed) | Your words plus `[Screenshot: /path/to/point_….png]`, a full-screen screenshot with your circle drawn on it. The agent reads the file from disk. |
+| **…and circle something**, in a chat app or browser (claude.ai, ChatGPT, the Claude app, Slack, Messages) | Your words, then the screenshot itself as an image. It stays on your clipboard to paste again. |
+| **…and drag a box** instead (Settings → Mark → Rectangle) | The same, with a red rectangle instead of a loop. |
+| **Circle several things** in one hold | One screenshot with every mark on it. |
+| **Double-tap Right ⌥** (or ⌃⇧N) | A sticky pad that floats over everything. Autosaved, 1,440 characters. Hold Right ⌥ while it's open to dictate into it. |
+
+## Why not just paste a screenshot?
+
+You can, and you should mark it. A screenshot with no mark tells the agent what you're looking at, not what you mean: on a busy page that's dozens of candidates, and the agent picks one confidently. The fix is to circle the thing and say one sentence about it.
+
+By hand that's six or seven steps: take the screenshot, open it, draw on it, save or copy it, switch back, paste it, type the request. Most people skip the drawing, which is the step that matters. Point does all of it in one gesture, while you talk. More on why this works: [why it's so hard to explain things to your AI agent](https://www.pointandtell.app/blog/why-its-hard-to-explain-things-to-your-ai-agent.html).
+
+## How is this different from…
+
+- **Dictation apps** (Wispr Flow, superwhisper, VoiceInk, macOS Dictation) turn speech into text. Point does that too, and adds the screenshot with your mark, because words carry *what's* wrong well and *where* it is badly.
+- **[Point and Yap](https://pointandyap.com)** records your voice and cursor position into a local queue that agents read over MCP. Point pastes straight into the app you're already in, so it also works with tools that don't speak MCP (claude.ai, ChatGPT, Slack) and needs no setup in the agent.
+- **[Assist](https://www.producthunt.com/r/HRQNZUNMW6OS3A)** turns your annotations and speech into a prompt with a local model, for you to copy into Codex or Claude Code. It's a one-time purchase. Point keeps your exact words, pastes for you, and is free and open source.
 
 Prefer another key? Pick **Right ⌥**, **Left ⌃**, **Right ⌘**, or **Fn** from the menu bar icon → *Trigger key*.
 
@@ -28,6 +45,16 @@ Transcription runs **on-device** with Apple's `SpeechAnalyzer` (macOS 26). No au
 ## Install
 
 Requires **macOS 26 on Apple Silicon**.
+
+### Let your agent install it (recommended)
+
+Paste this into Claude Code, Cursor, Codex, or any agent that can run commands:
+
+> Install Point: read https://raw.githubusercontent.com/sksareen/point/master/INSTALL.md and follow it.
+
+[INSTALL.md](INSTALL.md) is written for agents. It checks your Mac, installs or updates Point, adds the Claude Code plugin if you're in Claude Code, and ends with one short report: what was installed, the three permissions macOS will ask for, and how to use it.
+
+### Or install it yourself
 
 **Download:** [Point.dmg](https://github.com/sksareen/point/releases/latest/download/Point.dmg), open it, and drag Point to Applications. Point isn't notarized by Apple yet, so the first launch is blocked: open **System Settings → Privacy & Security** and click **Open Anyway**.
 
