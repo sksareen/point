@@ -14,6 +14,7 @@ Posts are Markdown files in blog/ with a front-matter block:
     date: 2026-11-18
     slug: show-claude-code-what-you-mean   (optional; defaults to the file name)
     draft: true                            (optional; drafts are skipped)
+    image: /blog-images/cover.png          (optional; cover and link-preview image)
     ---
 
 Generated files are committed; Vercel serves site/ as static files.
@@ -98,6 +99,7 @@ STYLE = """<style>
   .post { max-width: 720px; padding-top: 32px; padding-bottom: 72px; }
   .post h1 { font-size: clamp(2rem, 5vw, 2.8rem); letter-spacing: -0.03em; line-height: 1.08; margin: 0 0 12px; }
   .post .meta { color: var(--muted); font-size: 0.95rem; margin: 0 0 36px; }
+  .post img.cover { display: block; width: 100%; margin: -12px 0 32px; }
   .post h2 { font-size: 1.5rem; letter-spacing: -0.02em; margin: 44px 0 10px; }
   .post h3 { font-size: 1.15rem; margin: 32px 0 8px; }
   .post p, .post li { font-size: 1.08rem; }
@@ -119,7 +121,7 @@ STYLE = """<style>
 
 
 def page(*, title: str, description: str, canonical: str, body: str, og_type: str = "website",
-         extra_head: str = "") -> str:
+         extra_head: str = "", image: str = "/og.png") -> str:
     t, d = html.escape(title), html.escape(description)
     return f"""<!doctype html>
 <html lang="en">
@@ -133,7 +135,7 @@ def page(*, title: str, description: str, canonical: str, body: str, og_type: st
 <meta property="og:description" content="{d}">
 <meta property="og:type" content="{og_type}">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{BASE}/og.png">
+<meta property="og:image" content="{BASE}{image}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/rss+xml" title="Point blog" href="{BASE}/blog/feed.xml">
 <link rel="icon" type="image/png" href="/icon.png">
@@ -207,12 +209,14 @@ def build() -> None:
                 })
                 + "</script>"
             )
+            cover = (f'<img class="cover" src="{p["image"]}" alt="">\n' if p.get("image") else "")
             body = (f'<article class="post">\n<h1>{html.escape(p["title"])}</h1>\n'
                     f'<p class="meta"><time datetime="{p["date"]}">{human_date(p["date_obj"])}</time></p>\n'
-                    f'{p["body_html"]}\n{CTA}\n</article>')
+                    f'{cover}{p["body_html"]}\n{CTA}\n</article>')
             (OUT / f"{p['slug']}.html").write_text(
                 page(title=f"{p['title']} · Point", description=p["description"], canonical=url,
-                     body=body, og_type="article", extra_head=ld), encoding="utf-8")
+                     body=body, og_type="article", extra_head=ld,
+                     image=p.get("image") or "/og.png"), encoding="utf-8")
             # Plain Markdown twin, for agents and llms.txt.
             (OUT / f"{p['slug']}.md").write_text(f"# {p['title']}\n\n{p['body_md']}", encoding="utf-8")
 

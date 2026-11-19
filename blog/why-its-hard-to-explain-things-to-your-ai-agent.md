@@ -4,6 +4,7 @@ description: Coding agents are good at the what and bad at the where. Why "fix t
 date: 2026-11-18
 slug: why-its-hard-to-explain-things-to-your-ai-agent
 draft: false
+image: /blog-images/explain-to-your-agent-cover.png
 ---
 
 
