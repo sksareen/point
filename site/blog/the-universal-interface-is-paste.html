@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The most universal way to talk to any AI agent is paste · Point</title>
-<meta name="description" content="You can wire a tool into each agent with MCP servers and plugins. Or you can use the one interface every app already has. Why Point pastes, and what that costs.">
+<title>The clipboard is the universal context layer for AI · Point</title>
+<meta name="description" content="Before any agent sees your problem, it passes through the clipboard. Why the one channel every app already shares is the natural context layer for AI, and what it costs.">
 <link rel="canonical" href="https://www.pointandtell.app/blog/the-universal-interface-is-paste.html">
-<meta property="og:title" content="The most universal way to talk to any AI agent is paste · Point">
-<meta property="og:description" content="You can wire a tool into each agent with MCP servers and plugins. Or you can use the one interface every app already has. Why Point pastes, and what that costs.">
+<meta property="og:title" content="The clipboard is the universal context layer for AI · Point">
+<meta property="og:description" content="Before any agent sees your problem, it passes through the clipboard. Why the one channel every app already shares is the natural context layer for AI, and what it costs.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.pointandtell.app/blog/the-universal-interface-is-paste.html">
 <meta property="og:image" content="https://www.pointandtell.app/og.png">
@@ -50,7 +50,7 @@
   .posts p { margin: 4px 0 0; color: var(--muted); }
   .posts time { color: var(--muted); font-size: 0.9rem; }
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "The most universal way to talk to any AI agent is paste", "description": "You can wire a tool into each agent with MCP servers and plugins. Or you can use the one interface every app already has. Why Point pastes, and what that costs.", "datePublished": "2026-11-18", "url": "https://www.pointandtell.app/blog/the-universal-interface-is-paste.html", "author": {"@type": "Person", "name": "Savar Sareen"}, "publisher": {"@type": "Organization", "name": "Point", "url": "https://www.pointandtell.app"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "The clipboard is the universal context layer for AI", "description": "Before any agent sees your problem, it passes through the clipboard. Why the one channel every app already shares is the natural context layer for AI, and what it costs.", "datePublished": "2026-11-18", "url": "https://www.pointandtell.app/blog/the-universal-interface-is-paste.html", "author": {"@type": "Person", "name": "Savar Sareen"}, "publisher": {"@type": "Organization", "name": "Point", "url": "https://www.pointandtell.app"}}</script>
 </head>
 <body>
 <header class="wrap nav">
@@ -67,10 +67,12 @@
 </header>
 <main class="wrap">
 <article class="post">
-<h1>The most universal way to talk to any AI agent is paste</h1>
+<h1>The clipboard is the universal context layer for AI</h1>
 <p class="meta"><time datetime="2026-11-18">November 18, 2026</time></p>
-<p>If you build a tool for AI agents today, the obvious design is an integration. Run an MCP server, have the agent call a tool like <code>get_latest_screenshot</code>, and pass the capture in as structured data. It's clean. Agents understand it. It's how most new agent tools are built.</p>
-<p>Point goes the other way. It types into whatever app is in front of you, the same way you would: it puts your words and screenshot on the clipboard and presses paste. This post is about why.</p>
+<p>Watch how people actually use AI on a computer. They copy an error from the terminal and paste it into a chat. They copy a paragraph from a doc, a stack trace from a log, a screenshot from the desktop. Before any agent sees your problem, it passes through one place: the clipboard.</p>
+<p>That isn't a workaround. It's the only context channel that every app on your computer already shares. Your editor, your browser, your terminal and your chat apps don't integrate with each other, but they all read and write the clipboard. The tools that win will treat it as the context layer it already is.</p>
+<p>Point is built on that idea: it captures what you say and what you point at, and puts it where all context already goes.</p>
+<p>The obvious alternative, if you build a tool for AI agents today, is an integration: run an MCP server, have the agent call a tool like <code>get_latest_screenshot</code>, and pass the capture in as structured data. It's clean, and it's how most new agent tools are built. Here's why Point doesn't start there.</p>
 <h2>Integrations are one agent at a time</h2>
 <p>An MCP server, a plugin, or an extension works with exactly the clients that support it, once each one is set up. That's fine if you live in one tool. Most people don't. In a single afternoon you might talk to:</p>
 <ul>

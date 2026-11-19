@@ -1,8 +1,12 @@
-# The most universal way to talk to any AI agent is paste
+# The clipboard is the universal context layer for AI
 
-If you build a tool for AI agents today, the obvious design is an integration. Run an MCP server, have the agent call a tool like `get_latest_screenshot`, and pass the capture in as structured data. It's clean. Agents understand it. It's how most new agent tools are built.
+Watch how people actually use AI on a computer. They copy an error from the terminal and paste it into a chat. They copy a paragraph from a doc, a stack trace from a log, a screenshot from the desktop. Before any agent sees your problem, it passes through one place: the clipboard.
 
-Point goes the other way. It types into whatever app is in front of you, the same way you would: it puts your words and screenshot on the clipboard and presses paste. This post is about why.
+That isn't a workaround. It's the only context channel that every app on your computer already shares. Your editor, your browser, your terminal and your chat apps don't integrate with each other, but they all read and write the clipboard. The tools that win will treat it as the context layer it already is.
+
+Point is built on that idea: it captures what you say and what you point at, and puts it where all context already goes.
+
+The obvious alternative, if you build a tool for AI agents today, is an integration: run an MCP server, have the agent call a tool like `get_latest_screenshot`, and pass the capture in as structured data. It's clean, and it's how most new agent tools are built. Here's why Point doesn't start there.
 
 ## Integrations are one agent at a time
 
