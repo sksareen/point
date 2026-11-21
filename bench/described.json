@@ -1,0 +1,22 @@
+{
+  "short": {
+    "green-button": "Make the Pro pricing card's \"Get started\" button green.",
+    "remove-badge": "Remove the \"New\" badge from the Team pricing card.",
+    "red-price": "Make the $29 price in the Team plan red.",
+    "rename-heading": "Change the \"What teams say\" heading to \"Loved by teams\".",
+    "hide-quote": "Hide Sam's \"Finally one place for everything\" testimonial card.",
+    "underline-link": "Underline the footer Contact link under Company, below Careers.",
+    "bigger-question": "Make the \"Can I export my data?\" question text bigger.",
+    "strike-feature": "Strike through \"Unlimited projects\" in the Team pricing card."
+  },
+  "described": {
+    "green-button": "Make the \"Get started\" button in the middle Pro ($12) card of the \"Simple pricing\" section green, leaving the Starter and Team buttons blue.",
+    "remove-badge": "Remove the yellow \"New\" badge from the Team ($29) card in the \"Simple pricing\" section, but leave the ones on Starter and Pro alone.",
+    "red-price": "Make the \"$29\" price on the Team card in the Simple pricing section red, the one with Priority support, not the Starter or Pro prices.",
+    "rename-heading": "Change the \"What teams say\" heading, the one above the three testimonial cards, to say \"Loved by teams.",
+    "hide-quote": "Hide the \"What teams say\" testimonial card that reads \"Finally one place for everything.\" by Sam, founder, the middle one of the three.",
+    "underline-link": "Underline the \"Contact\" link in the footer's Company column, the one under Careers, not the Contact links under Product or Legal.",
+    "bigger-question": "In the \"Questions\" FAQ section, make the \"Can I export my data?\" question text bigger (the bold line above \"Yes, as CSV or JSON.\").",
+    "strike-feature": "Strike through the \"Unlimited projects\" bullet in the Team pricing card (the $29 one), not the Pro card's identical \"Unlimited projects\" line."
+  }
+}

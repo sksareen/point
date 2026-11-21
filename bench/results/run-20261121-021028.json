@@ -1,0 +1,2262 @@
+{
+  "model": "sonnet",
+  "repeats": 3,
+  "records": [
+    {
+      "task": "green-button",
+      "condition": "vague",
+      "run": 0,
+      "outcome": "overbroad",
+      "seconds": 9.6,
+      "prompt": "Make this button green.",
+      "prompt_words": 4,
+      "before": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)"
+      ],
+      "after": [
+        "rgb(22, 163, 74)",
+        "rgb(22, 163, 74)",
+        "rgb(22, 163, 74)",
+        "rgb(22, 163, 74)",
+        "rgb(22, 163, 74)"
+      ],
+      "reply": "I changed the `.button` background in `style.css:21` from blue (`#2456e6`) to green (`#16a34a`).\n\nI didn't know which button you meant, and all five \"Get started\" buttons in `index.html` share that class. So they're all green now. If you only wanted one changed, tell me which. I'll give that one its own class and put the blue back on the rest."
+    },
+    {
+      "task": "green-button",
+      "condition": "short",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 13.2,
+      "prompt": "Make the Pro pricing card's \"Get started\" button green.",
+      "prompt_words": 9,
+      "before": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)"
+      ],
+      "after": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(22, 163, 74)",
+        "rgb(36, 86, 230)"
+      ],
+      "reply": "The Pro card's \"Get started\" button is now green (`#16a34a`). I haven't opened the page in a browser to check it.\n\nI added a `.button.green` rule in `style.css` and put the `green` class on that one button in `index.html`. The Starter and Team buttons, and the ones in the nav and hero, are still blue."
+    },
+    {
+      "task": "green-button",
+      "condition": "described",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 12.8,
+      "prompt": "Make the \"Get started\" button in the middle Pro ($12) card of the \"Simple pricing\" section green, leaving the Starter and Team buttons blue.",
+      "prompt_words": 24,
+      "before": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)"
+      ],
+      "after": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(26, 143, 60)",
+        "rgb(36, 86, 230)"
+      ],
+      "reply": "The \"Get started\" button in the Pro ($12) card is now green. The Starter and Team buttons are still blue. I haven't opened the page in a browser to check how it looks.\n\n- `index.html`: I added a `green` class to the Pro card's button, so it's `class=\"button green\"`.\n- `style.css`: I added `.button.green { background: #1a8f3c; }`. This overrides only the background colour of that one button."
+    },
+    {
+      "task": "green-button",
+      "condition": "pointed",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 12.9,
+      "prompt": "Make this button green.\n\n[Screenshot: bench/shots/green-button.png]",
+      "prompt_words": 4,
+      "before": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)"
+      ],
+      "after": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(22, 163, 74)",
+        "rgb(36, 86, 230)"
+      ],
+      "reply": "I made the circled Pro \"Get started\" button green (`#16a34a`). I didn't run it or look at it in a browser.\n\nI added a `green` class to that button in `index.html` and a `.button.green` rule in `style.css`. The Starter and Team buttons and the header button stay blue. If you want all the pricing buttons green, change the base `.button` background instead."
+    },
+    {
+      "task": "remove-badge",
+      "condition": "vague",
+      "run": 0,
+      "outcome": "no-change",
+      "seconds": 8.1,
+      "prompt": "Remove this badge.",
+      "prompt_words": 3,
+      "before": [
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "There are two \"New\" badges on the pricing cards, one on Starter (`index.html:39`) and one on Team (`index.html:60`). Which one should I remove, or should I remove both?"
+    },
+    {
+      "task": "remove-badge",
+      "condition": "short",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 9.6,
+      "prompt": "Remove the \"New\" badge from the Team pricing card.",
+      "prompt_words": 9,
+      "before": [
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "MISSING"
+      ],
+      "reply": "I removed the \"New\" badge from the Team pricing card in `index.html`. The Starter card still has its \"New\" badge, since you only asked about Team."
+    },
+    {
+      "task": "remove-badge",
+      "condition": "described",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 9.4,
+      "prompt": "Remove the yellow \"New\" badge from the Team ($29) card in the \"Simple pricing\" section, but leave the ones on Starter and Pro alone.",
+      "prompt_words": 24,
+      "before": [
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "MISSING"
+      ],
+      "reply": "I removed the \"New\" badge from the Team ($29) card in `index.html`.\n\nOne thing differs from what you described: only Starter had a badge. Pro never had one, so I didn't touch it. Starter's badge is still there."
+    },
+    {
+      "task": "remove-badge",
+      "condition": "pointed",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 10.9,
+      "prompt": "Remove this badge.\n\n[Screenshot: bench/shots/remove-badge.png]",
+      "prompt_words": 3,
+      "before": [
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "MISSING"
+      ],
+      "reply": "I removed the \"New\" badge from the Team pricing card in `index.html`, the one you circled. The Starter card still has its \"New\" badge, since you only marked the Team one. I haven't loaded the page to check it."
+    },
+    {
+      "task": "red-price",
+      "condition": "vague",
+      "run": 0,
+      "outcome": "no-change",
+      "seconds": 8.3,
+      "prompt": "Make this price red.",
+      "prompt_words": 4,
+      "before": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "after": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "reply": "There are three prices on the page (Starter $0, Pro $12, Team $29), and I can't tell which one you mean by \"this price\". Which should be red?\n\nIf you want all three, I can change the `.price` rule in `style.css:18`. If it's only one, I'll add a modifier class to that card's price."
+    },
+    {
+      "task": "red-price",
+      "condition": "short",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 11.6,
+      "prompt": "Make the $29 price in the Team plan red.",
+      "prompt_words": 9,
+      "before": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "after": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(255, 0, 0)"
+      ],
+      "reply": "The $29 price in the Team plan is now red. I added an inline `style=\"color: red;\"` to that one element in `index.html` (line 62). The other plans' prices are unchanged. I haven't opened the page in a browser to check it.\n\nI used an inline style because the `.price` class is shared with the other plans. If you'd rather keep styles in `style.css`, I can move it there as a separate class."
+    },
+    {
+      "task": "red-price",
+      "condition": "described",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 9.6,
+      "prompt": "Make the \"$29\" price on the Team card in the Simple pricing section red, the one with Priority support, not the Starter or Pro prices.",
+      "prompt_words": 25,
+      "before": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "after": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(255, 0, 0)"
+      ],
+      "reply": "The \"$29\" price on the Team card is now red. I added an inline `style=\"color: red;\"` to that one `<p class=\"price\">` in `index.html`, so the Starter and Pro prices are unchanged. I haven't opened the page in a browser to check it."
+    },
+    {
+      "task": "red-price",
+      "condition": "pointed",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 11.7,
+      "prompt": "Make this price red.\n\n[Screenshot: bench/shots/red-price.png]",
+      "prompt_words": 4,
+      "before": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "after": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(220, 38, 38)"
+      ],
+      "reply": "The circled $29 price on the Team card is now red (`#dc2626`). I haven't loaded the page to check it.\n\nI added a `price-red` class to that one price in `index.html`. The rule for it is in `style.css`, right after `.price`. The $0 and $12 prices are unchanged."
+    },
+    {
+      "task": "rename-heading",
+      "condition": "vague",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 8.8,
+      "prompt": "Change this heading to say Loved by teams.",
+      "prompt_words": 8,
+      "before": [
+        "Everything your team needs",
+        "Simple pricing",
+        "What teams say",
+        "Questions"
+      ],
+      "after": [
+        "Everything your team needs",
+        "Simple pricing",
+        "Loved by teams",
+        "Questions"
+      ],
+      "reply": "I changed the \"What teams say\" heading in `index.html` (line 74) to \"Loved by teams\". You didn't say which heading, so I picked that one because it's the testimonials section. If you meant a different heading, tell me which and I'll change that one instead."
+    },
+    {
+      "task": "rename-heading",
+      "condition": "short",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 7.7,
+      "prompt": "Change the \"What teams say\" heading to \"Loved by teams\".",
+      "prompt_words": 10,
+      "before": [
+        "Everything your team needs",
+        "Simple pricing",
+        "What teams say",
+        "Questions"
+      ],
+      "after": [
+        "Everything your team needs",
+        "Simple pricing",
+        "Loved by teams",
+        "Questions"
+      ],
+      "reply": "I changed the heading in `index.html` (line 74) from \"What teams say\" to \"Loved by teams\". It was the only place that text appeared. I didn't open the page in a browser to check it."
+    },
+    {
+      "task": "rename-heading",
+      "condition": "described",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 7.9,
+      "prompt": "Change the \"What teams say\" heading, the one above the three testimonial cards, to say \"Loved by teams.",
+      "prompt_words": 18,
+      "before": [
+        "Everything your team needs",
+        "Simple pricing",
+        "What teams say",
+        "Questions"
+      ],
+      "after": [
+        "Everything your team needs",
+        "Simple pricing",
+        "Loved by teams",
+        "Questions"
+      ],
+      "reply": "I changed the heading in `index.html` (line 74) from \"What teams say\" to \"Loved by teams\". Your message had an opening quote but no closing one, so I left the quotes out and didn't add a period. Tell me if you wanted different punctuation."
+    },
+    {
+      "task": "rename-heading",
+      "condition": "pointed",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 8.1,
+      "prompt": "Change this heading to say Loved by teams.\n\n[Screenshot: bench/shots/rename-heading.png]",
+      "prompt_words": 8,
+      "before": [
+        "Everything your team needs",
+        "Simple pricing",
+        "What teams say",
+        "Questions"
+      ],
+      "after": [
+        "Everything your team needs",
+        "Simple pricing",
+        "Loved by teams",
+        "Questions"
+      ],
+      "reply": "I changed the circled heading in `index.html` (line 74) from \"What teams say\" to \"Loved by teams\". I haven't opened the page in a browser to check it."
+    },
+    {
+      "task": "hide-quote",
+      "condition": "vague",
+      "run": 0,
+      "outcome": "no-change",
+      "seconds": 5.7,
+      "prompt": "Hide this one.",
+      "prompt_words": 3,
+      "before": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "I'm not sure what \"this one\" refers to, because this is the start of our conversation and there's nothing earlier for me to hide. Which item do you mean: a file, an element on the site, a message, or something else? Tell me which one and where it lives, and I'll do it."
+    },
+    {
+      "task": "hide-quote",
+      "condition": "short",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 10.8,
+      "prompt": "Hide Sam's \"Finally one place for everything\" testimonial card.",
+      "prompt_words": 9,
+      "before": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "none|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "`.quote` doesn't set `display`, so the `hidden` attribute will take effect.\n\nI hid Sam's \"Finally one place for everything\" card by adding the `hidden` attribute to it in `index.html`. The markup is still there, so removing the attribute brings the card back. I didn't open the page in a browser to check it.\n\nThe grid is still `repeat(3, 1fr)`, so the two remaining testimonials will fill the first two columns and leave the third one empty. If you'd rather they span the full width, I can change the grid to two columns."
+    },
+    {
+      "task": "hide-quote",
+      "condition": "described",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 9.1,
+      "prompt": "Hide the \"What teams say\" testimonial card that reads \"Finally one place for everything.\" by Sam, founder, the middle one of the three.",
+      "prompt_words": 23,
+      "before": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "none|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "I hid Sam's \"Finally one place for everything.\" card by adding the `hidden` attribute to it in `index.html`. The other two testimonials are untouched. The CSS doesn't set `display` on `.quote`, so the attribute takes effect. I didn't open the page in a browser to check.\n\nTo bring the card back, remove the `hidden` attribute."
+    },
+    {
+      "task": "hide-quote",
+      "condition": "pointed",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 12.3,
+      "prompt": "Hide this one.\n\n[Screenshot: bench/shots/hide-quote.png]",
+      "prompt_words": 3,
+      "before": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "none|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "I hid Sam's quote (\"Finally one place for everything.\") by adding the `hidden` attribute to its `<article>` in `index.html:77`. I haven't loaded the page to check it.\n\nThe testimonials grid is fixed at three columns (`repeat(3, 1fr)` in `style.css`). With Sam's quote gone, the other two will fill the first two columns and leave an empty third column. If you'd rather they span the full width, I can switch the grid to two columns.\n\nThe quote is still in the markup, so removing `hidden` brings it back."
+    },
+    {
+      "task": "underline-link",
+      "condition": "vague",
+      "run": 0,
+      "outcome": "no-change",
+      "seconds": 5.7,
+      "prompt": "Underline this link.",
+      "prompt_words": 3,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I don't see a link in your message. Could you paste it, and tell me where it should be underlined (for example, a file in this project, or just formatted text like `<u>\u2026</u>` in HTML or Markdown)?"
+    },
+    {
+      "task": "underline-link",
+      "condition": "short",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 9.2,
+      "prompt": "Underline the footer Contact link under Company, below Careers.",
+      "prompt_words": 9,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "underline||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I underlined the footer Contact link under Company, the one right after Careers, in `index.html`. I added the underline as an inline `style=\"text-decoration: underline;\"` on that link, so the Contact links under Product and Legal are unchanged. I haven't opened the page in a browser to check it."
+    },
+    {
+      "task": "underline-link",
+      "condition": "described",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 8.4,
+      "prompt": "Underline the \"Contact\" link in the footer's Company column, the one under Careers, not the Contact links under Product or Legal.",
+      "prompt_words": 21,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "underline||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "The \"Contact\" link in the footer's Company column, the one after Careers, is now underlined. I added an inline `text-decoration: underline;` style in `index.html`, and the Contact links under Product and Legal are unchanged. I haven't opened the page in a browser to check how it looks."
+    },
+    {
+      "task": "underline-link",
+      "condition": "pointed",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 10.9,
+      "prompt": "Underline this link.\n\n[Screenshot: bench/shots/underline-link.png]",
+      "prompt_words": 3,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "underline||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I underlined the circled \"Contact\" link, the one in the Company column of the footer. I didn't render the page to check it.\n\nI added an `underlined` class to that link in `index.html`. The rule `footer a.underlined { text-decoration: underline; }` is in `style.css`. The other two \"Contact\" links, under Product and Legal, are unchanged."
+    },
+    {
+      "task": "bigger-question",
+      "condition": "vague",
+      "run": 0,
+      "outcome": "overbroad",
+      "seconds": 10.7,
+      "prompt": "Make this question's text bigger.",
+      "prompt_words": 5,
+      "before": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "after": [
+        "20px",
+        "20px",
+        "20px",
+        "20px"
+      ],
+      "reply": "I interpreted \"question\" as the FAQ questions, the bold lines in the \"Questions\" section. I raised their font size from 16px to 20px in `style.css:25`. The answers underneath are unchanged.\n\nI haven't loaded the page to check how it looks. If you meant a different piece of text, such as the \"Questions\" heading, tell me and I'll change that instead."
+    },
+    {
+      "task": "bigger-question",
+      "condition": "short",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 8.4,
+      "prompt": "Make the \"Can I export my data?\" question text bigger.",
+      "prompt_words": 10,
+      "before": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "after": [
+        "16px",
+        "16px",
+        "24px",
+        "16px"
+      ],
+      "reply": "I made the \"Can I export my data?\" question bigger by adding an inline `font-size: 1.5em` to its `<dt>` in `index.html` (line 87). The other questions are unchanged. I haven't opened the page in a browser to check how it looks."
+    },
+    {
+      "task": "bigger-question",
+      "condition": "described",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 9.1,
+      "prompt": "In the \"Questions\" FAQ section, make the \"Can I export my data?\" question text bigger (the bold line above \"Yes, as CSV or JSON.\").",
+      "prompt_words": 24,
+      "before": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "after": [
+        "16px",
+        "16px",
+        "20px",
+        "16px"
+      ],
+      "reply": "I made the \"Can I export my data?\" question bigger, going from 16px to 20px. I haven't opened the page in a browser to check how it looks. I added an inline style to that one `<dt>` in `index.html` (line 87), so the other three questions stay at the 16px set in `style.css`.\n\nIf you'd rather have all the FAQ questions larger, change the `dt` rule in `style.css` instead."
+    },
+    {
+      "task": "bigger-question",
+      "condition": "pointed",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 11.4,
+      "prompt": "Make this question's text bigger.\n\n[Screenshot: bench/shots/bigger-question.png]",
+      "prompt_words": 5,
+      "before": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "after": [
+        "16px",
+        "16px",
+        "22px",
+        "16px"
+      ],
+      "reply": "I made the circled question, \"Can I export my data?\", bigger: 22px instead of 16px. I didn't re-render the page to check how it looks.\n\nI added a `big` class to that question in `index.html` and a `dt.big { font-size: 22px; }` rule in `style.css`. The other three questions are unchanged. If you'd rather have all four questions bigger, I can change the base `dt` size instead."
+    },
+    {
+      "task": "strike-feature",
+      "condition": "vague",
+      "run": 0,
+      "outcome": "no-change",
+      "seconds": 5.6,
+      "prompt": "Strike this line through.",
+      "prompt_words": 4,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "Which line do you mean? I don't see a file or selection in your message. Tell me the file and line number or the text, and say whether you want Markdown strikethrough (`~~text~~`) or HTML (`<s>text</s>`). I'll apply it."
+    },
+    {
+      "task": "strike-feature",
+      "condition": "short",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 9.3,
+      "prompt": "Strike through \"Unlimited projects\" in the Team pricing card.",
+      "prompt_words": 9,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none|S|",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "\"Unlimited projects\" in the Team pricing card in `index.html` is now struck through with an `<s>` tag. I left the Pro card's \"Unlimited projects\" as it was. I haven't opened the page in a browser to check it."
+    },
+    {
+      "task": "strike-feature",
+      "condition": "described",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 8.6,
+      "prompt": "Strike through the \"Unlimited projects\" bullet in the Team pricing card (the $29 one), not the Pro card's identical \"Unlimited projects\" line.",
+      "prompt_words": 22,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none|S|",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I struck through \"Unlimited projects\" in the Team ($29) card in `index.html` by wrapping it in `<s>\u2026</s>`. The Pro card's identical line is unchanged. I haven't opened the page in a browser to check how it renders."
+    },
+    {
+      "task": "strike-feature",
+      "condition": "pointed",
+      "run": 0,
+      "outcome": "hit",
+      "seconds": 11.0,
+      "prompt": "Strike this line through.\n\n[Screenshot: bench/shots/strike-feature.png]",
+      "prompt_words": 4,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none|S|",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I struck through \"Unlimited projects\" in the Team card, the one circled in your screenshot. In `index.html` it's now wrapped in `<s>\u2026</s>`. I didn't render the page to check it.\n\nThe Pro card has the same line, and I left it alone."
+    },
+    {
+      "task": "green-button",
+      "condition": "vague",
+      "run": 1,
+      "outcome": "overbroad",
+      "seconds": 11.7,
+      "prompt": "Make this button green.",
+      "prompt_words": 4,
+      "before": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)"
+      ],
+      "after": [
+        "rgb(31, 157, 85)",
+        "rgb(31, 157, 85)",
+        "rgb(31, 157, 85)",
+        "rgb(31, 157, 85)",
+        "rgb(31, 157, 85)"
+      ],
+      "reply": "I changed the `.button` background in `style.css:21` from blue (`#2456e6`) to green (`#1f9d55`).\n\nYou didn't say which button, and the site has five \"Get started\" buttons that all use the `.button` class (one in `index.html` line 16, one at 23, and three more at 47, 57 and 68). So all five are green now. If you only wanted one of them, tell me which. I'll put the blue back on the rest and add a modifier class like `.button.green` for that one.\n\nI left the blue link color on `.more` alone."
+    },
+    {
+      "task": "green-button",
+      "condition": "short",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 12.7,
+      "prompt": "Make the Pro pricing card's \"Get started\" button green.",
+      "prompt_words": 9,
+      "before": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)"
+      ],
+      "after": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(26, 143, 76)",
+        "rgb(36, 86, 230)"
+      ],
+      "reply": "The Pro card's \"Get started\" button is now green (`#1a8f4c`, with white text). I haven't opened the page in a browser to check it.\n\nI added a `green` class to that button in `index.html` and a `.button.green` rule in `style.css`. The Starter and Team buttons and the header buttons are unchanged."
+    },
+    {
+      "task": "green-button",
+      "condition": "described",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 12.8,
+      "prompt": "Make the \"Get started\" button in the middle Pro ($12) card of the \"Simple pricing\" section green, leaving the Starter and Team buttons blue.",
+      "prompt_words": 24,
+      "before": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)"
+      ],
+      "after": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(26, 155, 75)",
+        "rgb(36, 86, 230)"
+      ],
+      "reply": "The \"Get started\" button in the Pro ($12) card is now green (`#1a9b4b`). I haven't opened the page in a browser to check it.\n\nI added a `green` class to that one button in `index.html` and a `.button.green` rule in `style.css`. The Starter and Team buttons, and the buttons outside the pricing section, still use the default blue."
+    },
+    {
+      "task": "green-button",
+      "condition": "pointed",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 16.2,
+      "prompt": "Make this button green.\n\n[Screenshot: bench/shots/green-button.png]",
+      "prompt_words": 4,
+      "before": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)"
+      ],
+      "after": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(22, 163, 74)",
+        "rgb(36, 86, 230)"
+      ],
+      "reply": "The Pro plan's \"Get started\" button (the circled one) is now green (`#16a34a`). I haven't opened the page to check how it looks.\n\nI added a `.button.green` rule in `style.css` and put the `green` class on that button at `index.html:57`. The Starter and Team buttons are still blue."
+    },
+    {
+      "task": "remove-badge",
+      "condition": "vague",
+      "run": 1,
+      "outcome": "no-change",
+      "seconds": 7.7,
+      "prompt": "Remove this badge.",
+      "prompt_words": 3,
+      "before": [
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "There are two \"New\" badges on the pricing page, one on the Starter card (`index.html:39`) and one on the Team card (`index.html:60`). Which one do you mean, or should I remove both?"
+    },
+    {
+      "task": "remove-badge",
+      "condition": "short",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 9.0,
+      "prompt": "Remove the \"New\" badge from the Team pricing card.",
+      "prompt_words": 9,
+      "before": [
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "MISSING"
+      ],
+      "reply": "I removed the \"New\" badge from the Team pricing card in `index.html`. The Starter card still has its \"New\" badge, since you only asked about Team."
+    },
+    {
+      "task": "remove-badge",
+      "condition": "described",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 8.4,
+      "prompt": "Remove the yellow \"New\" badge from the Team ($29) card in the \"Simple pricing\" section, but leave the ones on Starter and Pro alone.",
+      "prompt_words": 24,
+      "before": [
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "MISSING"
+      ],
+      "reply": "I removed the \"New\" badge from the Team ($29) card in `index.html`. The Starter badge is untouched.\n\nI didn't find a \"New\" badge on Pro. My search for \"New\" matched only the Starter and Team cards, so Pro may use different wording or have no badge. I didn't open the page in a browser to check."
+    },
+    {
+      "task": "remove-badge",
+      "condition": "pointed",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 9.3,
+      "prompt": "Remove this badge.\n\n[Screenshot: bench/shots/remove-badge.png]",
+      "prompt_words": 3,
+      "before": [
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "MISSING"
+      ],
+      "reply": "I removed the circled \"New\" badge from the Team pricing card in `index.html`. The Starter card's badge is still there, since you only circled the Team one. I haven't opened the page to check it."
+    },
+    {
+      "task": "red-price",
+      "condition": "vague",
+      "run": 1,
+      "outcome": "no-change",
+      "seconds": 8.7,
+      "prompt": "Make this price red.",
+      "prompt_words": 4,
+      "before": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "after": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "reply": "There are three prices on the page ($0, $12, $29), and \"this price\" doesn't tell me which one you mean. Which should be red: Starter, Pro, Team, or all of them?\n\nIf you want all three, it's a one-line change: add `color: red;` to `.price` in `style.css:18`. For a single card I'd add a modifier class to that price instead."
+    },
+    {
+      "task": "red-price",
+      "condition": "short",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 10.5,
+      "prompt": "Make the $29 price in the Team plan red.",
+      "prompt_words": 9,
+      "before": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "after": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(255, 0, 0)"
+      ],
+      "reply": "The $29 price in the Team plan is now red. I added an inline `style=\"color: red;\"` to that one `<p class=\"price\">` in `index.html` (line 62), so the $0 and $12 prices are unchanged. I haven't opened the page in a browser to check it.\n\nIf you'd rather keep styling in `style.css`, I can move it there as a separate class."
+    },
+    {
+      "task": "red-price",
+      "condition": "described",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 9.4,
+      "prompt": "Make the \"$29\" price on the Team card in the Simple pricing section red, the one with Priority support, not the Starter or Pro prices.",
+      "prompt_words": 25,
+      "before": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "after": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(255, 0, 0)"
+      ],
+      "reply": "The \"$29\" price on the Team card is now red. I added an inline `style=\"color: red;\"` to that one element in `index.html`, so the Starter and Pro prices are unchanged. I haven't opened the page in a browser to check it."
+    },
+    {
+      "task": "red-price",
+      "condition": "pointed",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 9.8,
+      "prompt": "Make this price red.\n\n[Screenshot: bench/shots/red-price.png]",
+      "prompt_words": 4,
+      "before": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "after": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(220, 38, 38)"
+      ],
+      "reply": "The Team plan's `$29` price is now red (`#dc2626`). I haven't loaded the page to check how it looks.\n\nI added a `price-red` class to that one price in `index.html` and defined its color in `style.css`. The `$0` and `$12` prices are unchanged. If you meant all three prices, I can set the color on `.price` instead."
+    },
+    {
+      "task": "rename-heading",
+      "condition": "vague",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 8.1,
+      "prompt": "Change this heading to say Loved by teams.",
+      "prompt_words": 8,
+      "before": [
+        "Everything your team needs",
+        "Simple pricing",
+        "What teams say",
+        "Questions"
+      ],
+      "after": [
+        "Everything your team needs",
+        "Simple pricing",
+        "Loved by teams",
+        "Questions"
+      ],
+      "reply": "I changed the testimonials heading in `index.html` from \"What teams say\" to \"Loved by teams\". You didn't say which heading, so I picked that one because it was the closest fit. If you meant a different heading, tell me which and I'll change that one instead."
+    },
+    {
+      "task": "rename-heading",
+      "condition": "short",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 7.2,
+      "prompt": "Change the \"What teams say\" heading to \"Loved by teams\".",
+      "prompt_words": 10,
+      "before": [
+        "Everything your team needs",
+        "Simple pricing",
+        "What teams say",
+        "Questions"
+      ],
+      "after": [
+        "Everything your team needs",
+        "Simple pricing",
+        "Loved by teams",
+        "Questions"
+      ],
+      "reply": "I changed the heading on line 74 of `index.html` from \"What teams say\" to \"Loved by teams\". I didn't open the page in a browser to check it."
+    },
+    {
+      "task": "rename-heading",
+      "condition": "described",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 7.9,
+      "prompt": "Change the \"What teams say\" heading, the one above the three testimonial cards, to say \"Loved by teams.",
+      "prompt_words": 18,
+      "before": [
+        "Everything your team needs",
+        "Simple pricing",
+        "What teams say",
+        "Questions"
+      ],
+      "after": [
+        "Everything your team needs",
+        "Simple pricing",
+        "Loved by teams",
+        "Questions"
+      ],
+      "reply": "I changed the heading in `index.html` (line 74) from \"What teams say\" to \"Loved by teams\". Your message had an opening quote but no closing one, so I left out any trailing period or punctuation. Tell me if you wanted one."
+    },
+    {
+      "task": "rename-heading",
+      "condition": "pointed",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 8.7,
+      "prompt": "Change this heading to say Loved by teams.\n\n[Screenshot: bench/shots/rename-heading.png]",
+      "prompt_words": 8,
+      "before": [
+        "Everything your team needs",
+        "Simple pricing",
+        "What teams say",
+        "Questions"
+      ],
+      "after": [
+        "Everything your team needs",
+        "Simple pricing",
+        "Loved by teams",
+        "Questions"
+      ],
+      "reply": "I changed the circled heading in `index.html` from \"What teams say\" to \"Loved by teams\". I didn't load the page in a browser to check it."
+    },
+    {
+      "task": "hide-quote",
+      "condition": "vague",
+      "run": 1,
+      "outcome": "no-change",
+      "seconds": 5.7,
+      "prompt": "Hide this one.",
+      "prompt_words": 3,
+      "before": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "I'm not sure what \"this one\" refers to, since this is the start of our conversation. What would you like hidden? For example, a file, an element on the site, or a message?"
+    },
+    {
+      "task": "hide-quote",
+      "condition": "short",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 10.6,
+      "prompt": "Hide Sam's \"Finally one place for everything\" testimonial card.",
+      "prompt_words": 9,
+      "before": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "none|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "I hid Sam's \"Finally one place for everything\" card by adding the `hidden` attribute to its `<article>` in `index.html` (line 77). I didn't open the page in a browser to check it.\n\nThe CSS doesn't set a `display` value on `.quote`, so `hidden` should work. To bring the card back, remove the attribute."
+    },
+    {
+      "task": "hide-quote",
+      "condition": "described",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 11.1,
+      "prompt": "Hide the \"What teams say\" testimonial card that reads \"Finally one place for everything.\" by Sam, founder, the middle one of the three.",
+      "prompt_words": 23,
+      "before": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "none|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "I hid Sam's \"Finally one place for everything.\" card by adding the `hidden` attribute to it in `index.html`. Nothing in `style.css` sets `display` on `.quote`, so the browser's default hiding applies. I haven't opened the page in a browser.\n\nThe markup is still in the file, so you can bring the card back by removing that attribute. The grid will now show Ana's and Priya's cards."
+    },
+    {
+      "task": "hide-quote",
+      "condition": "pointed",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 11.8,
+      "prompt": "Hide this one.\n\n[Screenshot: bench/shots/hide-quote.png]",
+      "prompt_words": 3,
+      "before": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "none|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "I hid Sam's quote (\"Finally one place for everything.\") by adding the `hidden` attribute to it in `index.html:77`. The markup is still there, so removing the attribute brings it back. I haven't loaded the page to check it.\n\nThe grid has no explicit placement, so the other two quotes should move together and leave an empty third column."
+    },
+    {
+      "task": "underline-link",
+      "condition": "vague",
+      "run": 1,
+      "outcome": "no-change",
+      "seconds": 5.3,
+      "prompt": "Underline this link.",
+      "prompt_words": 3,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "Your message didn't include a link. Could you paste it, and tell me where it should be underlined? For example, in an HTML file in this project, in markdown, or somewhere else."
+    },
+    {
+      "task": "underline-link",
+      "condition": "short",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 11.1,
+      "prompt": "Underline the footer Contact link under Company, below Careers.",
+      "prompt_words": 9,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "underline||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I underlined the Contact link under Company, below Careers, in `index.html`. The Product and Legal Contact links are unchanged. I haven't opened the page to check it.\n\nThe footer styles aren't in `index.html`, so I used an inline `style=\"text-decoration: underline;\"` on that one link. If you'd rather have it in your stylesheet, say so and I'll move it."
+    },
+    {
+      "task": "underline-link",
+      "condition": "described",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 8.6,
+      "prompt": "Underline the \"Contact\" link in the footer's Company column, the one under Careers, not the Contact links under Product or Legal.",
+      "prompt_words": 21,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "underline||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I underlined the \"Contact\" link in the footer's Company column (the one after Careers) in `index.html`. I did it with an inline `text-decoration: underline` style on that link only, so the Contact links under Product and Legal are unchanged. I haven't opened the page in a browser to check it."
+    },
+    {
+      "task": "underline-link",
+      "condition": "pointed",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 11.3,
+      "prompt": "Underline this link.\n\n[Screenshot: bench/shots/underline-link.png]",
+      "prompt_words": 3,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "underline||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I underlined the circled \"Contact\" link in the Company column of the footer (`index.html:94`). I did it with an inline `text-decoration: underline` style, because `footer a` in `style.css` removes underlines from all footer links. The other two \"Contact\" links are unchanged. I haven't opened the page to check how it looks."
+    },
+    {
+      "task": "bigger-question",
+      "condition": "vague",
+      "run": 1,
+      "outcome": "overbroad",
+      "seconds": 12.4,
+      "prompt": "Make this question's text bigger.",
+      "prompt_words": 5,
+      "before": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "after": [
+        "20px",
+        "20px",
+        "20px",
+        "20px"
+      ],
+      "reply": "I made the FAQ question text bigger by changing the `dt` rule in `style.css` from 16px to 20px. This applies to all four questions (\"Can I change plans later?\" and the other three), and I haven't viewed the page to check how it looks.\n\nYou said \"this question\" and I couldn't tell which one you meant, so I changed all four. If you only meant one, or want a different size, tell me."
+    },
+    {
+      "task": "bigger-question",
+      "condition": "short",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 9.7,
+      "prompt": "Make the \"Can I export my data?\" question text bigger.",
+      "prompt_words": 10,
+      "before": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "after": [
+        "16px",
+        "16px",
+        "22px",
+        "16px"
+      ],
+      "reply": "The \"Can I export my data?\" question is now 22px instead of 16px. I haven't opened the page in a browser to check how it looks.\n\nI set the size inline on that one `<dt>` in `index.html`, so the other questions stay at 16px. If you'd rather have every question bigger, change the `dt` rule at `style.css:25`."
+    },
+    {
+      "task": "bigger-question",
+      "condition": "described",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 10.7,
+      "prompt": "In the \"Questions\" FAQ section, make the \"Can I export my data?\" question text bigger (the bold line above \"Yes, as CSV or JSON.\").",
+      "prompt_words": 24,
+      "before": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "after": [
+        "16px",
+        "16px",
+        "20px",
+        "16px"
+      ],
+      "reply": "I made the \"Can I export my data?\" question bigger by raising its font size from 16px to 20px. I haven't opened the page in a browser to check how it looks.\n\nI used an inline style on that one `<dt>` in `index.html`, so the other three questions stay at 16px. If you'd rather have it as a CSS class in `style.css`, I can move it."
+    },
+    {
+      "task": "bigger-question",
+      "condition": "pointed",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 11.7,
+      "prompt": "Make this question's text bigger.\n\n[Screenshot: bench/shots/bigger-question.png]",
+      "prompt_words": 5,
+      "before": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "after": [
+        "16px",
+        "16px",
+        "20px",
+        "16px"
+      ],
+      "reply": "I made the circled question, \"Can I export my data?\", bigger: its text now renders at 20px instead of the 16px the other questions use. I haven't loaded the page to check how it looks.\n\nI added a `big` class to that question in `index.html` and a `dt.big { font-size: 20px; }` rule in `style.css`. The other questions are unchanged. To enlarge all of them instead, change the `font-size` on the `dt` rule."
+    },
+    {
+      "task": "strike-feature",
+      "condition": "vague",
+      "run": 1,
+      "outcome": "no-change",
+      "seconds": 5.9,
+      "prompt": "Strike this line through.",
+      "prompt_words": 4,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "Which line do you mean? Your message doesn't include a file or a selection, so I can't tell what to strike through. Send me the file path and the line number or text. Also tell me whether you want Markdown strikethrough (`~~text~~`), HTML (`<s>text</s>`), or something else."
+    },
+    {
+      "task": "strike-feature",
+      "condition": "short",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 9.3,
+      "prompt": "Strike through \"Unlimited projects\" in the Team pricing card.",
+      "prompt_words": 9,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none|S|",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "\"Unlimited projects\" in the Team pricing card is now struck through, using `<s>` in `index.html`. I left the Pro card's identical line alone. I haven't opened the page in a browser to check it."
+    },
+    {
+      "task": "strike-feature",
+      "condition": "described",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 9.4,
+      "prompt": "Strike through the \"Unlimited projects\" bullet in the Team pricing card (the $29 one), not the Pro card's identical \"Unlimited projects\" line.",
+      "prompt_words": 22,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none|S|",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I struck through \"Unlimited projects\" in the Team ($29) card at `index.html:64` by wrapping it in `<s>\u2026</s>`. The Pro card's identical line is unchanged. I haven't opened the page in a browser to check how it renders."
+    },
+    {
+      "task": "strike-feature",
+      "condition": "pointed",
+      "run": 1,
+      "outcome": "hit",
+      "seconds": 10.3,
+      "prompt": "Strike this line through.\n\n[Screenshot: bench/shots/strike-feature.png]",
+      "prompt_words": 4,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none|S|",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I struck through \"Unlimited projects\" in the Team card, the one you circled. It's now wrapped in `<s>` in `index.html` (line 64). The identical line in the Pro card is unchanged. I haven't rendered the page to check how it looks."
+    },
+    {
+      "task": "green-button",
+      "condition": "vague",
+      "run": 2,
+      "outcome": "no-change",
+      "seconds": 9.2,
+      "prompt": "Make this button green.",
+      "prompt_words": 4,
+      "before": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)"
+      ],
+      "after": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)"
+      ],
+      "reply": "There are five \"Get started\" buttons in `index.html` (lines 16, 23, 47, 57 and 68), and they all use the same `.button` style in `style.css:21`. I can't tell which one you mean.\n\n- **All of them:** I change the `.button` background from `#2456e6` to green. This is a one-line edit.\n- **Just one:** I add a modifier class, such as `button green`, to that button only. Tell me which one: the header, the hero, or one of the three lower ones.\n\nWhich do you want? If you don't have a preference, I'll turn them all green."
+    },
+    {
+      "task": "green-button",
+      "condition": "short",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 14.0,
+      "prompt": "Make the Pro pricing card's \"Get started\" button green.",
+      "prompt_words": 9,
+      "before": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)"
+      ],
+      "after": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(26, 143, 60)",
+        "rgb(36, 86, 230)"
+      ],
+      "reply": "The Pro card's \"Get started\" button is now green (`#1a8f3c`). I haven't opened the page in a browser to check it.\n\nI added a `green` class to that one button in `index.html` and a `.button.green` rule in `style.css`. The Starter and Team buttons and the ones in the header and hero are unchanged."
+    },
+    {
+      "task": "green-button",
+      "condition": "described",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 12.3,
+      "prompt": "Make the \"Get started\" button in the middle Pro ($12) card of the \"Simple pricing\" section green, leaving the Starter and Team buttons blue.",
+      "prompt_words": 24,
+      "before": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)"
+      ],
+      "after": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(26, 158, 75)",
+        "rgb(36, 86, 230)"
+      ],
+      "reply": "The Pro ($12) card's \"Get started\" button is now green (`#1a9e4b`). I haven't opened the page in a browser to check it.\n\nI added a `green` class to that one button in `index.html` and a matching `.button.green` rule in `style.css`. The Starter and Team buttons, and the buttons elsewhere on the page, keep the original blue."
+    },
+    {
+      "task": "green-button",
+      "condition": "pointed",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 16.9,
+      "prompt": "Make this button green.\n\n[Screenshot: bench/shots/green-button.png]",
+      "prompt_words": 4,
+      "before": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)"
+      ],
+      "after": [
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(36, 86, 230)",
+        "rgb(22, 163, 74)",
+        "rgb(36, 86, 230)"
+      ],
+      "reply": "The Pro plan's \"Get started\" button (the one circled in your screenshot) is now green. I haven't loaded the page in a browser to check it.\n\nI added a `green` class to that one link in `index.html` and a `.button.green { background: #16a34a; }` rule in `style.css`. The other \"Get started\" buttons are unchanged, so Starter and Team stay blue.\n\nIf you meant every button to be green, change the base `.button` colour in `style.css` instead."
+    },
+    {
+      "task": "remove-badge",
+      "condition": "vague",
+      "run": 2,
+      "outcome": "no-change",
+      "seconds": 7.8,
+      "prompt": "Remove this badge.",
+      "prompt_words": 3,
+      "before": [
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "The page has two \"New\" badges, one on the Starter card (`index.html:39`) and one on the Team card (`index.html:60`). Which one do you want removed, or should I remove both?"
+    },
+    {
+      "task": "remove-badge",
+      "condition": "short",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 9.5,
+      "prompt": "Remove the \"New\" badge from the Team pricing card.",
+      "prompt_words": 9,
+      "before": [
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "MISSING"
+      ],
+      "reply": "I removed the \"New\" badge from the Team pricing card in `index.html`. The Starter card still has its \"New\" badge, and I left it alone since you only asked about Team."
+    },
+    {
+      "task": "remove-badge",
+      "condition": "described",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 9.8,
+      "prompt": "Remove the yellow \"New\" badge from the Team ($29) card in the \"Simple pricing\" section, but leave the ones on Starter and Pro alone.",
+      "prompt_words": 24,
+      "before": [
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "MISSING"
+      ],
+      "reply": "I removed the \"New\" badge from the Team ($29) card in `index.html`.\n\nOne difference from what you described: Pro never had a badge. Only Starter and Team did. Starter's badge is untouched, and Pro is unchanged."
+    },
+    {
+      "task": "remove-badge",
+      "condition": "pointed",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 9.4,
+      "prompt": "Remove this badge.\n\n[Screenshot: bench/shots/remove-badge.png]",
+      "prompt_words": 3,
+      "before": [
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "MISSING"
+      ],
+      "reply": "I removed the \"New\" badge from the Team card in `index.html`. I left the one on the Starter card, since you only circled the Team one. I haven't loaded the page to check it."
+    },
+    {
+      "task": "red-price",
+      "condition": "vague",
+      "run": 2,
+      "outcome": "no-change",
+      "seconds": 8.5,
+      "prompt": "Make this price red.",
+      "prompt_words": 4,
+      "before": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "after": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "reply": "There are three prices on the page ($0 Starter, $12 Pro, $29 Team), and I can't tell which one you mean. Which should be red?\n\n- **All three:** I'd add `color: red` to the `.price` rule in `style.css`.\n- **One plan:** I'd add a modifier class to that plan's price, such as `price--red`."
+    },
+    {
+      "task": "red-price",
+      "condition": "short",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 11.2,
+      "prompt": "Make the $29 price in the Team plan red.",
+      "prompt_words": 9,
+      "before": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "after": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(255, 0, 0)"
+      ],
+      "reply": "The $29 price in the Team plan is now red. I added an inline `style=\"color: red;\"` to that one element in `index.html` (line 62). I didn't open the page to check it.\n\nThe `.price` class is shared by all three plans, so I used an inline style to leave the $0 and $12 prices unchanged. If you'd rather keep styling in `style.css`, I can add a modifier class there instead."
+    },
+    {
+      "task": "red-price",
+      "condition": "described",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 9.8,
+      "prompt": "Make the \"$29\" price on the Team card in the Simple pricing section red, the one with Priority support, not the Starter or Pro prices.",
+      "prompt_words": 25,
+      "before": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "after": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(255, 0, 0)"
+      ],
+      "reply": "The \"$29\" price on the Team card (the one with Priority support) is now red. I added an inline `style=\"color: red;\"` to that one element in `index.html`, so the Starter and Pro prices are unchanged. I haven't opened the page in a browser to check it."
+    },
+    {
+      "task": "red-price",
+      "condition": "pointed",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 11.7,
+      "prompt": "Make this price red.\n\n[Screenshot: bench/shots/red-price.png]",
+      "prompt_words": 4,
+      "before": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)"
+      ],
+      "after": [
+        "rgb(28, 36, 48)",
+        "rgb(28, 36, 48)",
+        "rgb(220, 38, 38)"
+      ],
+      "reply": "I made the circled `$29` price on the Team card red (`#dc2626`). I haven't loaded the page to check it.\n\nI added a `price-red` class to that one price in `index.html` and defined it in `style.css`. The `$0` and `$12` prices keep the default color."
+    },
+    {
+      "task": "rename-heading",
+      "condition": "vague",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 8.6,
+      "prompt": "Change this heading to say Loved by teams.",
+      "prompt_words": 8,
+      "before": [
+        "Everything your team needs",
+        "Simple pricing",
+        "What teams say",
+        "Questions"
+      ],
+      "after": [
+        "Everything your team needs",
+        "Simple pricing",
+        "Loved by teams",
+        "Questions"
+      ],
+      "reply": "I changed the \"What teams say\" heading in `index.html` to \"Loved by teams\". You didn't say which heading you meant, so I picked that one because it's the testimonials section. If you meant a different heading, tell me which and I'll change that one instead."
+    },
+    {
+      "task": "rename-heading",
+      "condition": "short",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 7.8,
+      "prompt": "Change the \"What teams say\" heading to \"Loved by teams\".",
+      "prompt_words": 10,
+      "before": [
+        "Everything your team needs",
+        "Simple pricing",
+        "What teams say",
+        "Questions"
+      ],
+      "after": [
+        "Everything your team needs",
+        "Simple pricing",
+        "Loved by teams",
+        "Questions"
+      ],
+      "reply": "I changed the heading in `index.html` (line 74) from \"What teams say\" to \"Loved by teams\". I didn't open the page to check it. That was the only place the old heading appeared."
+    },
+    {
+      "task": "rename-heading",
+      "condition": "described",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 8.1,
+      "prompt": "Change the \"What teams say\" heading, the one above the three testimonial cards, to say \"Loved by teams.",
+      "prompt_words": 18,
+      "before": [
+        "Everything your team needs",
+        "Simple pricing",
+        "What teams say",
+        "Questions"
+      ],
+      "after": [
+        "Everything your team needs",
+        "Simple pricing",
+        "Loved by teams",
+        "Questions"
+      ],
+      "reply": "I changed the heading in `index.html` (line 74) from \"What teams say\" to \"Loved by teams\". Your message had an opening quote but no closing one, so I left out the stray quote mark and didn't add a period. If you wanted a period or other punctuation, tell me and I'll add it."
+    },
+    {
+      "task": "rename-heading",
+      "condition": "pointed",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 7.8,
+      "prompt": "Change this heading to say Loved by teams.\n\n[Screenshot: bench/shots/rename-heading.png]",
+      "prompt_words": 8,
+      "before": [
+        "Everything your team needs",
+        "Simple pricing",
+        "What teams say",
+        "Questions"
+      ],
+      "after": [
+        "Everything your team needs",
+        "Simple pricing",
+        "Loved by teams",
+        "Questions"
+      ],
+      "reply": "I changed the circled heading in `index.html` (line 74) from \"What teams say\" to \"Loved by teams\". I didn't load the page in a browser to check how it looks."
+    },
+    {
+      "task": "hide-quote",
+      "condition": "vague",
+      "run": 2,
+      "outcome": "no-change",
+      "seconds": 6.2,
+      "prompt": "Hide this one.",
+      "prompt_words": 3,
+      "before": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "I'm not sure what \"this one\" refers to. This is the start of our conversation, so there's nothing earlier for me to hide. Which file, element, message or setting do you mean? If you mean something in the site, tell me the path or describe it and I'll take care of it."
+    },
+    {
+      "task": "hide-quote",
+      "condition": "short",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 10.6,
+      "prompt": "Hide Sam's \"Finally one place for everything\" testimonial card.",
+      "prompt_words": 9,
+      "before": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "none|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "I hid Sam's \"Finally one place for everything\" testimonial card by adding the `hidden` attribute to it in `index.html`. I haven't loaded the page in a browser. `style.css` doesn't set `display` on `.quote`, so nothing overrides the attribute and the card shouldn't show.\n\nThe markup is still in the file. To bring the card back, delete the word `hidden` from that `<article>`."
+    },
+    {
+      "task": "hide-quote",
+      "condition": "described",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 10.5,
+      "prompt": "Hide the \"What teams say\" testimonial card that reads \"Finally one place for everything.\" by Sam, founder, the middle one of the three.",
+      "prompt_words": 23,
+      "before": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "none|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "I hid Sam's \"Finally one place for everything.\" card by adding the `hidden` attribute to its `<article>` in `index.html`. No CSS sets `display` on `.quote`, so the attribute should take effect. I haven't opened the page to check.\n\nThe markup is still in the file. To bring the card back, remove `hidden`. The grid now holds two cards, Ana's and Priya's, so if it uses fixed three-column styling you may see an empty slot."
+    },
+    {
+      "task": "hide-quote",
+      "condition": "pointed",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 12.3,
+      "prompt": "Hide this one.\n\n[Screenshot: bench/shots/hide-quote.png]",
+      "prompt_words": 3,
+      "before": [
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "after": [
+        "block|visible",
+        "none|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible",
+        "block|visible"
+      ],
+      "reply": "I hid the \"Finally one place for everything.\" quote (Sam, founder) by adding the `hidden` attribute to it in `index.html:77`. I didn't reload the page, so I haven't seen the result.\n\nThe testimonials grid will now show only the other two quotes. Delete the `hidden` attribute to bring the quote back."
+    },
+    {
+      "task": "underline-link",
+      "condition": "vague",
+      "run": 2,
+      "outcome": "no-change",
+      "seconds": 5.4,
+      "prompt": "Underline this link.",
+      "prompt_words": 3,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I don't see a link in your message. Could you paste it, and tell me where it should be underlined (for example, in a file in this project, or as Markdown or HTML)?"
+    },
+    {
+      "task": "underline-link",
+      "condition": "short",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 8.2,
+      "prompt": "Underline the footer Contact link under Company, below Careers.",
+      "prompt_words": 9,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "underline||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I underlined the Contact link in the footer's Company column, the one after Careers. I did it with an inline `text-decoration: underline` style in `index.html`. The Contact links under Product and Legal are unchanged. I haven't opened the page in a browser to check it."
+    },
+    {
+      "task": "underline-link",
+      "condition": "described",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 8.2,
+      "prompt": "Underline the \"Contact\" link in the footer's Company column, the one under Careers, not the Contact links under Product or Legal.",
+      "prompt_words": 21,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "underline||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I underlined the \"Contact\" link in the footer's Company column (the one after Careers) in `index.html`. I did it with an inline `text-decoration: underline;` style on that link only. The Contact links under Product and Legal are unchanged. I haven't opened the page in a browser to check it."
+    },
+    {
+      "task": "underline-link",
+      "condition": "pointed",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 11.5,
+      "prompt": "Underline this link.\n\n[Screenshot: bench/shots/underline-link.png]",
+      "prompt_words": 3,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "underline||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I underlined the circled \"Contact\" link in the Company column of the footer. I didn't render the page to check it.\n\nI gave that link an `underlined` class in `index.html` and added `footer a.underlined { text-decoration: underline; }` to `style.css`. The \"Contact\" links under Product and Legal are unchanged."
+    },
+    {
+      "task": "bigger-question",
+      "condition": "vague",
+      "run": 2,
+      "outcome": "overbroad",
+      "seconds": 10.7,
+      "prompt": "Make this question's text bigger.",
+      "prompt_words": 5,
+      "before": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "after": [
+        "20px",
+        "20px",
+        "20px",
+        "20px"
+      ],
+      "reply": "I increased the FAQ question text (the `dt` elements, such as \"Can I change plans later?\") from 16px to 20px in `style.css`. I haven't opened the page to check how it looks.\n\nI took \"this question's text\" to mean those FAQ questions. If you meant something else, such as the \"Questions\" heading or the answers, let me know."
+    },
+    {
+      "task": "bigger-question",
+      "condition": "short",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 8.7,
+      "prompt": "Make the \"Can I export my data?\" question text bigger.",
+      "prompt_words": 10,
+      "before": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "after": [
+        "16px",
+        "16px",
+        "24px",
+        "16px"
+      ],
+      "reply": "I made the \"Can I export my data?\" question text bigger, setting it to 1.5em with an inline style on its `<dt>` in `index.html`. The other FAQ questions are unchanged. I haven't opened the page in a browser to check how it looks."
+    },
+    {
+      "task": "bigger-question",
+      "condition": "described",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 8.5,
+      "prompt": "In the \"Questions\" FAQ section, make the \"Can I export my data?\" question text bigger (the bold line above \"Yes, as CSV or JSON.\").",
+      "prompt_words": 24,
+      "before": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "after": [
+        "16px",
+        "16px",
+        "22.4px",
+        "16px"
+      ],
+      "reply": "I made the \"Can I export my data?\" question larger by adding an inline `font-size: 1.4em` to its `<dt>` in `index.html`. The other questions are unchanged. I haven't opened the page in a browser to check how it looks."
+    },
+    {
+      "task": "bigger-question",
+      "condition": "pointed",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 12.1,
+      "prompt": "Make this question's text bigger.\n\n[Screenshot: bench/shots/bigger-question.png]",
+      "prompt_words": 5,
+      "before": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "after": [
+        "16px",
+        "16px",
+        "24px",
+        "16px"
+      ],
+      "reply": "I made \"Can I export my data?\" bigger, going from 16px to 24px. I haven't loaded the page to check how it looks.\n\nI added a `big` class to that question in `index.html` and a `dt.big { font-size: 24px; }` rule in `style.css`. The other three questions are unchanged. If you want all the questions bigger, I can change the base `dt` rule instead. You can also change the 24px to another size."
+    },
+    {
+      "task": "strike-feature",
+      "condition": "vague",
+      "run": 2,
+      "outcome": "no-change",
+      "seconds": 5.8,
+      "prompt": "Strike this line through.",
+      "prompt_words": 4,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "Which line do you mean? Your message didn't include a file, a selection, or any text. Tell me the file and line number, or paste the line, and say whether you want Markdown strikethrough (`~~text~~`), HTML (`<s>text</s>`), or something else."
+    },
+    {
+      "task": "strike-feature",
+      "condition": "short",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 7.5,
+      "prompt": "Strike through \"Unlimited projects\" in the Team pricing card.",
+      "prompt_words": 9,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none|S|",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "\"Unlimited projects\" in the Team pricing card is now struck through (wrapped in `<s>`) in `index.html`. The Pro card is unchanged."
+    },
+    {
+      "task": "strike-feature",
+      "condition": "described",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 7.9,
+      "prompt": "Strike through the \"Unlimited projects\" bullet in the Team pricing card (the $29 one), not the Pro card's identical \"Unlimited projects\" line.",
+      "prompt_words": 22,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none|S|",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I struck through \"Unlimited projects\" in the Team ($29) card in `index.html` by wrapping it in `<s>\u2026</s>`. The Pro card's identical line is unchanged. I didn't open the page in a browser to check how it looks."
+    },
+    {
+      "task": "strike-feature",
+      "condition": "pointed",
+      "run": 2,
+      "outcome": "hit",
+      "seconds": 9.9,
+      "prompt": "Strike this line through.\n\n[Screenshot: bench/shots/strike-feature.png]",
+      "prompt_words": 4,
+      "before": [
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "after": [
+        "none||",
+        "none|S|",
+        "none||",
+        "none||",
+        "none||",
+        "none||"
+      ],
+      "reply": "I struck through \"Unlimited projects\" in the Team card, the one circled in your screenshot, by wrapping it in `<s>` at `index.html:64`. The Pro card has the same line, and I left it alone. I haven't loaded the page to check how it renders."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+[
+ {
+  "id": "green-button",
+  "say": "Make this button green.",
+  "candidates": [
+   "header.nav a.button",
+   "section.hero a.button",
+   "#pricing article:nth-of-type(1) a.button",
+   "#pricing article:nth-of-type(2) a.button",
+   "#pricing article:nth-of-type(3) a.button"
+  ],
+  "target": 3,
+  "probe": "getComputedStyle(el).backgroundColor"
+ },
+ {
+  "id": "remove-badge",
+  "say": "Remove this badge.",
+  "candidates": [
+   "#pricing article:nth-of-type(1) .badge",
+   "#pricing article:nth-of-type(3) .badge"
+  ],
+  "target": 1,
+  "probe": "getComputedStyle(el).display + '|' + getComputedStyle(el).visibility"
+ },
+ {
+  "id": "red-price",
+  "say": "Make this price red.",
+  "candidates": [
+   "#pricing article:nth-of-type(1) .price",
+   "#pricing article:nth-of-type(2) .price",
+   "#pricing article:nth-of-type(3) .price"
+  ],
+  "target": 2,
+  "probe": "getComputedStyle(el).color"
+ },
+ {
+  "id": "rename-heading",
+  "say": "Change this heading to say Loved by teams.",
+  "candidates": [
+   "#features > h2",
+   "#pricing > h2",
+   "#testimonials > h2",
+   "#faq > h2"
+  ],
+  "target": 2,
+  "probe": "el.textContent.trim()"
+ },
+ {
+  "id": "hide-quote",
+  "say": "Hide this one.",
+  "candidates": [
+   "text:article:We shipped a week early",
+   "text:article:Finally one place",
+   "text:article:The reports changed",
+   "text:article:Drag work",
+   "text:article:See what ships",
+   "text:article:Know where time",
+   "text:article:3 projects",
+   "text:article:$12",
+   "text:article:$29"
+  ],
+  "target": 1,
+  "probe": "getComputedStyle(el).display + '|' + getComputedStyle(el).visibility"
+ },
+ {
+  "id": "underline-link",
+  "say": "Underline this link.",
+  "candidates": [
+   "footer .col:nth-of-type(1) a:nth-of-type(3)",
+   "footer .col:nth-of-type(2) a:nth-of-type(3)",
+   "footer .col:nth-of-type(3) a:nth-of-type(3)",
+   "footer .col:nth-of-type(2) a:nth-of-type(1)",
+   "footer .col:nth-of-type(2) a:nth-of-type(2)"
+  ],
+  "target": 1,
+  "probe": "getComputedStyle(el).textDecorationLine + '|' + (el.querySelector('s,del,strike,u') ? el.querySelector('s,del,strike,u').tagName : '') + '|' + (el.closest('s,del,strike,u') ? el.closest('s,del,strike,u').tagName : '')"
+ },
+ {
+  "id": "bigger-question",
+  "say": "Make this question's text bigger.",
+  "candidates": [
+   "#faq dt:nth-of-type(1)",
+   "#faq dt:nth-of-type(2)",
+   "#faq dt:nth-of-type(3)",
+   "#faq dt:nth-of-type(4)"
+  ],
+  "target": 2,
+  "probe": "getComputedStyle(el).fontSize"
+ },
+ {
+  "id": "strike-feature",
+  "say": "Strike this line through.",
+  "candidates": [
+   "#pricing article:nth-of-type(2) li:nth-of-type(1)",
+   "#pricing article:nth-of-type(3) li:nth-of-type(1)",
+   "#pricing article:nth-of-type(2) li:nth-of-type(2)",
+   "#pricing article:nth-of-type(3) li:nth-of-type(2)",
+   "#pricing article:nth-of-type(1) li:nth-of-type(3)",
+   "#pricing article:nth-of-type(2) li:nth-of-type(3)"
+  ],
+  "target": 1,
+  "probe": "getComputedStyle(el).textDecorationLine + '|' + (el.querySelector('s,del,strike,u') ? el.querySelector('s,del,strike,u').tagName : '') + '|' + (el.closest('s,del,strike,u') ? el.closest('s,del,strike,u').tagName : '')"
+ }
+]
