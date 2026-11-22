@@ -34,5 +34,5 @@ cat <<'MSG'
 
 Point is installed and running. Look for the ☝ in your menu bar.
 Grant Accessibility and Microphone when asked, and Screen Recording the
-first time you draw a loop. Then hold Right Option and talk.
+first time you draw a loop. Then hold Left Control and talk.
 MSG

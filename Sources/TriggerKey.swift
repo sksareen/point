@@ -59,6 +59,26 @@ enum TriggerKey: String, CaseIterable {
         }
     }
 
+    /// Spoken name, e.g. "Left Control".
+    var name: String {
+        switch self {
+        case .rightOption: return "Right Option"
+        case .leftControl: return "Left Control"
+        case .rightCommand: return "Right Command"
+        case .fn: return "Fn"
+        }
+    }
+
+    /// What's printed on the key.
+    var capLabel: String {
+        switch self {
+        case .rightOption: return "option"
+        case .leftControl: return "control"
+        case .rightCommand: return "command"
+        case .fn: return "fn"
+        }
+    }
+
     /// Menu label, with any caveat the user should know before picking it.
     var menuTitle: String {
         switch self {

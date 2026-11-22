@@ -22,8 +22,8 @@ BUILD="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$DEST/Contents/Inf
 cat <<MSG
 
 Point $VERSION ($BUILD) installed and running.
-  hold Right ⌥ + talk        → dictate at your text cursor
+  hold Left ⌃ + talk         → dictate at your text cursor
   … and draw a loop          → + screenshot with your loop on it
-  double-tap Right ⌥ / ⌃⇧N   → sticky pad
+  double-tap Left ⌃ / ⌃⇧N    → sticky pad
 First run: grant Accessibility, Microphone, and (on first loop) Screen Recording.
 MSG

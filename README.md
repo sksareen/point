@@ -13,12 +13,13 @@ Hold a key, talk, and circle the thing on your screen. Point hands Claude Code, 
 
 | You do | Your agent gets |
 |---|---|
-| **Hold Right ⌥ and talk** | Your words, pasted at the text cursor of whatever app you're in. Plain dictation. |
+| **Hold Left ⌃ (Control) and talk** | Your words, pasted at the text cursor of whatever app you're in. Plain dictation. |
 | **…and circle something while holding**, in a terminal or code editor (Claude Code, Cursor, VS Code, Ghostty, iTerm, Warp, Zed) | Your words plus `[Screenshot: /path/to/point_….png]`, a full-screen screenshot with your circle drawn on it. The agent reads the file from disk. |
 | **…and circle something**, in a chat app or browser (claude.ai, ChatGPT, the Claude app, Slack, Messages) | Your words, then the screenshot itself as an image. It stays on your clipboard to paste again. |
 | **…and drag a box** instead (Settings → Mark → Rectangle) | The same, with a red rectangle instead of a loop. |
 | **Circle several things** in one hold | One screenshot with every mark on it. |
-| **Double-tap Right ⌥** (or ⌃⇧N) | A sticky pad that floats over everything. Autosaved, 1,440 characters. Hold Right ⌥ while it's open to dictate into it. |
+| **Tap Space while holding**, then let go | Hands-free: Point keeps listening while you use your Mac. Press the key again to paste, or Esc to cancel. |
+| **Double-tap Left ⌃** (or ⌃⇧N) | A sticky pad that floats over everything. Autosaved, 1,440 characters. Hold the key while it's open to dictate into it. |
 
 ## Why not just paste a screenshot?
 
@@ -32,7 +33,9 @@ By hand that's six or seven steps: take the screenshot, open it, draw on it, sav
 - **[Point and Yap](https://pointandyap.com)** records your voice and cursor position into a local queue that agents read over MCP. Point pastes straight into the app you're already in, so it also works with tools that don't speak MCP (claude.ai, ChatGPT, Slack) and needs no setup in the agent.
 - **[Assist](https://www.producthunt.com/r/HRQNZUNMW6OS3A)** turns your annotations and speech into a prompt with a local model, for you to copy into Codex or Claude Code. It's a one-time purchase. Point keeps your exact words, pastes for you, and is free and open source.
 
-Prefer another key? Pick **Right ⌥**, **Left ⌃**, **Right ⌘**, or **Fn** from the menu bar icon → *Trigger key*.
+Prefer another key? Pick **Left ⌃**, **Right ⌥**, **Right ⌘**, or **Fn** from the menu bar icon → *Trigger key*. Left Control is the default; Right Option never clashes with shortcuts.
+
+The first time you open Point, a short welcome walks you through permissions and one practice run. It's in the menu bar icon → *Welcome to Point…* any time.
 
 Prefer boxes to loops? *Settings → Mark → Rectangle* lets you drag a red box instead of drawing a circle.
 
@@ -118,6 +121,7 @@ Sources/
   Gesture.swift       trigger hold/double-tap, overlay, screenshot, paste
   Transcriber.swift   Transcriber protocol + Apple on-device implementation
   Sticky.swift        the sticky pad
+  Onboarding.swift    first-launch welcome: permissions and a practice run
   Window.swift        the Point window: captures time machine + Settings (SwiftUI)
   LoginItem.swift     launch at login, version, menu items
   SauronHook.swift    optional: logs screenshots to Sauron if it's installed
@@ -139,4 +143,4 @@ Ideas welcome in [issues](https://github.com/sksareen/point/issues).
 
 ## Status
 
-Early preview (0.1.2). Known: about 200–270 ms from key-down until the mic is live, so your first syllable can be clipped if you start talking instantly.
+Early preview (0.1.3). Known: about 200–270 ms from key-down until the mic is live, so your first syllable can be clipped if you start talking instantly.

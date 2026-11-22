@@ -6,10 +6,12 @@ Point needs macOS 26 on Apple Silicon. It is MIT-licensed and makes no network r
 
 ## How it works
 
-- Hold Right Option and talk: your words are pasted at the text cursor.
+- Hold Left Control and talk: your words are pasted at the text cursor.
 - Keep holding and draw a loop (or a rectangle, in Settings → Mark): Point adds a full-screen screenshot with your mark drawn on it.
 - In terminals and code editors (Claude Code, Cursor, VS Code, Ghostty, iTerm, Warp, Zed) Point pastes your words plus the screenshot's file path, because those agents read files from disk. In chat apps and browsers (claude.ai, ChatGPT, the Claude app, Slack) it pastes your words, then the image itself.
-- Double-tap Right Option: a floating sticky pad.
+- Tap Space while holding to go hands-free; press the key again to paste.
+- Double-tap Left Control: a floating sticky pad.
+- The key can be changed (Right Option, Right Command, Fn).
 
 ## Install
 

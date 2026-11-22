@@ -71,7 +71,7 @@ Reply with one short report, and nothing else:
   - **Accessibility**, right away, so Point can notice the key. If no prompt appeared, they can open System Settings → Privacy & Security → Accessibility and turn on Point.
   - **Microphone**, the first time they hold the key and talk.
   - **Screen Recording**, the first time they circle something. macOS may ask them to quit and reopen Point after granting it.
-- **How to use it:** hold **Right Option** and talk to dictate. Keep holding and circle something on screen to add a screenshot. Let go to paste. Double-tap Right Option for a sticky pad. The trigger key can be changed from the menu bar icon (a pointing hand).
+- **How to use it:** hold **Left Control** and talk to dictate. Keep holding and circle something on screen to add a screenshot. Let go to paste. Double-tap Left Control for a sticky pad. On first launch Point opens a short welcome that walks through the permissions. The trigger key can be changed from the menu bar icon (a pointing hand).
 - If you installed the plugin: "Circle something in any app, then in Claude Code type `/point:last fix this`."
 
 Website: https://www.pointandtell.app

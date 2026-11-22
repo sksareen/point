@@ -54,6 +54,7 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         TriggerKey.keepKeyForExistingInstall()
+        OnboardingController.noteLaunch()
         setupMenuBar()
         NotificationCenter.default.addObserver(forName: TriggerKey.changed, object: nil, queue: .main) { [weak self] _ in
             self?.refreshTriggerLabels()
@@ -62,7 +63,9 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
             let recording = (note.object as? Bool) ?? false
             self?.statusItem.button?.contentTintColor = recording ? LOOP_COLOR : nil
         }
-        requireAccessibility()
+        let onboarding = OnboardingController.needed || CommandLine.arguments.contains("--onboarding")
+        requireAccessibility(prompt: !onboarding)
+        if onboarding { OnboardingController.shared.show() }
         NSLog("Point %@ launched from %@", APP_VERSION, Bundle.main.bundlePath)
     }
 
@@ -82,6 +85,9 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
         let settings = NSMenuItem(title: "Settings…", action: #selector(openSettings), keyEquivalent: ",")
         settings.target = self
         menu.addItem(settings)
+        let welcome = NSMenuItem(title: "Welcome to Point…", action: #selector(openWelcome), keyEquivalent: "")
+        welcome.target = self
+        menu.addItem(welcome)
         menu.addItem(.separator())
         howItem.isEnabled = false
         menu.addItem(howItem)
@@ -110,6 +116,7 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
     @objc func toggleSticky() { StickyNoteController.shared.toggle() }
     @objc func openWindow() { PointWindowController.shared.show(.captures) }
     @objc func openSettings() { PointWindowController.shared.show(.settings) }
+    @objc func openWelcome() { OnboardingController.shared.show() }
 
     // ─── Trigger key setting ─────────────────────────────────────────────────
 
@@ -134,13 +141,16 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
     }
 
     // Global key monitoring needs Accessibility. Prompt once, then poll until granted.
-    private func requireAccessibility() {
+    /// During onboarding the window's own Allow button raises the system prompt, so don't raise it here.
+    private func requireAccessibility(prompt: Bool) {
         if AXIsProcessTrusted() {
             start()
             return
         }
-        AXIsProcessTrustedWithOptions([kAXTrustedCheckOptionPrompt.takeUnretainedValue(): true] as CFDictionary)
-        NSLog("Point: ⚠️ Accessibility not granted — system prompt shown. Waiting...")
+        if prompt {
+            AXIsProcessTrustedWithOptions([kAXTrustedCheckOptionPrompt.takeUnretainedValue(): true] as CFDictionary)
+        }
+        NSLog("Point: ⚠️ Accessibility not granted. Waiting...")
         Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [weak self] timer in
             guard AXIsProcessTrusted() else { return }
             timer.invalidate()

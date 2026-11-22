@@ -49,6 +49,12 @@ final class CircleTalkController {
     private var otherKeyDuringHold = false
     private var session: CircleSession?
     private var pendingOverlay: DispatchWorkItem?
+    /// Hands-free: Space pressed while holding the trigger keeps listening after release,
+    /// until the trigger is pressed again (like Wispr Flow's hands-free mode).
+    private var locked = false
+    private var ignoreNextTriggerUp = false
+    private var swallowSpaceUp = false
+    private var keyTap: CFMachPort?
 
     func install() {
         guard monitors.isEmpty else { return }
@@ -71,6 +77,7 @@ final class CircleTalkController {
             NSLog("Point: ⚠️ microphone denied — circles will work, transcripts won't")
         default: break
         }
+        installKeyTap()
         AppleTranscriber.prewarm()
         NSLog("Point: ✅ active — hold %@ to dictate, draw to add a screenshot, double-tap for sticky", TriggerKey.current.symbol)
     }
@@ -82,12 +89,21 @@ final class CircleTalkController {
             guard event.keyCode == key.keyCode else { return }
             let down = key.isDown(event.modifierFlags)
             if down && !held {
+                if locked {
+                    // Second press ends hands-free mode: paste what was said.
+                    ignoreNextTriggerUp = true
+                    finish()
+                    return
+                }
                 held = true
                 downAt = Date()
                 otherKeyDuringHold = false
                 begin()
-            } else if !down && held {
+            } else if !down {
+                if ignoreNextTriggerUp { ignoreNextTriggerUp = false; return }
+                guard held else { return }
                 held = false
+                if locked { return }  // hands-free: keep listening after release
                 let wasTap = Date().timeIntervalSince(downAt) < TAP_MAX
                     && !otherKeyDuringHold
                     && !(session?.strokes.contains(where: isLoop) ?? false)
@@ -97,6 +113,8 @@ final class CircleTalkController {
         case .keyDown:
             // Any key while holding means the trigger was part of a shortcut (or Esc) — bail out.
             if held {
+                // Space after a deliberate hold locks hands-free mode (handled in the key tap).
+                if event.keyCode == SPACE_KEY && (locked || Date().timeIntervalSince(downAt) >= HANDSFREE_MIN_HOLD) { return }
                 otherKeyDuringHold = true
                 if session != nil { cancel() }
             }
@@ -130,16 +148,81 @@ final class CircleTalkController {
     }
 
     private func finish() {
+        locked = false
         pendingOverlay?.cancel()
         session?.finish()
     }
 
     private func cancel() {
+        locked = false
         pendingOverlay?.cancel()
         session?.cancel()
         session = nil
     }
+
+    private func lock() {
+        guard let session, !locked else { return }
+        locked = true
+        session.lock()
+        NSLog("Point: hands-free on — press %@ again to finish", TriggerKey.current.symbol)
+    }
+
+    // ─── Key tap: swallow the Space that locks, and Esc while locked ────────
+    // A global NSEvent monitor can only watch keys, not stop them, so the Space would also
+    // type into the front app. A session event tap (covered by the Accessibility grant) can.
+
+    private func installKeyTap() {
+        guard keyTap == nil else { return }
+        let mask = (1 << CGEventType.keyDown.rawValue) | (1 << CGEventType.keyUp.rawValue)
+        let me = Unmanaged.passUnretained(self).toOpaque()
+        guard let tap = CGEvent.tapCreate(
+            tap: .cgSessionEventTap, place: .headInsertEventTap, options: .defaultTap,
+            eventsOfInterest: CGEventMask(mask),
+            callback: { _, type, event, info in
+                guard let info else { return Unmanaged.passUnretained(event) }
+                let controller = Unmanaged<CircleTalkController>.fromOpaque(info).takeUnretainedValue()
+                return controller.handleTap(type: type, event: event)
+            },
+            userInfo: me
+        ) else {
+            NSLog("Point: ⚠️ key tap unavailable — hold-Space hands-free mode is off")
+            return
+        }
+        let source = CFMachPortCreateRunLoopSource(nil, tap, 0)
+        CFRunLoopAddSource(CFRunLoopGetMain(), source, .commonModes)
+        CGEvent.tapEnable(tap: tap, enable: true)
+        keyTap = tap
+    }
+
+    fileprivate func handleTap(type: CGEventType, event: CGEvent) -> Unmanaged<CGEvent>? {
+        if type == .tapDisabledByTimeout || type == .tapDisabledByUserInput {
+            if let keyTap { CGEvent.tapEnable(tap: keyTap, enable: true) }
+            return Unmanaged.passUnretained(event)
+        }
+        let code = UInt16(event.getIntegerValueField(.keyboardEventKeycode))
+        if code == SPACE_KEY {
+            // Only a deliberate hold locks. A quick trigger+Space is a shortcut (⌃Space switches
+            // input source, opens autocomplete): let it through, and the monitor cancels the session.
+            let deliberate = Date().timeIntervalSince(downAt) >= HANDSFREE_MIN_HOLD
+            if type == .keyDown && held && !locked && session != nil && deliberate {
+                lock()
+                swallowSpaceUp = true
+                return nil
+            }
+            if held && locked { return nil }  // key repeat while still holding
+            if type == .keyUp && swallowSpaceUp { swallowSpaceUp = false; return nil }
+        }
+        if code == ESC_KEY && locked && type == .keyDown {
+            cancel()
+            return nil
+        }
+        return Unmanaged.passUnretained(event)
+    }
 }
+
+let HANDSFREE_MIN_HOLD: TimeInterval = 0.4   // trigger must be held this long before Space locks
+let SPACE_KEY: UInt16 = 49
+let ESC_KEY: UInt16 = 53
 
 // ─── One gesture ─────────────────────────────────────────────────────────────
 
@@ -157,6 +240,15 @@ final class CircleSession {
     private(set) var strokes: [[NSPoint]] = []   // global (Cocoa) screen coordinates
     private(set) var liveText = ""
     let markStyle = MarkStyle.current            // fixed for the whole hold
+    /// Hands-free: still listening after the key was released. The overlay goes click-through
+    /// (and stops dimming) so the Mac stays usable while you talk.
+    private(set) var locked = false
+
+    func lock() {
+        locked = true
+        overlays.forEach { $0.ignoresMouseEvents = true }
+        redraw()
+    }
 
     private var audioURL: URL { CAPTURES_DIR.appendingPathComponent("point_\(id).wav") }
     private var metaURL: URL { CAPTURES_DIR.appendingPathComponent("point_\(id).json") }
@@ -182,6 +274,7 @@ final class CircleSession {
     func showOverlay() {
         guard !ended, overlays.isEmpty else { return }
         overlays = NSScreen.screens.map { OverlayPanel(screen: $0, session: self) }
+        if locked { overlays.forEach { $0.ignoresMouseEvents = true } }
         overlays.forEach { $0.orderFrontRegardless() }
         mark("overlay_shown")
         NotificationCenter.default.post(name: RECORDING_CHANGED, object: true)
@@ -254,6 +347,12 @@ final class CircleSession {
                         self.onDone?()
                         return
                     }
+                    if let hook = CAPTURE_INTERCEPT {  // onboarding practice: show it there, don't paste
+                        hook(transcript, nil)
+                        self.writeMetadata(transcript: transcript, screenshot: nil, kind: "dictation")
+                        self.onDone?()
+                        return
+                    }
                     pasteText(transcript, target: target) {
                         self.mark("pasted")
                         self.writeMetadata(transcript: transcript, screenshot: nil, kind: "dictation")
@@ -270,6 +369,12 @@ final class CircleSession {
                 guard let path else {
                     self.writeMetadata(transcript: transcript, screenshot: nil, kind: "circle_failed")
                     showToast("⚠️ Screenshot failed — check Screen Recording permission")
+                    self.onDone?()
+                    return
+                }
+                if let hook = CAPTURE_INTERCEPT {  // onboarding practice
+                    hook(transcript, path)
+                    self.writeMetadata(transcript: transcript, screenshot: path, kind: "circle")
                     self.onDone?()
                     return
                 }
@@ -537,10 +642,11 @@ final class OverlayView: NSView {
     override func mouseDragged(with event: NSEvent) { session?.extendStroke(NSEvent.mouseLocation) }
 
     override func draw(_ dirtyRect: NSRect) {
-        NSColor.black.withAlphaComponent(0.12).setFill()
-        bounds.fill()
-
         guard let session else { return }
+        if !session.locked {
+            NSColor.black.withAlphaComponent(0.12).setFill()
+            bounds.fill()
+        }
 
         LOOP_COLOR.setStroke()
         for stroke in session.strokes where stroke.count > 1 {
@@ -556,10 +662,18 @@ final class OverlayView: NSView {
         // Only the screen under the cursor shows the transcript pill.
         guard NSMouseInRect(NSEvent.mouseLocation, screenFrame, false) else { return }
         let hasLoop = session.strokes.contains(where: isLoop)
-        let mode = hasLoop ? "Dictating + screenshot" : "Dictating"
-        let detail = !session.liveText.isEmpty
-            ? tail(session.liveText, max: 90)
-            : (hasLoop ? "keep talking, let go to paste" : session.markStyle.hint)
+        let mode = session.locked
+            ? (hasLoop ? "Hands-free + screenshot" : "Hands-free")
+            : (hasLoop ? "Dictating + screenshot" : "Dictating")
+        let detail: String
+        if session.locked {
+            let stop = "press \(TriggerKey.current.symbol) to paste · esc to cancel"
+            detail = session.liveText.isEmpty ? stop : tail(session.liveText, max: 60) + "  ·  " + stop
+        } else {
+            detail = !session.liveText.isEmpty
+                ? tail(session.liveText, max: 90)
+                : (hasLoop ? "keep talking, let go to paste" : "tap space for hands-free · " + session.markStyle.hint)
+        }
         drawPill(mode: mode, detail: detail)
     }
 

@@ -31,5 +31,5 @@ Point saves one JSON file per capture, next to its screenshot. Find the newest o
 ## If there is nothing to read
 
 - **The folder is missing and `/Applications/Point.app` is not there:** Point is not installed. Tell the user it is a free, open-source macOS app (macOS 26, Apple Silicon) at https://github.com/sksareen/point.
-- **Point is installed but there are no captures with a screenshot:** tell them to hold their trigger key (Right Option by default), circle something on screen while talking, and let go. Offer to include their dictations with `all`.
+- **Point is installed but there are no captures with a screenshot:** tell them to hold their trigger key (Left Control by default), circle something on screen while talking, and let go. Offer to include their dictations with `all`.
 - **Not on macOS:** Point only runs on macOS.
