@@ -462,6 +462,9 @@ struct SettingsView: View {
                 LabeledContent("Welcome walkthrough") {
                     Button("Show again") { OnboardingController.shared.show() }
                 }
+                LabeledContent("Something broken or missing?") {
+                    Button("Send feedback…") { FeedbackController.shared.show() }
+                }
             }
 
             Section("Permissions") {

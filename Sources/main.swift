@@ -66,6 +66,7 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
         let onboarding = OnboardingController.needed || CommandLine.arguments.contains("--onboarding")
         requireAccessibility(prompt: !onboarding)
         if onboarding { OnboardingController.shared.show() }
+        if CommandLine.arguments.contains("--feedback") { FeedbackController.shared.show() }
         NSLog("Point %@ launched from %@", APP_VERSION, Bundle.main.bundlePath)
     }
 
@@ -88,6 +89,9 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
         let welcome = NSMenuItem(title: "Welcome to Point…", action: #selector(openWelcome), keyEquivalent: "")
         welcome.target = self
         menu.addItem(welcome)
+        let feedback = NSMenuItem(title: "Send feedback…", action: #selector(openFeedback), keyEquivalent: "")
+        feedback.target = self
+        menu.addItem(feedback)
         menu.addItem(.separator())
         howItem.isEnabled = false
         menu.addItem(howItem)
@@ -117,6 +121,7 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
     @objc func openWindow() { PointWindowController.shared.show(.captures) }
     @objc func openSettings() { PointWindowController.shared.show(.settings) }
     @objc func openWelcome() { OnboardingController.shared.show() }
+    @objc func openFeedback() { FeedbackController.shared.show() }
 
     // ─── Trigger key setting ─────────────────────────────────────────────────
 

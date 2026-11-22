@@ -333,7 +333,7 @@ struct OnboardingView: View {
     }
 
     private var done: some View {
-        VStack(alignment: .leading, spacing: 26) {
+        VStack(alignment: .leading, spacing: 20) {
             heading("You're set", "Point lives in your menu bar.")
             VStack(spacing: 0) {
                 tip("Hold \(model.key.name), talk", "Dictation, wherever your cursor is")
@@ -349,6 +349,8 @@ struct OnboardingView: View {
                 Text("Open Point when I log in").font(.system(size: 15))
             }
             .toggleStyle(.checkbox)
+            Button("Something not working? Send feedback…") { FeedbackController.shared.show() }
+                .buttonStyle(.plain).font(.system(size: 14)).foregroundStyle(OB.muted).underline()
         }
         .padding(.horizontal, 24)
     }

@@ -2,7 +2,7 @@
 
 > Point is a free, open-source Mac app. Hold a key, talk, and circle something on your screen: Point pastes your words plus a screenshot with your mark on it into Claude Code, Cursor, ChatGPT, or any chat. Transcription runs on-device with Apple's speech recognizer. Without a mark, it is fast push-to-talk dictation.
 
-Point needs macOS 26 on Apple Silicon. It is MIT-licensed and makes no network requests.
+Point needs macOS 26 on Apple Silicon. It is MIT-licensed and makes no network requests on its own; the only one is feedback the user chooses to send.
 
 ## How it works
 
