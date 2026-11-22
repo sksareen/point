@@ -143,4 +143,4 @@ Ideas welcome in [issues](https://github.com/sksareen/point/issues).
 
 ## Status
 
-Early preview (0.1.3). Known: about 200–270 ms from key-down until the mic is live, so your first syllable can be clipped if you start talking instantly.
+Early preview (0.1.4). Known: about 200–270 ms from key-down until the mic is live, so your first syllable can be clipped if you start talking instantly.
