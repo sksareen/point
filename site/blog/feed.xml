@@ -4,7 +4,14 @@
     <title>Point blog</title>
     <link>https://www.pointandtell.app/blog/</link>
     <description>Notes on building Point, and on showing AI agents exactly what you mean.</description>
-    <lastBuildDate>Sun, 22 Nov 2026 19:24:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Nov 2026 19:37:54 +0000</lastBuildDate>
+    <item>
+      <title>We talked to Point users and added an onboarding</title>
+      <link>https://www.pointandtell.app/blog/we-talked-to-users-and-added-onboarding.html</link>
+      <guid>https://www.pointandtell.app/blog/we-talked-to-users-and-added-onboarding.html</guid>
+      <pubDate>Sun, 22 Nov 2026 16:00:00 +0000</pubDate>
+      <description>Two things came out of our first user conversations. Point had no onboarding, and the default key was hard to press. Both are fixed in 0.1.3.</description>
+    </item>
     <item>
       <title>How to show Claude Code (or Cursor) a UI bug</title>
       <link>https://www.pointandtell.app/blog/show-claude-code-what-you-mean.html</link>
