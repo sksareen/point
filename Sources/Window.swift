@@ -459,6 +459,9 @@ struct SettingsView: View {
                     .onChange(of: launchAtLogin) { _, want in
                         if want != LoginItem.isEnabled { launchAtLogin = LoginItem.toggle() }
                     }
+                LabeledContent("Welcome walkthrough") {
+                    Button("Show again") { OnboardingController.shared.show() }
+                }
             }
 
             Section("Permissions") {
