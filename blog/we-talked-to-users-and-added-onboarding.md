@@ -13,9 +13,7 @@ We started talking to people who use Point. Two things came up right away.
 
 You installed Point, it asked for some permissions, and then it sat in your menu bar. Nothing told you what to do next. So we added a welcome that opens the first time you launch it.
 
-It starts with what Point is, and a short clip of it working:
-
-![The welcome screen: Talk less. Point more., with a demo clip](/blog-images/onboarding-1.png)
+It starts with what Point is and a short clip of it working. That's the screen at the top of this post.
 
 Then the three permissions, with one line each on why Point needs them:
 
