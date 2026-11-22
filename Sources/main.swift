@@ -1,9 +1,9 @@
-// Point — hold Right Option to talk to your computer about what's on screen.
+// Point — hold a key to talk to your computer about what's on screen.
 //
 //   hold trigger + talk              → dictation, pasted at your text cursor
 //   hold trigger + talk + draw loop  → + path to a screenshot with your loop on it
 //   double-tap trigger (or ⌃⇧N)      → toggle a persistent sticky pad
-// The trigger defaults to Right ⌥ and can be changed from the menu (TriggerKey.swift).
+// The trigger defaults to Left ⌃ and can be changed from the menu (TriggerKey.swift).
 //
 // Install: ./install.sh   (builds, signs, copies to /Applications, launches)
 // (This file must be main.swift: it holds the top-level app entry point.)
@@ -53,6 +53,7 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
     private var keyMonitors: [Any] = []
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        TriggerKey.keepKeyForExistingInstall()
         setupMenuBar()
         NotificationCenter.default.addObserver(forName: TriggerKey.changed, object: nil, queue: .main) { [weak self] _ in
             self?.refreshTriggerLabels()

@@ -1,4 +1,4 @@
-// Which modifier key drives Point (hold = talk/circle, double-tap = sticky pad).
+// Which modifier key drives Point (hold = talk/circle, double-tap = sticky pad). Default: Left ⌃.
 // Chosen from the menu bar; persisted in UserDefaults.
 
 import Cocoa
@@ -11,12 +11,21 @@ enum TriggerKey: String, CaseIterable {
 
     static var current: TriggerKey {
         get {
-            UserDefaults.standard.string(forKey: defaultsKey).flatMap(TriggerKey.init(rawValue:)) ?? .rightOption
+            UserDefaults.standard.string(forKey: defaultsKey).flatMap(TriggerKey.init(rawValue:)) ?? .leftControl
         }
         set {
             UserDefaults.standard.set(newValue.rawValue, forKey: defaultsKey)
             NotificationCenter.default.post(name: changed, object: nil)
         }
+    }
+
+    /// The default was Right ⌥ through 0.1.2 and is Left ⌃ after. Someone who installed an
+    /// earlier build and never picked a key keeps Right ⌥, so an update doesn't move their key.
+    /// Call once at launch, before anything creates Point's data folder.
+    static func keepKeyForExistingInstall() {
+        guard UserDefaults.standard.string(forKey: defaultsKey) == nil,
+              FileManager.default.fileExists(atPath: POINT_DIR.path) else { return }
+        UserDefaults.standard.set(TriggerKey.rightOption.rawValue, forKey: defaultsKey)
     }
 
     /// Virtual key code reported in .flagsChanged events for this physical key.
@@ -53,8 +62,8 @@ enum TriggerKey: String, CaseIterable {
     /// Menu label, with any caveat the user should know before picking it.
     var menuTitle: String {
         switch self {
-        case .rightOption: return "Right ⌥ Option (recommended)"
-        case .leftControl: return "Left ⌃ Control (mic flickers on ⌃ shortcuts)"
+        case .rightOption: return "Right ⌥ Option (never clashes with shortcuts)"
+        case .leftControl: return "Left ⌃ Control (default)"
         case .rightCommand: return "Right ⌘ Command"
         case .fn: return "Fn / 🌐 (set 🌐 key to “Do Nothing” in Keyboard settings)"
         }
