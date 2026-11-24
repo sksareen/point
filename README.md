@@ -71,6 +71,12 @@ It downloads the latest release into Applications and opens it ([read the script
 
 A notarized download and a Homebrew cask are coming.
 
+## Connect your AI agents
+
+Point can connect to the agents on your Mac so they can read your latest capture without you pasting anything: **Settings → AI agents** (also a step in the welcome). It works with Claude Code, Claude Desktop, Cursor, Codex, Gemini CLI, and opencode.
+
+Each agent gets one tool, `last_capture`: your words, the app you were in, and the screenshot with your mark. Point runs it as a small local MCP server (`Point.app/Contents/MacOS/Point --mcp`) that the agent starts itself, so Point doesn't need to be open. Connecting adds one entry named `point` to that agent's settings and keeps a backup of the file; Disconnect removes it. Restart an agent after connecting it.
+
 ## Claude Code plugin
 
 Point works in Claude Code with nothing extra: it pastes your words and the screenshot's path. The plugin adds two things on top.

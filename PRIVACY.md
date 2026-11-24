@@ -23,6 +23,12 @@ If you click **Attach my last capture**, it also sends what the window shows you
 
 Feedback is stored as an issue in a private GitHub repository that only the author can read. To have yours deleted, open an issue or say so in a new feedback message.
 
+## AI agents you connect
+
+In Settings → AI agents you can connect agents on your Mac (Claude Code, Claude Desktop, Cursor, Codex, Gemini CLI, opencode). Connecting adds one entry named "point" to that agent's settings file, and keeps a copy of the original beside it (`<file>.point-backup`). Disconnect removes the entry.
+
+A connected agent can ask Point for your latest capture: what you said, the app you were in, when, and the screenshot. Point answers from files on your Mac and sends nothing itself. The agent then handles that capture like anything else you give it, which usually means sending it to its AI provider, under that provider's privacy policy. Agents only get a capture when they ask for one, typically because you said "this" or "what I circled".
+
 ## The Claude Code plugin
 
 The plugin only reads capture files Point already saved on your Mac, when you ask it to. It stores nothing and sends nothing to us. What Claude reads becomes part of your conversation with Claude, under Anthropic's privacy policy.
