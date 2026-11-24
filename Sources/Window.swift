@@ -523,6 +523,9 @@ struct SettingsView: View {
             }
         }
         .formStyle(.grouped)
+        .onReceive(NotificationCenter.default.publisher(for: MarkStyle.changed)) { _ in
+            markStyle = MarkStyle.current
+        }
         .onAppear {
             trigger = TriggerKey.current
             markStyle = MarkStyle.current

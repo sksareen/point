@@ -110,6 +110,18 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
         let trigger = NSMenuItem(title: "Trigger key", action: nil, keyEquivalent: "")
         trigger.submenu = triggerMenu
         menu.addItem(trigger)
+
+        let markMenu = NSMenu()
+        for style in MarkStyle.allCases {
+            let item = NSMenuItem(title: style.title, action: #selector(pickMark(_:)), keyEquivalent: "")
+            item.target = self
+            item.representedObject = style.rawValue
+            markMenu.addItem(item)
+            markItems.append(item)
+        }
+        let mark = NSMenuItem(title: "Mark with", action: nil, keyEquivalent: "")
+        mark.submenu = markMenu
+        menu.addItem(mark)
         refreshTriggerLabels()
         addDevModeItems(to: menu)
         menu.addItem(.separator())
@@ -128,6 +140,7 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
     private let howItem = NSMenuItem(title: "", action: nil, keyEquivalent: "")
     private let stickyItem = NSMenuItem(title: "", action: nil, keyEquivalent: "")
     private var triggerItems: [NSMenuItem] = []
+    private var markItems: [NSMenuItem] = []
 
     @objc func pickTrigger(_ sender: NSMenuItem) {
         guard let raw = sender.representedObject as? String, let key = TriggerKey(rawValue: raw) else { return }
@@ -136,9 +149,20 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
         NSLog("Point: trigger key → %@", key.symbol)
     }
 
+    @objc func pickMark(_ sender: NSMenuItem) {
+        guard let raw = sender.representedObject as? String, let style = MarkStyle(rawValue: raw) else { return }
+        MarkStyle.current = style
+        refreshTriggerLabels()
+        NSLog("Point: mark style → %@", style.rawValue)
+    }
+
     private func refreshTriggerLabels() {
         let key = TriggerKey.current
-        howItem.title = "Hold \(key.symbol): talk → dictate · draw → + screenshot"
+        let style = MarkStyle.current
+        howItem.title = "Hold \(key.symbol): talk → dictate · \(style == .loop ? "draw" : "drag") → + screenshot"
+        for item in markItems {
+            item.state = (item.representedObject as? String) == style.rawValue ? .on : .off
+        }
         stickyItem.title = "Sticky pad  (double-tap \(key.symbol) · ⌃⇧N)"
         for item in triggerItems {
             item.state = (item.representedObject as? String) == key.rawValue ? .on : .off

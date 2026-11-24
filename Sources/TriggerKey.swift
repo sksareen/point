@@ -94,11 +94,15 @@ enum TriggerKey: String, CaseIterable {
 enum MarkStyle: String, CaseIterable {
     case loop, rectangle
 
+    static let changed = Notification.Name("PointMarkStyleChanged")
     private static let defaultsKey = "markStyle"
 
     static var current: MarkStyle {
         get { UserDefaults.standard.string(forKey: defaultsKey).flatMap(MarkStyle.init(rawValue:)) ?? .loop }
-        set { UserDefaults.standard.set(newValue.rawValue, forKey: defaultsKey) }
+        set {
+            UserDefaults.standard.set(newValue.rawValue, forKey: defaultsKey)
+            NotificationCenter.default.post(name: changed, object: nil)
+        }
     }
 
     var title: String {
