@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.pointandtell.app/</loc><lastmod>2026-11-22</lastmod></url>
-  <url><loc>https://www.pointandtell.app/roadmap.html</loc><lastmod>2026-11-22</lastmod></url>
-  <url><loc>https://www.pointandtell.app/blog/</loc><lastmod>2026-11-22</lastmod></url>
+  <url><loc>https://www.pointandtell.app/roadmap.html</loc><lastmod>2026-11-24</lastmod></url>
+  <url><loc>https://www.pointandtell.app/blog/</loc><lastmod>2026-11-24</lastmod></url>
+  <url><loc>https://www.pointandtell.app/blog/connect-your-ai-agents.html</loc><lastmod>2026-11-24</lastmod></url>
+  <url><loc>https://www.pointandtell.app/blog/feedback-and-smaller-fixes.html</loc><lastmod>2026-11-24</lastmod></url>
   <url><loc>https://www.pointandtell.app/blog/we-talked-to-users-and-added-onboarding.html</loc><lastmod>2026-11-22</lastmod></url>
   <url><loc>https://www.pointandtell.app/blog/show-claude-code-what-you-mean.html</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://www.pointandtell.app/blog/talk-to-your-coding-agent.html</loc><lastmod>2026-11-18</lastmod></url>

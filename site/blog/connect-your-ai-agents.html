@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your AI agents can now ask Point what you circled · Point</title>
+<meta name="description" content="Point connects to Claude Code, Claude Desktop, Cursor, Codex, Gemini CLI, and opencode, so they can read your latest capture themselves. What we built, why, and what it changes on your Mac.">
+<link rel="canonical" href="https://www.pointandtell.app/blog/connect-your-ai-agents.html">
+<meta property="og:title" content="Your AI agents can now ask Point what you circled · Point">
+<meta property="og:description" content="Point connects to Claude Code, Claude Desktop, Cursor, Codex, Gemini CLI, and opencode, so they can read your latest capture themselves. What we built, why, and what it changes on your Mac.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.pointandtell.app/blog/connect-your-ai-agents.html">
+<meta property="og:image" content="https://www.pointandtell.app/blog-images/agents-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="Point blog" href="https://www.pointandtell.app/blog/feed.xml">
+<link rel="icon" type="image/png" href="/icon.png">
+<link rel="apple-touch-icon" href="/icon.png">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("point-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+  .post { max-width: 720px; padding-top: 32px; padding-bottom: 72px; }
+  .post h1 { font-size: clamp(2rem, 5vw, 2.8rem); letter-spacing: -0.03em; line-height: 1.08; margin: 0 0 12px; }
+  .post .meta { color: var(--muted); font-size: 0.95rem; margin: 0 0 36px; }
+  .post img.cover { display: block; width: 100%; margin: -12px 0 32px; }
+  .post h2 { font-size: 1.5rem; letter-spacing: -0.02em; margin: 44px 0 10px; }
+  .post h3 { font-size: 1.15rem; margin: 32px 0 8px; }
+  .post p, .post li { font-size: 1.08rem; }
+  .post img, .post video { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); }
+  .post pre { background: var(--term); color: var(--term-ink); padding: 14px 16px; border-radius: 10px; overflow-x: auto; font-size: 0.92rem; }
+  .post blockquote { margin: 20px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--loop); color: var(--muted); }
+  .post table { border-collapse: collapse; width: 100%; font-size: 0.98rem; }
+  .post th, .post td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .cta { margin-top: 48px; padding: 20px 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--window); }
+  .cta p { margin: 0 0 12px; }
+  .cta a.btn { display: inline-block; background: var(--loop); color: #fff; font-weight: 700; text-decoration: none; padding: 10px 16px; border-radius: 999px; }
+  .posts { list-style: none; padding: 0; margin: 24px 0 0; border-top: 1.5px solid var(--ink); }
+  .posts li { padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .posts a { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+  .posts a:hover { text-decoration: underline; }
+  .posts p { margin: 4px 0 0; color: var(--muted); }
+  .posts time { color: var(--muted); font-size: 0.9rem; }
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Your AI agents can now ask Point what you circled", "description": "Point connects to Claude Code, Claude Desktop, Cursor, Codex, Gemini CLI, and opencode, so they can read your latest capture themselves. What we built, why, and what it changes on your Mac.", "datePublished": "2026-11-24", "url": "https://www.pointandtell.app/blog/connect-your-ai-agents.html", "author": {"@type": "Person", "name": "Savar Sareen"}, "publisher": {"@type": "Organization", "name": "Point", "url": "https://www.pointandtell.app"}}</script>
+</head>
+<body>
+<header class="wrap nav">
+  <a class="brand" href="/">
+    <img src="/icon.png" alt="" width="28" height="28">
+    Point
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="/blog/">Blog</a>
+    <a href="/roadmap.html">Roadmap</a>
+    <a href="https://github.com/sksareen/point">GitHub</a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode (⌘I)" title="Toggle dark mode (⌘I)">◐</button>
+  </nav>
+</header>
+<main class="wrap">
+<article class="post">
+<h1>Your AI agents can now ask Point what you circled</h1>
+<p class="meta"><time datetime="2026-11-24">November 24, 2026</time></p>
+<img class="cover" src="/blog-images/agents-cover.png" alt="">
+<p>Until now, Point did one thing with a capture: it pasted it. You held the key, talked, circled something, let go, and your words and screenshot landed in whatever box your cursor was in.</p>
+<p>That still works, and it's still the default. We wrote about why in <a href="/blog/the-universal-interface-is-paste.html">the clipboard is the universal context layer for AI</a>: paste reaches every app, with no setup.</p>
+<p>But it has one annoying gap. You have to be in the right place when you let go. If you circle a bug in your browser and then switch to Claude Code, the paste already happened in the browser.</p>
+<p>So now your agents can ask for it.</p>
+<h2>What changed</h2>
+<p>In <strong>Settings → AI agents</strong>, Point lists the agents it finds on your Mac and connects the ones you pick: Claude Code, Claude Desktop, Cursor, Codex, Gemini CLI, and opencode. It's also a step in the welcome when you first install.</p>
+<p>Once an agent is connected, you can say "what did I just circle?" or "fix this" in it, and it fetches your latest capture from Point: what you said, the app you were in, and the screenshot with your mark on it.</p>
+<h2>How it works</h2>
+<p>Each of these agents keeps a list of tools it's allowed to use, in a settings file on your Mac. Connecting adds one entry to that list. In Cursor's file it looks like this:</p>
+<pre><code class="language-json">&quot;point&quot;: {
+  &quot;command&quot;: &quot;/Applications/Point.app/Contents/MacOS/Point&quot;,
+  &quot;args&quot;: [&quot;--mcp&quot;]
+}
+</code></pre>
+<p>That says: there's a tool called point, and to use it, run Point with <code>--mcp</code>. When the agent starts, it runs that command in the background and asks what it can do. Point answers with one tool, <code>last_capture</code>. When you mention something on your screen, the agent calls it, and Point reads your newest capture from its folder and hands it back.</p>
+<p>Point doesn't have to be open for this. The agent starts it, and it only reads files that are already on your Mac.</p>
+<p>The protocol is <a href="https://modelcontextprotocol.io">MCP</a>, which all of these agents support. That's why one small piece covers six different tools.</p>
+<h2>What we chose not to do</h2>
+<p>The obvious way to make an agent "know about" a tool is to add a paragraph to its instructions file: your <code>CLAUDE.md</code>, <code>AGENTS.md</code>, or <code>GEMINI.md</code>. We didn't. Those files are yours, and they get long enough already.</p>
+<p>It turned out we didn't need to. When an agent starts, it reads the description of every connected tool. Point's description says when to use it ("when the user says this, what I circled, or refers to something on screen you can't see"), so the agent knows about Point without any instructions from us.</p>
+<h2>What it changes on your Mac</h2>
+<ul>
+<li><strong>One entry per agent, named <code>point</code>.</strong> Nothing else in those files changes. Your other tools stay where they were.</li>
+<li><strong>A backup first.</strong> Before the first change, Point saves the original file beside it as <code>&lt;file&gt;.point-backup</code>.</li>
+<li><strong>Disconnect removes the entry.</strong> The file goes back to how it was.</li>
+<li><strong>Point won't edit a file it can't read.</strong> If a settings file has comments or something unexpected in it, Point leaves it alone and tells you.</li>
+<li><strong>Restart the agent after connecting.</strong> Agents read their tool list when they start.</li>
+</ul>
+<h2>Privacy</h2>
+<p>Point itself still sends nothing anywhere. But when a connected agent asks for a capture, the agent does what it does with anything you give it, which usually means sending it to its AI provider. That only happens when the agent asks, typically because you said "this" or "what I circled". The details are in <a href="https://github.com/sksareen/point/blob/master/PRIVACY.md">PRIVACY.md</a>.</p>
+<h2>What's not covered</h2>
+<p>Apps that don't have a tool system, like the ChatGPT app, can't be connected this way. Point still pastes into them, the same as before.</p>
+<p>We've tested the whole path in Claude Code: ask "what did I just circle?" and it calls Point, gets the screenshot, and describes it. Gemini CLI, opencode, and Codex list Point as connected. If an agent can't show the screenshot itself, it still gets the file's path.</p>
+<h2>Try it</h2>
+<p>Update to <a href="https://github.com/sksareen/point/releases/latest">Point 0.1.5</a>, open <strong>Settings → AI agents</strong>, connect what you use, and restart those agents. Then circle something and ask "what did I just circle?"</p>
+<p>If something doesn't connect, use <strong>Send feedback…</strong> in the menu bar. It goes straight to us.</p>
+<div class="cta">
+  <p><strong>Point</strong> is a free, open-source Mac app: hold a key, talk, and circle what you mean. Your agent gets your words plus a screenshot of exactly what you circled.</p>
+  <a class="btn" href="https://github.com/sksareen/point/releases/latest/download/Point.dmg">Download free for Mac</a>
+</div>
+</article>
+</main>
+<footer>
+  <div class="wrap">
+    <span>Point is free and open source under the MIT license.</span>
+    <a href="/blog/feed.xml">RSS</a>
+  </div>
+</footer>
+<script>
+(function () {
+  function currentTheme() {
+    var t = document.documentElement.getAttribute("data-theme");
+    if (t) return t;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  function toggleTheme() {
+    var next = currentTheme() === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("point-theme", next); } catch (e) {}
+  }
+  document.getElementById("themeBtn").addEventListener("click", toggleTheme);
+  window.addEventListener("keydown", function (e) {
+    if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "i") {
+      e.preventDefault();
+      toggleTheme();
+    }
+  });
+})();
+</script>
+</body>
+</html>

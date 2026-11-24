@@ -18,6 +18,10 @@ Point needs macOS 26 on Apple Silicon. It is MIT-licensed and makes no network r
 - [Download Point.dmg](https://github.com/sksareen/point/releases/latest/download/Point.dmg): open it and drag Point to Applications. It is not notarized yet: on first launch, open System Settings → Privacy & Security and click Open Anyway.
 - Or in Terminal: `curl -fsSL https://raw.githubusercontent.com/sksareen/point/master/get.sh | bash`
 
+## Connect AI agents
+
+In Settings → AI agents, Point connects to Claude Code, Claude Desktop, Cursor, Codex, Gemini CLI, and opencode. Each gets one MCP tool, `last_capture`, which returns the user's latest capture: what they said, the app they were in, and the screenshot with their mark. The server is `Point.app/Contents/MacOS/Point --mcp`, started by the agent.
+
 ## Claude Code plugin
 
 - Install: `/plugin install point --marketplace sksareen/point`

@@ -4,7 +4,21 @@
     <title>Point blog</title>
     <link>https://www.pointandtell.app/blog/</link>
     <description>Notes on building Point, and on showing AI agents exactly what you mean.</description>
-    <lastBuildDate>Sun, 22 Nov 2026 19:38:17 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Nov 2026 08:23:01 +0000</lastBuildDate>
+    <item>
+      <title>Your AI agents can now ask Point what you circled</title>
+      <link>https://www.pointandtell.app/blog/connect-your-ai-agents.html</link>
+      <guid>https://www.pointandtell.app/blog/connect-your-ai-agents.html</guid>
+      <pubDate>Tue, 24 Nov 2026 16:00:00 +0000</pubDate>
+      <description>Point connects to Claude Code, Claude Desktop, Cursor, Codex, Gemini CLI, and opencode, so they can read your latest capture themselves. What we built, why, and what it changes on your Mac.</description>
+    </item>
+    <item>
+      <title>Feedback in one click, and four smaller fixes</title>
+      <link>https://www.pointandtell.app/blog/feedback-and-smaller-fixes.html</link>
+      <guid>https://www.pointandtell.app/blog/feedback-and-smaller-fixes.html</guid>
+      <pubDate>Tue, 24 Nov 2026 16:00:00 +0000</pubDate>
+      <description>What else changed in Point 0.1.4 and 0.1.5. Send feedback with your last capture attached, switch back to Point with Command-Tab, click a capture to copy it, and pick circle or rectangle from the menu bar.</description>
+    </item>
     <item>
       <title>We talked to Point users and added an onboarding</title>
       <link>https://www.pointandtell.app/blog/we-talked-to-users-and-added-onboarding.html</link>
