@@ -104,6 +104,7 @@ final class OnboardingModel: ObservableObject {
     @Published var circleHint = false
     @Published var launchAtLogin = LoginItem.isEnabled
     @Published var key = TriggerKey.current
+    let agents = AgentsModel()
     let onFinish: () -> Void
     private var timer: Timer?
 
@@ -111,7 +112,7 @@ final class OnboardingModel: ObservableObject {
         self.onFinish = onFinish
         // For screenshots and testing: `--onboarding-step=3` opens on that step.
         if let arg = CommandLine.arguments.first(where: { $0.hasPrefix("--onboarding-step=") }),
-           let n = Int(arg.dropFirst("--onboarding-step=".count)), (0...4).contains(n) {
+           let n = Int(arg.dropFirst("--onboarding-step=".count)), (0...5).contains(n) {
             step = n
             stepChanged()
         }
@@ -172,6 +173,7 @@ struct OnboardingView: View {
                 case 1: permissions
                 case 2: talk
                 case 3: circle
+                case 4: OnboardingAgentsStep(agents: model.agents)
                 default: done
                 }
             }
@@ -368,17 +370,19 @@ struct OnboardingView: View {
     private var footer: some View {
         HStack(spacing: 8) {
             HStack(spacing: 7) {
-                ForEach(0..<5, id: \.self) { i in
+                ForEach(0..<6, id: \.self) { i in
                     Capsule().fill(i == model.step ? OB.loop : OB.dot)
                         .frame(width: i == model.step ? 22 : 6, height: 6)
                 }
             }
-            .accessibilityLabel("Step \(model.step + 1) of 5")
+            .accessibilityLabel("Step \(model.step + 1) of 6")
             Spacer()
-            if model.step > 0 && model.step < 4 {
+            if model.step > 0 && model.step < 5 {
                 Button("Back") { model.step -= 1 }.buttonStyle(QuietButton())
             }
             if model.step == 4 {
+                OnboardingAgentsButtons(agents: model.agents) { model.step += 1 }
+            } else if model.step == 5 {
                 Menu("Change the key") {
                     ForEach(TriggerKey.allCases, id: \.self) { k in
                         Button(k.menuTitle) { TriggerKey.current = k; model.key = k }
@@ -391,6 +395,73 @@ struct OnboardingView: View {
                 Button(model.step == 0 ? "Get started" : "Continue") { model.step += 1 }
                     .buttonStyle(PrimaryButton())
             }
+        }
+    }
+}
+
+// ─── Connect your agents ─────────────────────────────────────────────────────
+
+private struct OnboardingAgentsStep: View {
+    @ObservedObject var agents: AgentsModel
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Connect your agents").font(.system(size: 30, weight: .heavy)).tracking(-0.6)
+                Text("Point found these on your Mac. Connected ones can read your latest capture.")
+                    .font(.system(size: 15)).foregroundStyle(OB.muted)
+            }
+            VStack(spacing: 0) {
+                ForEach(agents.installed) { s in
+                    HStack(spacing: 14) {
+                        if s.connected {
+                            Image(systemName: "checkmark.circle.fill").font(.system(size: 19)).foregroundStyle(OB.green)
+                        } else {
+                            Toggle("", isOn: Binding(
+                                get: { agents.selected.contains(s.id) },
+                                set: { on in if on { agents.selected.insert(s.id) } else { agents.selected.remove(s.id) } }))
+                                .toggleStyle(.checkbox).labelsHidden()
+                        }
+                        Text(s.name).font(.system(size: 16, weight: .bold))
+                        Spacer()
+                        if s.connected {
+                            Text("Connected").font(.system(size: 13, weight: .bold)).foregroundStyle(OB.green)
+                        }
+                    }
+                    .frame(minHeight: 40)
+                    if s.id != agents.installed.last?.id { Rectangle().fill(OB.line).frame(height: 1) }
+                }
+                if agents.installed.isEmpty {
+                    Text("No agents found. Point still pastes into any app.").font(.system(size: 15)).foregroundStyle(OB.muted)
+                }
+            }
+            if let error = agents.error {
+                Text(error).font(.system(size: 13)).foregroundStyle(OB.loop).fixedSize(horizontal: false, vertical: true)
+            } else {
+                Text("Adds one entry named \u{201C}point\u{201D} to each agent\u{2019}s settings, with a backup. Change it any time in Settings.")
+                    .font(.system(size: 13)).foregroundStyle(OB.muted).fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .padding(.horizontal, 24)
+        .onAppear { agents.refresh(preselect: agents.selected.isEmpty) }
+    }
+}
+
+private struct OnboardingAgentsButtons: View {
+    @ObservedObject var agents: AgentsModel
+    let next: () -> Void
+
+    var body: some View {
+        let n = agents.toConnect.count
+        if n == 0 {
+            Button("Continue", action: next).buttonStyle(PrimaryButton())
+        } else {
+            Button("Skip", action: next).buttonStyle(QuietButton())
+            Button(agents.busy ? "Connecting…" : "Connect \(n) agent\(n == 1 ? "" : "s")") {
+                agents.connect(agents.toConnect) { if agents.error == nil { next() } }
+            }
+            .buttonStyle(PrimaryButton(enabled: !agents.busy))
+            .disabled(agents.busy)
         }
     }
 }

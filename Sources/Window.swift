@@ -157,6 +157,8 @@ private enum KindFilter: String, CaseIterable, Identifiable {
 struct CapturesView: View {
     @EnvironmentObject var store: CaptureStore
     @State private var selection: Capture.ID?
+    /// Set while Point picks the selection itself, so only a user's click or arrow key copies.
+    @State private var autoSelecting = false
     @State private var query = ""
     @State private var filter: KindFilter = .all
 
@@ -230,9 +232,18 @@ struct CapturesView: View {
             }
             .frame(minWidth: 420, maxWidth: .infinity, maxHeight: .infinity)
         }
-        .onAppear { if selection == nil { selection = filtered.first?.id } }
+        .onAppear {
+            if selection == nil, let first = filtered.first?.id { autoSelecting = true; selection = first }
+        }
         .onChange(of: store.captures) { _, new in
-            if let s = selection, !new.contains(where: { $0.id == s }) { selection = new.first?.id }
+            if let s = selection, !new.contains(where: { $0.id == s }) { autoSelecting = true; selection = new.first?.id }
+        }
+        .onChange(of: selection) { _, id in
+            // Clicking (or arrowing to) a capture copies it, so it's ready to paste.
+            if autoSelecting { autoSelecting = false; return }
+            guard let id, let c = store.captures.first(where: { $0.id == id }) else { return }
+            copyCapture(c)
+            showToast(c.screenshot == nil ? "Copied" : "Copied words + screenshot")
         }
     }
 
@@ -396,6 +407,22 @@ private func copy(_ text: String) {
     NSPasteboard.general.setString(text, forType: .string)
 }
 
+/// A capture as Point would have pasted it: the words, plus the screenshot when there is one.
+/// Text-only apps (terminals) get the words and the screenshot's path; apps that take images get
+/// the picture too.
+private func copyCapture(_ c: Capture) {
+    let pb = NSPasteboard.general
+    pb.clearContents()
+    let item = NSPasteboardItem()
+    if let shot = c.screenshot {
+        item.setString(c.transcript.isEmpty ? "[Screenshot: \(shot.path)]" : c.transcript + "\n\n[Screenshot: \(shot.path)]", forType: .string)
+        if let png = try? Data(contentsOf: shot) { item.setData(png, forType: .png) }
+    } else {
+        item.setString(c.transcript, forType: .string)
+    }
+    pb.writeObjects([item])
+}
+
 /// Drag provider for a screenshot. Offers the PNG as image data (web chats and
 /// rich-text fields take the image itself) and as a file (Finder and file drops).
 private func screenshotDragProvider(_ url: URL) -> NSItemProvider {
@@ -467,6 +494,8 @@ struct SettingsView: View {
                     Button("Send feedback…") { FeedbackController.shared.show() }
                 }
             }
+
+            AgentsSettingsSection()
 
             Section("Permissions") {
                 PermissionRow(name: "Accessibility", detail: "to notice the trigger key",

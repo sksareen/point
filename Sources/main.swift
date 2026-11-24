@@ -39,6 +39,12 @@ enum CapturesFolder {
 
 // ─── Entry point ─────────────────────────────────────────────────────────────
 
+// Agents launch `Point --mcp` as a tool server (MCP.swift); no app, no UI.
+if CommandLine.arguments.contains("--mcp") { PointMCP.run() }
+if let i = CommandLine.arguments.firstIndex(of: "--agents") {
+    Agents.cli(Array(CommandLine.arguments[(i + 1)...]))
+}
+
 let app = NSApplication.shared
 app.setActivationPolicy(.accessory)
 let appDelegate = PointAppDelegate()
@@ -112,6 +118,7 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
         TriggerKey.keepKeyForExistingInstall()
         OnboardingController.noteLaunch()
         AppPresence.installMainMenu()
+        DispatchQueue.global(qos: .utility).async { Agents.refreshMovedEntries() }
         NotificationCenter.default.addObserver(forName: NSWindow.willCloseNotification, object: nil,
                                                queue: .main) { note in
             AppPresence.windowWillClose(note.object as? NSWindow)
