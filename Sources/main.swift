@@ -45,6 +45,62 @@ let appDelegate = PointAppDelegate()
 app.delegate = appDelegate
 app.run()
 
+// ─── Dock and ⌘-Tab presence ──────────────────────────────────────────────────
+
+/// Point is a menu bar app, and macOS leaves those out of the Dock and ⌘-Tab. While one of its
+/// real windows is open (Captures/Settings, the welcome, feedback) it becomes a regular app so
+/// you can switch back to it; when the last one closes it goes back to the menu bar only.
+/// The sticky pad and the drawing overlay are panels and don't count.
+enum AppPresence {
+    static func windowWillShow() {
+        if NSApp.activationPolicy() != .regular { NSApp.setActivationPolicy(.regular) }
+    }
+
+    static func windowWillClose(_ closing: NSWindow?) {
+        let stillOpen = NSApp.windows.contains { w in
+            w !== closing && w.isVisible && !(w is NSPanel) && w.styleMask.contains(.titled)
+        }
+        if !stillOpen && NSApp.activationPolicy() != .accessory { NSApp.setActivationPolicy(.accessory) }
+    }
+
+    /// A minimal menu bar for when Point is the active app: ⌘W closes, ⌘Q quits, and the Edit
+    /// shortcuts (⌘C, ⌘V, ⌘A, undo) work in Point's text fields.
+    static func installMainMenu() {
+        let main = NSMenu()
+
+        let appItem = NSMenuItem()
+        let appMenu = NSMenu()
+        appMenu.addItem(withTitle: "Hide Point", action: #selector(NSApplication.hide(_:)), keyEquivalent: "h")
+        appMenu.addItem(.separator())
+        appMenu.addItem(withTitle: "Quit Point", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        appItem.submenu = appMenu
+        main.addItem(appItem)
+
+        let editItem = NSMenuItem()
+        let edit = NSMenu(title: "Edit")
+        edit.addItem(withTitle: "Undo", action: Selector(("undo:")), keyEquivalent: "z")
+        let redo = edit.addItem(withTitle: "Redo", action: Selector(("redo:")), keyEquivalent: "z")
+        redo.keyEquivalentModifierMask = [.command, .shift]
+        edit.addItem(.separator())
+        edit.addItem(withTitle: "Cut", action: #selector(NSText.cut(_:)), keyEquivalent: "x")
+        edit.addItem(withTitle: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "c")
+        edit.addItem(withTitle: "Paste", action: #selector(NSText.paste(_:)), keyEquivalent: "v")
+        edit.addItem(withTitle: "Select All", action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
+        editItem.submenu = edit
+        main.addItem(editItem)
+
+        let windowItem = NSMenuItem()
+        let window = NSMenu(title: "Window")
+        window.addItem(withTitle: "Close", action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w")
+        window.addItem(withTitle: "Minimize", action: #selector(NSWindow.performMiniaturize(_:)), keyEquivalent: "m")
+        windowItem.submenu = window
+        main.addItem(windowItem)
+        NSApp.windowsMenu = window
+
+        NSApp.mainMenu = main
+    }
+}
+
 // ─── App delegate ────────────────────────────────────────────────────────────
 
 final class PointAppDelegate: NSObject, NSApplicationDelegate {
@@ -55,6 +111,11 @@ final class PointAppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         TriggerKey.keepKeyForExistingInstall()
         OnboardingController.noteLaunch()
+        AppPresence.installMainMenu()
+        NotificationCenter.default.addObserver(forName: NSWindow.willCloseNotification, object: nil,
+                                               queue: .main) { note in
+            AppPresence.windowWillClose(note.object as? NSWindow)
+        }
         setupMenuBar()
         NotificationCenter.default.addObserver(forName: TriggerKey.changed, object: nil, queue: .main) { [weak self] _ in
             self?.refreshTriggerLabels()

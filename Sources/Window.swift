@@ -125,6 +125,7 @@ final class PointWindowController {
             window = w
         }
         CaptureStore.shared.reload()
+        AppPresence.windowWillShow()
         NSApp.activate(ignoringOtherApps: true)
         window?.makeKeyAndOrderFront(nil)
     }

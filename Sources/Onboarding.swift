@@ -39,6 +39,7 @@ final class OnboardingController: NSObject, NSWindowDelegate {
             w.center()
             window = w
         }
+        AppPresence.windowWillShow()
         NSApp.activate(ignoringOtherApps: true)
         window?.makeKeyAndOrderFront(nil)
     }
